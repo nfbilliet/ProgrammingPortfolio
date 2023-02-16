@@ -1,0 +1,5 @@
+\contentsline {chapter}{\numberline {1}A Tour of the Standard Library}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Types provided by the Standard Library}{3}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Strings and Char}{3}{subsection.1.1.1}%
+\contentsline {subsubsection}{String type}{3}{section*.2}%
+\contentsline {subsubsection}{Char}{4}{section*.3}%
