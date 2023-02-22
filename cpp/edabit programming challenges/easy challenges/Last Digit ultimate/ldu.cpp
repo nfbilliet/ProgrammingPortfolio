@@ -25,10 +25,26 @@ Notes
 Numbers can be negative.
 */
 
-int getLastDigit(int number){
-    // Extract the last number of a given number
-}
+#include <iostream>
+ using namespace std;
 
 bool lastDig(int a, int b, int c){
-    
+    // The last digit of an integer can be computed through the modulo operator.
+    // When diving any number by 10 then the remainder of the division is the last digit.
+    int last_a = a%10;
+    int last_b = b%10;
+    int last_c = c%10;
+    // the product of the last digits must be divided by 10 as well to obtain a single digit result
+    if ((last_a*last_b)%10==last_c){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+int main(){
+    cout << lastDig(25, 21, 125) << "\n";
+    cout << lastDig(55, 226, 5190) << "\n";
+    cout << lastDig(12, 215, 2142) << "\n";
 }
