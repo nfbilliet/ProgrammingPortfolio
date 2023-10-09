@@ -1,0 +1,67 @@
+dynamic linking library 
+cmake
+opengl
+native scripting
+
+### Interesting sites and blog posts ###
+
+https://www.dataorienteddesign.com/dodmain/node17.html
+https://gamesfromwithin.com/data-oriented-design
+https://www.gamedevs.org/uploads/data-driven-game-object-system.pdf
+https://gameprogrammingpatterns.com/data-locality.html
+
+### Interesting books ###
+
+Game Physics,  David H. Eberly 
+Game Engine Architecture, Jason Gregory 
+Game Programming Patterns,  Robert Nystrom
+AI for Games, Ian Millington 
+
+
+### Game engine development - libraries and tools to learn ###
+
+1) Algorithms and data structures
+	- How to represent game objects in memory
+	- How to most efficiently access the information contained within objects
+
+2) Mathematics
+	- Operations performed on objects require linear algebra, discrete mathematics
+	- Controlling events requires the utilization of statistics and calculus
+	- Implementation of AI requires the use of statistics
+
+3) Computer architecture
+	- How does the device on which the software operates work?
+	- Does the build and function of specific components prefer certain ways of handling information or processing?
+
+4) Graphics
+	- Parallelization of computation using GPUs
+	- How do GPUs function?
+	
+5) Compiler & formal languages
+	- scripting languages
+
+6) Networking
+
+7) UI & UX
+
+Handy libraries
+	- SDL
+	- EnTT, Flecs
+	- OpenGL, Direct3D, Vulkan, and Metal
+	- TinyOBJLoader and AssImp 
+	- For 2D physics, I recommend looking at Box2D and Chipmunk2D. 
+	  For professional and stable 3D physics simulation, some good names are libraries like 
+	  PhysX and Bullet.
+	- Dear ImGui, Qt, and Nuklear
+	- SDL_Mixer, SoLoud, and FMOD
+
+Objects functionality
+    Position component: Keeps track of the x-y position coordinates of our entity in the world (or x-y-z in 3D).
+    Velocity component: Keeps track of how fast the entity is moving in the x-y axis (or x-y-z in 3D).
+    Sprite component: It usually stores the PNG image that we should render for a certain entity.
+    Animation component: Keeps track of the entity's animation speed, and how the animation frames change over time.
+    Collider component: This is usually related to physics characteristics of a rigid body, and defines the colliding shape of an entity (bounding box, bounding circle, mesh collider, etc.).
+    Health component: Stores the current health value of an entity. This is usually just a number or in some cases a percentage value (a health bar, for example).
+    Script component: Sometimes we can have a script component attached to our entity, which might be an external script file (Lua, Python, etc) that our engines must interpret and execute behind the scenes.
+	* Data-Oriented Design, Entity-Component-System (ECS), data locality
+

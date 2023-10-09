@@ -1,0 +1,6 @@
+Bezier curves
+https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node13.html
+
+Gaussian Splatting
+https://github.com/graphdeco-inria/gaussian-splatting
+
