@@ -4,3 +4,25 @@ https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node13.html
 Gaussian Splatting
 https://github.com/graphdeco-inria/gaussian-splatting
 
+Cellulur automata
+https://en.wikipedia.org/wiki/Cellular_automaton
+
+Shell texturing
+https://www.researchgate.net/publication/220183640_Shell_Texture_Functions
+https://gim.studio/animalia/an-introduction-to-shell-based-fur-technique/
+
+Difference of Gaussians
+https://en.wikipedia.org/wiki/Difference_of_Gaussians
+
+Dithering
+https://en.wikipedia.org/wiki/Dither
+
+Color Quantization
+https://en.wikipedia.org/wiki/Color_quantization
+
+Kuwahara Filter
+https://en.wikipedia.org/wiki/Kuwahara_filter
+
+Line Integral Convolution
+https://cs.brown.edu/courses/csci2370/2000/1999/cabral.pdf
+
