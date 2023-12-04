@@ -1,0 +1,479 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.meta package &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="gqcml.analysis package" href="gqcml.analysis.html" />
+    <link rel="prev" title="gqcml.utils package" href="gqcml.utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">gqcml.meta package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.meta.Meta">gqcml.meta.Meta module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.meta.format">gqcml.meta.format module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.meta">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>gqcml.meta package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/gqcml.meta.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gqcml-meta-package">
+<h1>gqcml.meta package<a class="headerlink" href="#gqcml-meta-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-gqcml.meta.Meta">
+<span id="gqcml-meta-meta-module"></span><h2>gqcml.meta.Meta module<a class="headerlink" href="#module-gqcml.meta.Meta" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="gqcml.meta.Meta.get_git_information">
+<code class="sig-prename descclassname"><span class="pre">gqcml.meta.Meta.</span></code><code class="sig-name descname"><span class="pre">get_git_information</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">library_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/meta/Meta.html#get_git_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.meta.Meta.get_git_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lookup the repository metadata and returns the current active branch and the git commit sha/hash.
+The information is store</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">library_directory (str)</dt>
+<dd class="field-odd"><p>The path to the parent directory of the library from which the
+data needs to be extracted. The directory should end in the parent
+directory name (no / at the end).</p>
+</dd>
+<dt class="field-even">meta_dict (dict)</dt>
+<dd class="field-even"><p>The dictionary in which the meta data needs to be stored.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">None</dt>
+<dd class="field-odd"><p>The information is extracted and appended to the meta dict</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.meta.Meta.get_hardware_information">
+<code class="sig-prename descclassname"><span class="pre">gqcml.meta.Meta.</span></code><code class="sig-name descname"><span class="pre">get_hardware_information</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/meta/Meta.html#get_hardware_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.meta.Meta.get_hardware_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function designed to look up hardware information and store it in a dictionary format</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">meta_dict (dict)</dt>
+<dd class="field-odd"><p>The dictionary in which the meta data needs to be stored</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">None</dt>
+<dd class="field-odd"><p>The information about the Hardware is extracted and appended to the meta dict</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.meta.Meta.get_optimizer_information">
+<code class="sig-prename descclassname"><span class="pre">gqcml.meta.Meta.</span></code><code class="sig-name descname"><span class="pre">get_optimizer_information</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/meta/Meta.html#get_optimizer_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.meta.Meta.get_optimizer_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function to extract all the hyper parameters from the optimizer used during the training</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">meta_dict (dict)</dt>
+<dd class="field-odd"><p>The dictionary in which the meta data needs to be stored</p>
+</dd>
+<dt class="field-even">optizimer (torch.optim)</dt>
+<dd class="field-even"><p>Optimizer object from pytorch</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">None</dt>
+<dd class="field-odd"><p>The information about the optimizer is extracted and appended to the meta dict</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.meta.Meta.get_script_information">
+<code class="sig-prename descclassname"><span class="pre">gqcml.meta.Meta.</span></code><code class="sig-name descname"><span class="pre">get_script_information</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_script</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/meta/Meta.html#get_script_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.meta.Meta.get_script_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used in the extraction of meta data from a submission script. This function
+is built on the assumption that the SLURM job manager is being used to submit tasks on a
+high performance computing infrastructure.</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">submission_script (str)</dt>
+<dd class="field-odd"><p>The filepath to the submission script being used</p>
+</dd>
+<dt class="field-even">meta_dict (dictionary)</dt>
+<dd class="field-even"><p>The dictionary in which the meta data needs to be stored.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">None</dt>
+<dd class="field-odd"><p>The information is extracted from the script and appended to the meta dict</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.meta.Meta.get_software_information">
+<code class="sig-prename descclassname"><span class="pre">gqcml.meta.Meta.</span></code><code class="sig-name descname"><span class="pre">get_software_information</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/meta/Meta.html#get_software_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.meta.Meta.get_software_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function designed to look up software information and store it in a dictionary format</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">param meta_dict (dict)</dt>
+<dd class="field-odd"><p>The dictionary in which the meta data needs to be stored</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">None</dt>
+<dd class="field-odd"><p>The information about the software is extracted and appended to the meta dict</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.meta.Meta.get_system_information">
+<code class="sig-prename descclassname"><span class="pre">gqcml.meta.Meta.</span></code><code class="sig-name descname"><span class="pre">get_system_information</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/meta/Meta.html#get_system_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.meta.Meta.get_system_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function designed to look up system information and store it in a dictionary format</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">meta_dict (dict)</dt>
+<dd class="field-odd"><p>The dictionary in which the meta data needs to be stored.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">None</dt>
+<dd class="field-odd"><p>The information about the system is extracted and appended to the meta dict</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.meta.Meta.get_timestamp">
+<code class="sig-prename descclassname"><span class="pre">gqcml.meta.Meta.</span></code><code class="sig-name descname"><span class="pre">get_timestamp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/meta/Meta.html#get_timestamp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.meta.Meta.get_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function to retrieve the time stamp of the calculation</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">meta_dict (dict)</dt>
+<dd class="field-odd"><p>The dictionary in which the meta data needs to be stored</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">None</dt>
+<dd class="field-odd"><p>The information about the time of execution is extracted and appended to the meta dict</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.meta.Meta.make_meta">
+<code class="sig-prename descclassname"><span class="pre">gqcml.meta.Meta.</span></code><code class="sig-name descname"><span class="pre">make_meta</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission_script</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">library_directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/meta/Meta.html#make_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.meta.Meta.make_meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that generates a JSON file that contains all the necessary meta data of the calculation that is
+being performed. The JSON file stores</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Script information</p></li>
+<li><p>Git information</p></li>
+<li><p>Model information</p></li>
+<li><p>System information</p></li>
+<li><p>Hardware information</p></li>
+<li><p>Software information</p></li>
+<li><p>Optimizer data</p></li>
+<li><p>Dataset</p></li>
+<li><p>Timestamp</p></li>
+<li><p>Random seed</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">meta_dir (str)</dt>
+<dd class="field-odd"><p>A filepath to the target directory where the meta data should be stored.</p>
+</dd>
+<dt class="field-even">modelname (str)</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">model (gqcml.nn.models/gqcml.torchgeom_interface.models)</dt>
+<dd class="field-odd"><p>A torch object that represents the model.
+This model is required to have the meta function</p>
+</dd>
+<dt class="field-even">optimizer (torch.optim)</dt>
+<dd class="field-even"><p>The optimizer that is used in the training of the model</p>
+</dd>
+<dt class="field-odd">submission_script (str)</dt>
+<dd class="field-odd"><p>The filepath to the submission script being used</p>
+</dd>
+<dt class="field-even">library_directory (str)</dt>
+<dd class="field-even"><p>The path to the parent directory of the library from which the
+data needs to be extracted. The directory should end in the parent
+directory name (no / at the end).</p>
+</dd>
+<dt class="field-odd">dataset (str/list)</dt>
+<dd class="field-odd"><p>A string containing the filepath to the dataset is being in the model. If multiple
+datasets are used then a filepath to each of these need to be provided in a list</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">None</dt>
+<dd class="field-odd"><p>The meta dict is stored in a json file and stored in the meta target dir</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.meta.format">
+<span id="gqcml-meta-format-module"></span><h2>gqcml.meta.format module<a class="headerlink" href="#module-gqcml.meta.format" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="gqcml.meta.format.load_meta">
+<code class="sig-prename descclassname"><span class="pre">gqcml.meta.format.</span></code><code class="sig-name descname"><span class="pre">load_meta</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/meta/format.html#load_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.meta.format.load_meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that reads a json file and returns the meta data as a dictionary</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">json_file (str)</dt>
+<dd class="field-odd"><p>A string containing the filepath to the json file (including filename)</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">dict</dt>
+<dd class="field-odd"><p>The meta data dictionary</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.meta.format.print_json">
+<code class="sig-prename descclassname"><span class="pre">gqcml.meta.format.</span></code><code class="sig-name descname"><span class="pre">print_json</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/meta/format.html#print_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.meta.format.print_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function to pretty print a json file</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">json_file (str)</dt>
+<dd class="field-odd"><p>A string containing the filepath to the json file (including filename)</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">json_summary</dt>
+<dd class="field-odd"><p>Prints the contents of the meta dict in the json file</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.meta">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-gqcml.meta" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gqcml.analysis.html" class="btn btn-neutral float-right" title="gqcml.analysis package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gqcml.utils.html" class="btn btn-neutral float-left" title="gqcml.utils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,561 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.data_generators package &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="gqcml.data package" href="gqcml.data.html" />
+    <link rel="prev" title="GQCML: Ghent Quantum Chemistry Machine Learning library" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">gqcml.data_generators package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.data_generators.Huckel">gqcml.data_generators.Huckel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.data_generators.graph_sampler">gqcml.data_generators.graph_sampler module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.data_generators">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>gqcml.data_generators package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/gqcml.data_generators.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gqcml-data-generators-package">
+<h1>gqcml.data_generators package<a class="headerlink" href="#gqcml-data-generators-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-gqcml.data_generators.Huckel">
+<span id="gqcml-data-generators-huckel-module"></span><h2>gqcml.data_generators.Huckel module<a class="headerlink" href="#module-gqcml.data_generators.Huckel" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="gqcml.data_generators.Huckel.HuckelSolver">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.data_generators.Huckel.</span></code><code class="sig-name descname"><span class="pre">HuckelSolver</span></code><a class="reference internal" href="../_modules/gqcml/data_generators/Huckel.html#HuckelSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.Huckel.HuckelSolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that provides the utilities to solve the Schrödinger equation
+for the Hückel model. This class contains the following objects</p>
+<dl class="simple">
+<dt>Attributes</dt><dd><dl class="field-list simple">
+<dt class="field-odd">eigenvals (np.array)</dt>
+<dd class="field-odd"><p>An attribute that stores the eigenvalues of the last computed system.
+The standard value for this attribute is 0</p>
+</dd>
+<dt class="field-even">eigenvecs (np.array)</dt>
+<dd class="field-even"><p>An attribute that stores the eigenvectors of the last computed system.
+The standard value for this attribute is 0</p>
+</dd>
+<dt class="field-odd">ONV_a (np.array)</dt>
+<dd class="field-odd"><p>An attribute that stores the alpha occupation number vector of the last computed system.
+The standard value for this attribute is 0</p>
+</dd>
+<dt class="field-even">ONV_b (np.array)</dt>
+<dd class="field-even"><p>An attribute that stores the beta occuptation number vector of the last computed system.
+The standard value for this attribute is 0</p>
+</dd>
+<dt class="field-odd">P_a (np.array)</dt>
+<dd class="field-odd"><p>An attribute that stores the alpha density matrix of the last computed system.
+The standard value for this attribute is 0</p>
+</dd>
+<dt class="field-even">P_b (np.array)</dt>
+<dd class="field-even"><p>An attribute that stores the beta density matrix of the last computed system.
+The standard value for this attribute is 0</p>
+</dd>
+<dt class="field-odd">P (np.array)</dt>
+<dd class="field-odd"><p>An attribute that stores the total density matrix of the last computed system.
+The standard value for this attribute is 0</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="gqcml.data_generators.Huckel.HuckelSolver.ONV">
+<code class="sig-name descname"><span class="pre">ONV</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eigenvals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data_generators/Huckel.html#HuckelSolver.ONV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.Huckel.HuckelSolver.ONV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs the occupation number vectors that determines the filling of the electrons in the
+spin orbitals. This functions takes degenerate states into account as well</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">eigenvals (np.array)</dt>
+<dd class="field-odd"><p>A 1D array containing the eigenvalues of the system</p>
+</dd>
+<dt class="field-even">N (int)</dt>
+<dd class="field-even"><p>The amount of spin orbitals in the system, i.e. the maximum number
+of electrons in the ONV</p>
+</dd>
+<dt class="field-odd">N_a (int)</dt>
+<dd class="field-odd"><p>The amount of alpha electrons in the system</p>
+</dd>
+<dt class="field-even">N_b (int)</dt>
+<dd class="field-even"><p>The amount of beta electrons in the system</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">ONV (np.array)</dt>
+<dd class="field-odd"><p>The occupation number vector for both alpha and beta are updated</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data_generators.Huckel.HuckelSolver.compute_density_matrix">
+<code class="sig-name descname"><span class="pre">compute_density_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data_generators/Huckel.html#HuckelSolver.compute_density_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.Huckel.HuckelSolver.compute_density_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the groundstate density of based on the ONV</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">N_a (int)</dt>
+<dd class="field-odd"><p>The number of alpha electrons.</p>
+</dd>
+<dt class="field-even">N_b (int)</dt>
+<dd class="field-even"><p>The number of beta electrons.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">P (np.array)</dt>
+<dd class="field-odd"><p>A (N x N) numpy array that represents the total electron density matrix from the system
+when it contains N_a and  N_b electrons</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data_generators.Huckel.HuckelSolver.compute_energy">
+<code class="sig-name descname"><span class="pre">compute_energy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data_generators/Huckel.html#HuckelSolver.compute_energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.Huckel.HuckelSolver.compute_energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the molecular energy in the Huckel model based on the occupation of
+alpha and beta electrons of the molecular orbitals. This functions assumes that
+the lowest eigenvalues are the first elements</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">N_a (int)</dt>
+<dd class="field-odd"><p>The number of alpha electrons</p>
+</dd>
+<dt class="field-even">N_b (int)</dt>
+<dd class="field-even"><p>The number of beta electrons</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">E (float)</dt>
+<dd class="field-odd"><p>A floating point value that corresponds to the total energy of the system
+when contain N_a and N_b electrons</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data_generators.Huckel.HuckelSolver.solve_general">
+<code class="sig-name descname"><span class="pre">solve_general</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data_generators/Huckel.html#HuckelSolver.solve_general"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.Huckel.HuckelSolver.solve_general" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that solves the Schrodinger equation working when including a general overlap</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">H (np.array)</dt>
+<dd class="field-odd"><p>A (N x N) numpy array that represents the system that needs to be computed</p>
+</dd>
+<dt class="field-even">S (np.array)</dt>
+<dd class="field-even"><p>A (N x N) numpy array that contains the overlap values associated with the
+given H</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">None</dt>
+<dd class="field-odd"><p>The function does computes the eigenvalues and eigenvectors of the given matrix H
+using the eigh function from scipy. These solutions are stored in the corresponding attributes</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data_generators.Huckel.HuckelSolver.solve_ndo">
+<code class="sig-name descname"><span class="pre">solve_ndo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data_generators/Huckel.html#HuckelSolver.solve_ndo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.Huckel.HuckelSolver.solve_ndo" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that solves the Schrodinger equation working under the assumption of non-differential overlap</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">H (np.array)</dt>
+<dd class="field-odd"><p>A (N x N) numpy array that represents the system that needs to be computed</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">None</dt>
+<dd class="field-odd"><p>The function does computes the eigenvalues and eigenvectors of the given matrix H
+using the eigh function from numpy. These solutions are stored in the corresponding attributes</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.data_generators.graph_sampler">
+<span id="gqcml-data-generators-graph-sampler-module"></span><h2>gqcml.data_generators.graph_sampler module<a class="headerlink" href="#module-gqcml.data_generators.graph_sampler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="gqcml.data_generators.graph_sampler.graph_sampler">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.data_generators.graph_sampler.</span></code><code class="sig-name descname"><span class="pre">graph_sampler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sites</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data_generators/graph_sampler.html#graph_sampler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.graph_sampler.graph_sampler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An object used in the generation of randomly sampled chemical structures
+using the adjacency matrix as a representation of the molecular structure</p>
+<dl class="simple">
+<dt>Attributes</dt><dd><dl class="field-list simple">
+<dt class="field-odd">sites (int)</dt>
+<dd class="field-odd"><p>An integer denoting the amount of sites present in the system(s) which will sampled</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="gqcml.data_generators.graph_sampler.graph_sampler.convert_triu_to_mat">
+<code class="sig-name descname"><span class="pre">convert_triu_to_mat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triu_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data_generators/graph_sampler.html#graph_sampler.convert_triu_to_mat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.graph_sampler.graph_sampler.convert_triu_to_mat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the upper triangle representation of a graph to the full matrix form</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">triu_vector (np.array)</dt>
+<dd class="field-odd"><p>An upper triangle vector corresponding to the graph of interest</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">adjacency_matrix (np.array)</dt>
+<dd class="field-odd"><p>The matrix form of the input triu</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data_generators.graph_sampler.graph_sampler.generate_diagonal_vector">
+<code class="sig-name descname"><span class="pre">generate_diagonal_vector</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nmb_el_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data_generators/graph_sampler.html#graph_sampler.generate_diagonal_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.graph_sampler.graph_sampler.generate_diagonal_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that generates a set of vectors that specifies all possible combinations of the diagonal elements of the adjacency matrix.</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">nmb_el_type (list)</dt>
+<dd class="field-odd"><p>A list that contains the number of occurence of each unique element,
+e.g. suppose we have a diagonal of length 4 with 2 unique elements in equal occurence then this would
+correspond with [2,2]</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">List of lists</dt>
+<dd class="field-odd"><p>A set of vectors that contain all possible permutations of a vector that has the
+specified ratios of these elements. E.g. for 2 unique elements in a diagonal of length 4 (equal ratios)
+this would return [[1,1,2,2],[1,2,1,2], [2,1,1,2]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data_generators.graph_sampler.graph_sampler.permutate_matrix">
+<code class="sig-name descname"><span class="pre">permutate_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permutations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data_generators/graph_sampler.html#graph_sampler.permutate_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.graph_sampler.graph_sampler.permutate_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates all possible permutations of a matrix where the permutation changes the order of the rows
+and columns in the same way</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">matrix (np.array)</dt>
+<dd class="field-odd"><p>The matrix that is to be permutated</p>
+</dd>
+<dt class="field-even">permutations (list)</dt>
+<dd class="field-even"><p>A list of lists where each sublist contains the order of the rows and columns</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">permutated_matrices (list)</dt>
+<dd class="field-odd"><p>A list of all the permutated matrices</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data_generators.graph_sampler.graph_sampler.sample_homogeneous_matrix">
+<code class="sig-name descname"><span class="pre">sample_homogeneous_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triu_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diagonal_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[-</span> <span class="pre">5,</span> <span class="pre">0.001]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">off_diagonal_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[-</span> <span class="pre">5,</span> <span class="pre">-</span> <span class="pre">0.001]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data_generators/graph_sampler.html#graph_sampler.sample_homogeneous_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.graph_sampler.graph_sampler.sample_homogeneous_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that takes a upper triangle of a homogeneous systems, i.e. a graph consisting of a single
+vertex type, and generates an amount of samples within the specified sampling ranges</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">triu_vector (np array)</dt>
+<dd class="field-odd"><p>A upper triangle np array that describes the structure of the system
+The array consists of 0’s and 1’s where the 1 signifies a weight.</p>
+</dd>
+<dt class="field-even">amount_samples (int)</dt>
+<dd class="field-even"><p>An integer that determines how many samples need to be generated</p>
+</dd>
+<dt class="field-odd">diagonal_interval (opt, list)</dt>
+<dd class="field-odd"><p>A list of floats that determines the lower and upper range
+of the uniform random distribution used in the generation of the samples
+for the diagonal elements of the adjacency matrix</p>
+</dd>
+<dt class="field-even">off_diagonal_interval (opt, list)</dt>
+<dd class="field-even"><p>A list of floats that determines the lower and upper range
+of the uniform random distribution used in the generation of the samples
+for the off-diagonal elements of the adjacency matrix</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">sampled_trius (list)</dt>
+<dd class="field-odd"><p>A list of numpy arrays containing the upper triangle vector sampled randomly</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data_generators.graph_sampler.graph_sampler.sample_inhomogeneous_matrix">
+<code class="sig-name descname"><span class="pre">sample_inhomogeneous_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diagonal_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">triu_vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diagonal_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[-</span> <span class="pre">5,</span> <span class="pre">0.001]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">off_diagonal_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[-</span> <span class="pre">5,</span> <span class="pre">-</span> <span class="pre">0.001]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data_generators/graph_sampler.html#graph_sampler.sample_inhomogeneous_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data_generators.graph_sampler.graph_sampler.sample_inhomogeneous_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Constructs a weighted adjacency matrix sampled uniformly based on the symbolic assignment of the elements</dt><dd><ul class="simple">
+<li><p>The diagonal elements are assigned symbolic through integers. These integers will be replaced by random values</p></li>
+<li><p>Off diagonal elements are sampled based on the the diagonal indices</p></li>
+</ul>
+</dd>
+</dl>
+<p>This function will thus generate an adjacency matrix that has unique weights for every type of bond.
+A type of bond is considered to be the edge between a pair of diagonal weihgts.</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">diagonal_vector (np array)</dt>
+<dd class="field-odd"><p>A np array of integers that symbolic denotes the type of vertex.</p>
+</dd>
+<dt class="field-even">triu_vector (np array)</dt>
+<dd class="field-even"><p>A upper triangle np array that describes the structure of the system
+The array consists of 0’s and 1’s where the 1 signifies a weight.</p>
+</dd>
+<dt class="field-odd">amount_samples (int)</dt>
+<dd class="field-odd"><p>An integer that determines how many samples need to be generated</p>
+</dd>
+<dt class="field-even">diagonal_interval (opt, list)</dt>
+<dd class="field-even"><p>A list of floats that determines the lower and upper range
+of the uniform random distribution used in the generation of the samples
+for the diagonal elements of the adjacency matrix</p>
+</dd>
+<dt class="field-odd">off_diagonal_interval (opt, list)</dt>
+<dd class="field-odd"><p>A list of floats that determines the lower and upper range
+of the uniform random distribution used in the generation of the samples
+for the off-diagonal elements of the adjacency matrix</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">sampled_trius (list)</dt>
+<dd class="field-odd"><p>A list of numpy arrays containing the upper triangle vector sampled randomly</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.data_generators">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-gqcml.data_generators" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gqcml.data.html" class="btn btn-neutral float-right" title="gqcml.data package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="GQCML: Ghent Quantum Chemistry Machine Learning library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

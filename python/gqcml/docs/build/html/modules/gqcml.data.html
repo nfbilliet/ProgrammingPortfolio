@@ -1,0 +1,482 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.data package &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="gqcml.datasets package" href="gqcml.datasets.html" />
+    <link rel="prev" title="gqcml.data_generators package" href="gqcml.data_generators.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">gqcml.data package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.data.Data">gqcml.data.Data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>gqcml.data package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/gqcml.data.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gqcml-data-package">
+<h1>gqcml.data package<a class="headerlink" href="#gqcml-data-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-gqcml.data.Data">
+<span id="gqcml-data-data-module"></span><h2>gqcml.data.Data module<a class="headerlink" href="#module-gqcml.data.Data" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="gqcml.data.Data.Preprocessor">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.data.Data.</span></code><code class="sig-name descname"><span class="pre">Preprocessor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data/Data.html#Preprocessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data.Data.Preprocessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An objec that contains all the functionalities required in the handling of graph based data.</p>
+<dl class="simple">
+<dt>Attributes</dt><dd><dl class="field-list simple">
+<dt class="field-odd">graph_dim (int)</dt>
+<dd class="field-odd"><p>An attribute that describes the graph dimension of the set of graphs that will be processed</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="gqcml.data.Data.Preprocessor.adjacency_matrix">
+<code class="sig-name descname"><span class="pre">adjacency_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diagonal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data/Data.html#Preprocessor.adjacency_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data.Data.Preprocessor.adjacency_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function to format the matrix into a adjacency matrix format.
+The function has the capability to change the diagonal elements of the matrix
+according to the argument given to ‘diagonal’</p>
+<p>In addition to this we also provide the option to normalize the given adjacency matrix
+using the following formula</p>
+<div class="math notranslate nohighlight">
+\[Ã=D^{-1/2}AD^{-1/2}\]</div>
+<p>where the normalized is computed using the absolute value of the adjacency matrix</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">matrix (np.array)</dt>
+<dd class="field-odd"><p>A numpy array that represents the graph that is currently being processed
+The array has the dimension (N x N) where N is the number of vertices in the graph</p>
+</dd>
+<dt class="field-even">diagonal (opt,str)</dt>
+<dd class="field-even"><p>An optional parameter that determines the diagonal of this matrix. Standardly
+we set this value to None resulting in a diagonal that remains unchanged.
+Alternatively we can give the following keywords</p>
+<ol class="arabic simple">
+<li><p>‘ones’-replace the diagonal elements with ones</p></li>
+<li><p>‘zeros’-replace the diagonal elements with zero</p></li>
+</ol>
+</dd>
+<dt class="field-odd">normalize (opt,bool)</dt>
+<dd class="field-odd"><p>A boolean that determines whether the matrix should be normalized using its
+degree matrix (computed using the absolute values of the matrix)</p>
+</dd>
+<dt class="field-even">negative_weights (opt,bool)</dt>
+<dd class="field-even"><p>A boolean that is used in the determination of the added one to the
+diagonal (negative or positive) and how the normalization is
+computed</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">adjacency_matrix (np.array)</dt>
+<dd class="field-odd"><p>The adjacency matrix</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data.Data.Preprocessor.binarize_matrix">
+<code class="sig-name descname"><span class="pre">binarize_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diagonal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data/Data.html#Preprocessor.binarize_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data.Data.Preprocessor.binarize_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that binarizes a given matrix with the option to exclude the diagonal elements</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">matrix (np.array)</dt>
+<dd class="field-odd"><p>A 2D numpy array that will be converted to its binary form</p>
+</dd>
+<dt class="field-even">diagonal (opt,bool)</dt>
+<dd class="field-even"><p>A boolean that indicates whether the diagonal should be 1 or 0</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">binary_matrix (np.array)</dt>
+<dd class="field-odd"><p>A binary representation of the input matrix</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data.Data.Preprocessor.pdegree_weighted_nf">
+<code class="sig-name descname"><span class="pre">pdegree_weighted_nf</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_degrees</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data/Data.html#Preprocessor.pdegree_weighted_nf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data.Data.Preprocessor.pdegree_weighted_nf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a seperate class representation that characterizes the edges that
+connect to the central vertex. This class representation is constructed as a set of tuples
+where the first element of the tuple describes the central vertex’s degree and the second element
+describes the connecting vertex’s degree.</p>
+<p>{(1,1), (1,2),…, (2,1), (2,2), …}.</p>
+<p>as such this class degree will have the dimension (1 X .. math::M^2) where M is the predefined maximum degree number
+(standarly this will be set to 3 when working with organic molecules).</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">matrix (numpy.array)</dt>
+<dd class="field-odd"><p>A 2D matrix (N X N) representing the graph that is to be processed. This matrix
+is a square matrix that contains the weights that will be used in weighting
+the generated categorical vectors. The weights can either be the edge weights
+or the self loop weights (diagonal repeated as a row).</p>
+</dd>
+<dt class="field-even">num_degrees (int)</dt>
+<dd class="field-even"><p>The number of possible degree values</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">pdegree_features (np.array)</dt>
+<dd class="field-odd"><p>A numpy array containing the pair degree features</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data.Data.Preprocessor.triu_to_matrix">
+<code class="sig-name descname"><span class="pre">triu_to_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data/Data.html#Preprocessor.triu_to_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data.Data.Preprocessor.triu_to_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a vector of upper triangular values to a full, symmetric matrix.</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">triu (np.array)</dt>
+<dd class="field-odd"><p>A 1D numpy array containing the upper triangle values of a symmetric
+matrix</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">matrix (np.array)</dt>
+<dd class="field-odd"><p>The matrix form of the upper triangle</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data.Data.Preprocessor.vdegree_nf">
+<code class="sig-name descname"><span class="pre">vdegree_nf</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_degrees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data/Data.html#Preprocessor.vdegree_nf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data.Data.Preprocessor.vdegree_nf" title="Permalink to this definition">¶</a></dt>
+<dd><p>A funtion that formats the weighted matrix to generate a vertex degree feature based on the
+weights in the matrix. The degree is computed as the number of weights that each vertex possesses.
+In addition  we standardly enable the conversion of this integer feature to the
+categorical form.</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">matrix (numpy array)</dt>
+<dd class="field-odd"><p>A numpy array that represents the adjacency matrix that represents the
+graph.</p>
+</dd>
+<dt class="field-even">categorical (opt,bool)</dt>
+<dd class="field-even"><p>Option to convert the degree feature into the categorical format.
+Standard value for this argument is True</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">vdegree_nf (np.array)</dt>
+<dd class="field-odd"><p>A numpy array that describes the vertices in terms of their degree</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data.Data.Preprocessor.vdegree_weighted_nf">
+<code class="sig-name descname"><span class="pre">vdegree_weighted_nf</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbourhood</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'average'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data/Data.html#Preprocessor.vdegree_weighted_nf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data.Data.Preprocessor.vdegree_weighted_nf" title="Permalink to this definition">¶</a></dt>
+<dd><p>A vertex degree node feature constructor that weights the categorical vector
+using different weights types. The weight types that we specify are the following options</p>
+<p>If “neighbourhood” is set to true we weight the categorical with the self loops but also weights 2 additional
+categorical vectors. These 2 vectors take the following weighting into account</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The edges weights</p></li>
+<li><p>The self loops of the connecting vertices`</p></li>
+</ul>
+</div></blockquote>
+<p>When using the neighbourhood weight type we als can specify how to weight these neighbourhood</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>“average”, the off diagonal elements are average and subsequently used to weight
+the degree vector of the central vertex</p></li>
+<li><p>“linear combination”, the off diagonal elements are weighted using the degree vector
+of the connecting vertices which are then subsequently summed and averaged per
+degree class</p></li>
+</ol>
+</div></blockquote>
+<dl>
+<dt>Arguments</dt><dd><dl class="field-list">
+<dt class="field-odd">matrix (numpy.array)</dt>
+<dd class="field-odd"><p>A 2D matrix (N X N) representing the graph that is to be processed. This matrix
+is a square matrix that contains the weights that will be used in weighting
+the generated categorical vectors. The weights can either be the edge weights
+or the self loop weights (diagonal repeated as a row)</p>
+</dd>
+<dt class="field-even">neighbourhood (opt,bool)</dt>
+<dd class="field-even"><p>Boolean that enables the option to include information about the neighbourhood
+weights. The edge weights and self loop weights of the neighbouring vertices
+are formatted in the categorical format. The method which this is done is
+determined by the weight_method optional argument</p>
+</dd>
+<dt class="field-odd">weight_method (opt,str)</dt>
+<dd class="field-odd"><p>Method by which we incorporate neighbourhood information into the node feature
+representation.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>“average”, neighbourhood weights are averaged and then used to weight the
+the degree vector of the central vertex</p></li>
+<li><p>“linear combination” neighbourhood weights are weighted with the degree vectors
+of the connecting vertex and subsequently summed up and averaged, meaning that
+we count the amount of neighbouring vertices have a specific degree which will be
+used to rescale the summed combination</p></li>
+</ol>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">vdegree_weighted_nf (numpy.array)</dt>
+<dd class="field-odd"><p>a numpy array that describes the vertices as a categorical degree vector weighted
+by its self loop weight</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.data.Data.Preprocessor.weights_nf">
+<code class="sig-name descname"><span class="pre">weights_nf</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/data/Data.html#Preprocessor.weights_nf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.data.Data.Preprocessor.weights_nf" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that formats the weighted matrix as node_features using the self loop weight
+as the node features. In addition to this we also provide to option to include the average
+of the edge weights as an additional feature</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">matrix (np.array)</dt>
+<dd class="field-odd"><p>A 2D numpy array that contains diagonal and off-diagonal weights
+that parametrize the graph</p>
+</dd>
+<dt class="field-even">edge_weights (opt, bool)</dt>
+<dd class="field-even"><p>A boolean argument that determines whether the average of the off-diagonal
+elements should be included as an additional node feature</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">node_features (np.array)</dt>
+<dd class="field-odd"><p>Numpy array where the node features are the self loop
+weights and possibly the average of the edge weights as well</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.data">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-gqcml.data" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gqcml.datasets.html" class="btn btn-neutral float-right" title="gqcml.datasets package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gqcml.data_generators.html" class="btn btn-neutral float-left" title="gqcml.data_generators package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

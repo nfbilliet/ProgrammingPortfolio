@@ -1,0 +1,453 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.nn.models &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../../../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gqcml.nn.models</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gqcml.nn.models</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">gqcml.nn</span> <span class="kn">import</span> <span class="n">layers</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DNN&quot;</span><span class="p">,</span> <span class="s2">&quot;GraphConv_model&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="DNN"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.models.DNN">[docs]</a><span class="k">class</span> <span class="nc">DNN</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A standard dense network consisting of multiple hidden layers</span>
+
+<span class="sd">    Attributes </span>
+<span class="sd">        :layer_dims (list): A list containing the number of nodes in each layer for the network.</span>
+<span class="sd">                            The first entry in the list corresponds to the number of features in the input tensor</span>
+<span class="sd">                            and the last entry in the list corresponds to the number of features in the output tensor</span>
+<span class="sd">        :activation_function (torch.nn): The activation used in the network after each hidden layer</span>
+<span class="sd">        :bias (opt, bool): A boolean indication the option to include a bias term in the dense layers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">layer_configs</span><span class="p">,</span>
+                 <span class="n">activation_function</span><span class="p">,</span>
+                 <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="o">=</span><span class="n">bias</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_configs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">layer_configs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">layer_configs</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_configs</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">layer_config</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">layer_config</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>
+                                           <span class="k">for</span> <span class="n">layer_config</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_configs</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span> <span class="o">=</span> <span class="n">activation_function</span>
+
+<div class="viewcode-block" id="DNN.forward"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.models.DNN.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">):</span>
+        <span class="n">output_tensor</span> <span class="o">=</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">output_tensor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span><span class="p">(</span><span class="n">layer</span><span class="p">(</span><span class="n">output_tensor</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">](</span><span class="n">output_tensor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DNN.meta"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.models.DNN.meta">[docs]</a>    <span class="k">def</span> <span class="nf">meta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes the input arguments of the class and formats them in a dictionary format which can be used in</span>
+<span class="sd">        creating an overarching meta file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">DNN_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">DNN_dict</span><span class="p">[</span><span class="s2">&quot;Model type&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;Dense&quot;</span>
+        <span class="n">DNN_dict</span><span class="p">[</span><span class="s2">&quot;Layer configuration&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_configs</span>
+        <span class="n">DNN_dict</span><span class="p">[</span><span class="s2">&quot;Bias&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bias</span>
+        <span class="n">DNN_dict</span><span class="p">[</span><span class="s2">&quot;Activation function&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">DNN_dict</span></div></div>
+    
+<span class="k">class</span> <span class="nc">Emb</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A module that performs the linear mapping of an initial feature vector to an embedded feature vector according</span>
+<span class="sd">    to the formula</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">       EMB(v_i)=v_iZ</span>
+
+<span class="sd">    Where Z is a learnable set of weights with dimensions (M x N) where M is the number of input features and N </span>
+<span class="sd">    is the number of output features in the embedded space</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        :input_dim (int): An integer describing the initial dimension of the node features </span>
+<span class="sd">        :output_dim (int): An integer describing the desired output dimension of the node features</span>
+<span class="sd">        :bias (opt, bool): A boolean (standard False) that enables or disables the inclusion of a bias term in the construction</span>
+<span class="sd">                          of the embedding vector</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">input_dim</span><span class="p">,</span>
+                 <span class="n">output_dim</span><span class="p">,</span>
+                 <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Emb</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span> <span class="o">=</span> <span class="n">input_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span> <span class="o">=</span> <span class="n">output_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="o">=</span><span class="n">bias</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>
+                
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">meta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes the input arguments of the class and formats them in a dictionary format which can be used in</span>
+<span class="sd">        creating an overarching meta file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Emb_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">Emb_dict</span><span class="p">[</span><span class="s2">&quot;Model type&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;Embedding&quot;</span>
+        <span class="n">Emb_dict</span><span class="p">[</span><span class="s2">&quot;Layer configuration&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="p">]</span>
+        <span class="n">Emb_dict</span><span class="p">[</span><span class="s2">&quot;Bias&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bias</span>
+        <span class="k">return</span> <span class="n">Emb_dict</span>
+
+
+<span class="k">class</span> <span class="nc">Gauss_Emb</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A module that performs the Gaussian embedding procedure for a single continuous node feature.</span>
+<span class="sd">    The layer consists of 2 specific components</span>
+<span class="sd">       1) Gaussian expansion layer</span>
+<span class="sd">       2) Embedding layer</span>
+<span class="sd">    The Gaussian expansion layer consist of a set of Gaussians where neighbouring Gaussians are equidistant </span>
+<span class="sd">    and each gaussian has the same width. Let F be the function that performs the Gaussian expansion then</span>
+<span class="sd">    F consists of K elements </span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        F(x) = [f_1(x), f_2(x), ..., f_K(x)]</span>
+
+<span class="sd">    where f_i(x) is defined as </span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        f_i(x) = exp^{\\frac{-(x-m_i)^2}{2s^2}}</span>
+
+<span class="sd">    where m_i is the mean/center of the Gaussian and s is the variance of the Gaussian. Subsequently this</span>
+<span class="sd">    expanded vector is fed to an embedding layer that subsequently transforms it through a linear combination</span>
+
+<span class="sd">       G_EMB(v_i)=F(v_i)Z</span>
+
+<span class="sd">    Where Z is a learnable matrix of dimension (K x N) with K the number of Gaussians in the expansion layer</span>
+<span class="sd">    and N the embedding dimension</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">       :lower (float): The lower limit of the interval from which the means of the Gaussians are generated</span>
+<span class="sd">       :upper (float): The upper limit of the interval from which the means of the Gaussians are generated</span>
+<span class="sd">       :num_gaussians (int): The number of equidistant Gaussians that are generated in the interval specified</span>
+<span class="sd">                            by the lower and upper argument</span>
+<span class="sd">       :output_dim (int): The output dimension of the embedded feature vector</span>
+<span class="sd">       :variance (opt) (float/None): Controls the width of the Gaussians and is standarly computed so that</span>
+<span class="sd">                                    neighbouring Gaussians intersect at 0.5 (FWHM) as to maintain resolution.</span>
+<span class="sd">                                    If the standard None value is changed to a float this float will be utilized instead.</span>
+<span class="sd">       :bias (opt, bool): A boolean that controls whether to include a bias term in the generation of the embedding.</span>
+<span class="sd">                          This value is standardly set to False and will not include a bias.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">lower</span><span class="p">,</span>
+                 <span class="n">upper</span><span class="p">,</span>
+                 <span class="n">num_gaussians</span><span class="p">,</span>
+                 <span class="n">output_dim</span><span class="p">,</span>
+                 <span class="n">variance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Gauss_Emb</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lower</span> <span class="o">=</span> <span class="n">lower</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upper</span> <span class="o">=</span> <span class="n">upper</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_gaussians</span> <span class="o">=</span> <span class="n">num_gaussians</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span> <span class="o">=</span> <span class="n">output_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variance</span> <span class="o">=</span> <span class="n">variance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">bias</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gauss</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">GaussianEmbedding</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">num_gaussians</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span>
+                                              <span class="n">variance</span><span class="o">=</span><span class="n">variance</span><span class="p">,</span> <span class="n">emb_bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gauss</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">meta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Emb_dict</span><span class="o">=</span><span class="p">{}</span>
+        <span class="n">Emb_dict</span><span class="p">[</span><span class="s2">&quot;Model type&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;Gaussian Embedding&quot;</span>
+        <span class="n">Emb_dict</span><span class="p">[</span><span class="s2">&quot;Continuous interval&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">upper</span><span class="p">]</span>
+        <span class="n">Emb_dict</span><span class="p">[</span><span class="s2">&quot;Number of Gaussians&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_gaussians</span>
+        <span class="n">Emb_dict</span><span class="p">[</span><span class="s2">&quot;Embedding dimension&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">variance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">Emb_dict</span><span class="p">[</span><span class="s2">&quot;Variance&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;FWHM&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Emb_dict</span><span class="p">[</span><span class="s2">&quot;Variance&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">variance</span>
+        <span class="n">Emb_dict</span><span class="p">[</span><span class="s2">&quot;Bias&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bias</span>
+        <span class="k">return</span> <span class="n">Emb_dict</span>
+    
+<div class="viewcode-block" id="GraphConv_model"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.models.GraphConv_model">[docs]</a><span class="k">class</span> <span class="nc">GraphConv_model</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A standard graph convolution model constructor</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        :node_embedding_nn (torch.nn.Module): A torch.nn.Module that processes the initial node features. This torch module</span>
+<span class="sd">                                             takes a tensor with dimensions (B x N x f)  and should return a tensor with</span>
+<span class="sd">                                             dimensions (B x N x F) where B is the batch size, N is the number of nodes in</span>
+<span class="sd">                                             the graphs, f is the initial number of node features and F is the number of node features</span>
+<span class="sd">                                             associated with each node in the graph. F should be equal to the node_input_dim</span>
+<span class="sd">                                             parameter of the GraphConv layers.</span>
+<span class="sd">        :GC_dimensions (list): A list of integers describing the consecutive node embedding dimensions that go into the graph</span>
+<span class="sd">                              convolution layers and are subsequently returned. </span>
+<span class="sd">        :activation_function (torch.nn): The activation function used non-linear transformation of the aggregated neighbourhood</span>
+<span class="sd">                                        information.</span>
+<span class="sd">        :node_prop_nn (torch.nn.Module): A torch.nn.Module that processes the transformed node features after the application</span>
+<span class="sd">                                        of the graph convolution operators. The network takes the node features with dimension</span>
+<span class="sd">                                        (B x N x F) where B is the batch size, N is the number of nodes in the graph and F</span>
+<span class="sd">                                        the number of features associated with each node in the graphs. The output of the network</span>
+<span class="sd">                                        is a tensor that has the dimensions (B x N x 1) where the resulting features are</span>
+<span class="sd">                                        mapped to a single node property.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">node_embedding_nn</span><span class="p">,</span>
+                 <span class="n">GC_dimensions</span><span class="p">,</span>
+                 <span class="n">activation_function</span><span class="p">,</span>
+                 <span class="n">node_prop_nn</span><span class="p">,</span>
+                 <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GraphConv_model</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node_embedding</span> <span class="o">=</span> <span class="n">node_embedding_nn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span> <span class="o">=</span> <span class="n">activation_function</span>
+        <span class="c1">#Construct a list of tuples that determine the number of input features for each node and the</span>
+        <span class="c1">#number of output features from the graph convolution layer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_configs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">GC_dimensions</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">GC_dimensions</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+                              <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">GC_dimensions</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GC_layers</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">layers</span><span class="o">.</span><span class="n">GraphConv</span><span class="p">(</span><span class="n">layer_config</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                               <span class="n">layer_config</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                               <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span><span class="p">,</span>
+                                                               <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>
+                                              <span class="k">for</span> <span class="n">layer_config</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_configs</span><span class="p">])</span>
+
+<div class="viewcode-block" id="GraphConv_model.forward"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.models.GraphConv_model.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_feat</span><span class="p">,</span> <span class="n">adj_matrix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Forward propagation phase of the graph conv model</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :node_feat (torch.Tensor): The initial node feature tensor with the dimensions (B x N x f) where B is the batch</span>
+<span class="sd">                                        size, N is the number of nodes in each graph and f is the number of node features</span>
+<span class="sd">                                        associated with each node in the graphs.</span>
+<span class="sd">            :adj_matrix (torch.Tensor): The weighted adjacency tensor with the dimensions (B x N x N) where B is the batch</span>
+<span class="sd">                                        size and N is the number of nodes in each graph.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        :output (torch.Tensor): The graph property tensor with dimensions (B x 1) where B is the batch</span>
+<span class="sd">                                size. The graph property is computed as the sum of the node properties obtained through the</span>
+<span class="sd">                                site_prop_nn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Transform the initial node features</span>
+        <span class="n">node_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_embedding</span><span class="p">(</span><span class="n">node_feat</span><span class="p">)</span>
+        <span class="c1"># Aggregate neighbourhood information of each node</span>
+        <span class="k">for</span> <span class="n">GC_layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GC_layers</span><span class="p">:</span>
+            <span class="n">node_emb</span> <span class="o">=</span> <span class="n">GC_layer</span><span class="p">(</span><span class="n">node_emb</span><span class="p">,</span> <span class="n">adj_matrix</span><span class="p">)</span>
+        <span class="c1"># Transform the aggregated features into site properties</span>
+        <span class="n">node_prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_properties</span><span class="p">(</span><span class="n">node_emb</span><span class="p">)</span>
+        <span class="c1"># Sum all the node properties in each graph</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">node_prop</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraphConv_model.site_properties"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.models.GraphConv_model.site_properties">[docs]</a>    <span class="k">def</span> <span class="nf">site_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_feat</span><span class="p">,</span> <span class="n">adj_matrix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Site property function utilized to return the site properties, i.e. the output of the layer before the final pooling step</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :node_feat (torch.Tensor): The initial node feature tensor with the dimensions (B x N x f) where B is the batch</span>
+<span class="sd">                                        size, N is the number of nodes in each graph and f is the number of node features</span>
+<span class="sd">                                        associated with each node in the graphs.</span>
+<span class="sd">            :adj_matrix (torch.Tensor): The weighted adjacency tensor with the dimensions (B x N x N) where B is the batch</span>
+<span class="sd">                                        size and N is the number of nodes in each graph.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        :node properties(torch.Tensor): The site properties tensor with dimensions (B x N x1) where B is the batch</span>
+<span class="sd">                                        size and N is the number of nodes in each graph.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Transform the initial node features</span>
+        <span class="n">node_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_embedding</span><span class="p">(</span><span class="n">node_feat</span><span class="p">))</span>
+        <span class="c1"># Aggregate neighbourhood information of each node</span>
+        <span class="k">for</span> <span class="n">GC_layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GC_layers</span><span class="p">:</span>
+            <span class="n">node_emb</span> <span class="o">=</span> <span class="n">GC_layer</span><span class="p">(</span><span class="n">node_emb</span><span class="p">,</span> <span class="n">adj_matrix</span><span class="p">)</span>
+        <span class="c1"># Transform the aggregated features into site properties</span>
+        <span class="n">node_prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_properties</span><span class="p">(</span><span class="n">node_emb</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">site_prop</span></div>
+
+<div class="viewcode-block" id="GraphConv_model.meta"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.models.GraphConv_model.meta">[docs]</a>    <span class="k">def</span> <span class="nf">meta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">GraphConv_dict</span><span class="o">=</span><span class="p">{}</span>
+        <span class="n">GraphConv_dict</span><span class="p">[</span><span class="s2">&quot;Embedding&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node_embedding</span><span class="o">.</span><span class="n">meta</span><span class="p">()</span>
+        <span class="n">GraphConv_dict</span><span class="p">[</span><span class="s2">&quot;Graph Convolution&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Graph Conv configuration&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_configs</span><span class="p">,</span>
+                                             <span class="s2">&quot;Number of filter layers per GC layer&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">nmb_filter_dlayers</span><span class="p">,</span>
+                                             <span class="s2">&quot;Activation function&quot;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span><span class="p">)}</span>
+        <span class="n">GraphConv_dict</span><span class="p">[</span><span class="s2">&quot;Node property&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node_properties</span><span class="o">.</span><span class="n">meta</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">GraphConv_dict</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

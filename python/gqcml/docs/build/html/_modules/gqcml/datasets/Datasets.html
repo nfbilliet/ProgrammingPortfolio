@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.datasets.Datasets &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../../../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gqcml.datasets.Datasets</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gqcml.datasets.Datasets</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">gqcml.data</span> <span class="kn">import</span> <span class="n">Data</span>
+<span class="kn">from</span> <span class="nn">h5py</span> <span class="kn">import</span> <span class="n">File</span> <span class="k">as</span> <span class="n">f</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<div class="viewcode-block" id="bin_values"><a class="viewcode-back" href="../../../modules/gqcml.datasets.html#gqcml.datasets.Datasets.bin_values">[docs]</a><span class="k">def</span> <span class="nf">bin_values</span><span class="p">(</span><span class="n">target_values</span><span class="p">,</span> <span class="n">num_bins</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function to partition a continuous target variable into discrete bins. This function is intended</span>
+<span class="sd">    to work together with the train_test_split functionality from sklearn.model_selection to partition the</span>
+<span class="sd">    dataset into representative training, validation and test data by ensuring that target values are equally </span>
+<span class="sd">    represented</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">        :target_values (np.array): A 2D numpy array containing the continuous target values of the dataset.</span>
+<span class="sd">                                     Each row represents the target value of a datapoint</span>
+<span class="sd">        :num_bins (int): An integer that determines the number of output classes that the function returns</span>
+<span class="sd">    Returns</span>
+<span class="sd">        :binned_values (np.array): A 2D array where the values of the input array have been classified into</span>
+<span class="sd">                                      discrete bins determined by the minimum and maximum of the input array.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">min_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">target_values</span><span class="p">)</span>
+    <span class="n">max_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">target_values</span><span class="p">)</span>
+    <span class="c1">#A small perturbation is added to the boundary values to ensure that all bins contain more than 1 datapoint</span>
+    <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_value</span><span class="o">-</span><span class="p">(</span><span class="mf">0.001</span><span class="o">*</span><span class="n">min_value</span><span class="p">),</span><span class="n">max_value</span><span class="o">+</span><span class="p">(</span><span class="mf">0.001</span><span class="o">*</span><span class="n">max_value</span><span class="p">),</span><span class="n">num_bins</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">target_values</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="split_dataset"><a class="viewcode-back" href="../../../modules/gqcml.datasets.html#gqcml.datasets.Datasets.split_dataset">[docs]</a><span class="k">def</span> <span class="nf">split_dataset</span><span class="p">(</span><span class="n">input_values</span><span class="p">,</span> <span class="n">target_values</span><span class="p">,</span> <span class="n">data_frac</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span>
+                  <span class="n">stratify</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function that splits a dataset into a training, validation and test set.</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">        :input_values (np.array): A 2D numpy array containing the input values of the dataset. Each row represents an input vector of the dataset.</span>
+<span class="sd">        :output_values (np.array): A 2D numpy array containing the continuous target values of the dataset.</span>
+<span class="sd">                                     Each row represents the target value of a datapoint.</span>
+<span class="sd">        :data_frac (float): The fraction of the dataset that should be reserved for the validation and test set. </span>
+<span class="sd">                              This fraction will be split in half for both these sets.</span>
+<span class="sd">        :seed (int): The random seed used to determine the split of the dataset.</span>
+<span class="sd">        :stratify (opt,bool): Option to partition the dataset according to the distribution of the target values. This option</span>
+<span class="sd">                                       ensures that all the sets follow the same distribution in their target.</span>
+<span class="sd">        :num_bins (opt,int): An integer that determines the number of output classes</span>
+<span class="sd">        :shuffle (opt,bool): Option to shuffle the dataset before partitioning it into a training, validation and test set.</span>
+<span class="sd">    Returns</span>
+<span class="sd">        :inputs, outputs (tuple): The function returns a tuple of the split dataset in the order of input data followed by output data.</span>
+<span class="sd">                                     The order in which this happens is training, validation and test set</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">stratify</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">binned_target</span> <span class="o">=</span> <span class="n">bin_values</span><span class="p">(</span><span class="n">target_values</span><span class="p">,</span> <span class="n">num_bins</span><span class="p">)</span>
+        <span class="n">train_input</span><span class="p">,</span> <span class="n">valtest_input</span><span class="p">,</span> <span class="n">train_output</span><span class="p">,</span> <span class="n">valtest_output</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">input_values</span><span class="p">,</span> <span class="n">target_values</span><span class="p">,</span>
+                                                                                    <span class="n">test_size</span><span class="o">=</span><span class="n">data_frac</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+                                                                                    <span class="n">stratify</span><span class="o">=</span><span class="n">binned_target</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">)</span>
+        <span class="n">binned_valtest</span> <span class="o">=</span> <span class="n">bin_values</span><span class="p">(</span><span class="n">valtest_output</span><span class="p">,</span> <span class="n">num_bins</span><span class="p">)</span>
+        <span class="n">val_input</span><span class="p">,</span> <span class="n">test_input</span><span class="p">,</span> <span class="n">val_output</span><span class="p">,</span> <span class="n">test_output</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">valtest_input</span><span class="p">,</span> <span class="n">valtest_output</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                                                                          <span class="n">stratify</span><span class="o">=</span><span class="n">binned_valtest</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+                                                                          <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">train_input</span><span class="p">,</span> <span class="n">val_input</span><span class="p">,</span> <span class="n">test_input</span><span class="p">,</span> <span class="n">train_output</span><span class="p">,</span> <span class="n">val_output</span><span class="p">,</span> <span class="n">test_output</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">train_input</span><span class="p">,</span> <span class="n">valtest_input</span><span class="p">,</span> <span class="n">train_output</span><span class="p">,</span> <span class="n">valtest_output</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">input_values</span><span class="p">,</span> <span class="n">target_values</span><span class="p">,</span>
+                                                                                    <span class="n">test_size</span><span class="o">=</span><span class="n">data_frac</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+                                                                                    <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">)</span>
+        <span class="n">val_input</span><span class="p">,</span> <span class="n">test_input</span><span class="p">,</span> <span class="n">val_output</span><span class="p">,</span> <span class="n">test_output</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">valtest_input</span><span class="p">,</span> <span class="n">valtest_output</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                                                                          <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">train_input</span><span class="p">,</span> <span class="n">val_input</span><span class="p">,</span> <span class="n">test_input</span><span class="p">,</span> <span class="n">train_output</span><span class="p">,</span> <span class="n">val_output</span><span class="p">,</span> <span class="n">test_output</span>    </div>
+
+
+<div class="viewcode-block" id="trius_to_inputs"><a class="viewcode-back" href="../../../modules/gqcml.datasets.html#gqcml.datasets.Datasets.trius_to_inputs">[docs]</a><span class="k">def</span> <span class="nf">trius_to_inputs</span><span class="p">(</span><span class="n">trius</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">,</span> <span class="n">am_args</span><span class="p">,</span>
+                    <span class="n">preprocessor_nf_method</span><span class="p">,</span> <span class="n">nf_args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function that interacts with the preprocessor class defined in the Data section of gqcml.</span>
+<span class="sd">    The function takes as stack of upper triangle values and converts them to their matrix representation.</span>
+<span class="sd">    Following the conversion to matrices we utilize methods defined in the preprocessor class to</span>
+<span class="sd">    convert the matrices to a suitable input for graph neural networks. The different methods that are</span>
+<span class="sd">    defined are </span>
+
+<span class="sd">        1) (categorical) degree node feature</span>
+<span class="sd">        2) weight node feature</span>
+<span class="sd">        3) weighted categorical degree</span>
+<span class="sd">        4) weighted categorical pair degree </span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">        :trius (np.array): A numpy array containing the trius of the graphs that are to be processed. This</span>
+<span class="sd">                             array has the dimension (K x M) where K is the number of graphs contained in the </span>
+<span class="sd">                             dataset and M=N(N-1)/2 with N the number of vertices in the graph</span>
+<span class="sd">        :preprocessor_am_method (gqcml.data.Data): A function from the Preprocessor class that processes</span>
+<span class="sd">                                                     the matrices to the adjacency matrices</span>
+<span class="sd">        :am_args (list): The list of function arguments (excluding the input matrix) for the am_method.</span>
+<span class="sd">                           When no arguments need to specified the input should be an empty list</span>
+<span class="sd">        :preprocessor_nf_method (gqcml.data.Data.Preprocessor): A function from the Preprocessor class that</span>
+<span class="sd">                                                                  processes the matrices into the desired node</span>
+<span class="sd">                                                                  feature class</span>
+<span class="sd">        :nf_args (list): The list of function arguments (excluding the input matrix) for the nf_method.</span>
+<span class="sd">                           When no arguments need to specified the input should be an empty list</span>
+<span class="sd">        :args (list): The arguments for the preprocessor_method excluding the matrix to be processed.</span>
+<span class="sd">    Returns</span>
+<span class="sd">        :node_features, adjacency_matrices: Returns the processed node features and the adjacency matrices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">matrices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">preprocessor</span><span class="o">.</span><span class="n">triu_to_matrix</span><span class="p">(</span><span class="n">triu</span><span class="p">)</span> <span class="k">for</span> <span class="n">triu</span> <span class="ow">in</span> <span class="n">trius</span><span class="p">])</span>
+    <span class="n">node_features</span><span class="p">,</span> <span class="n">adjacency_matrices</span>  <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">matrix</span> <span class="ow">in</span> <span class="n">matrices</span><span class="p">:</span>
+        <span class="n">am</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">adjacency_matrix</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="o">*</span><span class="n">am_args</span><span class="p">)</span>
+        <span class="n">nf</span> <span class="o">=</span> <span class="n">preprocessor_nf_method</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="o">*</span><span class="n">nf_args</span><span class="p">)</span>
+        <span class="n">node_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nf</span><span class="p">)</span>
+        <span class="n">adjacency_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">am</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">node_features</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">adjacency_matrices</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="DataLoader_constructor"><a class="viewcode-back" href="../../../modules/gqcml.datasets.html#gqcml.datasets.Datasets.DataLoader_constructor">[docs]</a><span class="k">def</span> <span class="nf">DataLoader_constructor</span><span class="p">(</span><span class="n">input_tensors</span><span class="p">,</span> <span class="n">output_tensors</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                           <span class="n">pin_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function that takes in a set of input tensors and a set of output tensor and </span>
+<span class="sd">    constructs a data loader that can be used in the optimization of network.</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">        :input_tensors (list of torch.Tensor): A list of input tensors</span>
+<span class="sd">        :output_tensors (torch.Tensor): A tensor that contains the corresponding output tensors</span>
+<span class="sd">        :batch_size (int): An integer that determines the number of tensors in each batch </span>
+<span class="sd">        :shuffle (opt, bool): A boolean that enables the option to shuffle the data during batch iteration</span>
+<span class="sd">        :pin_memory (opt, bool): A boolean that enables the option to pin memory in the GPUs utilized during training.</span>
+<span class="sd">                                   This allows for faster data transfer</span>
+<span class="sd">        :num_workers (opt, int): An integer that controls how many subprocesses to use for data loading. </span>
+<span class="sd">                                   0 means that the data will be loaded in the main process</span>
+<span class="sd">    Returns</span>
+<span class="sd">        :loader (torch.data.DataLoader): A DataLoader object that returns batch objects  </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">input_tensors</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="n">input_tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span><span class="o">.</span><span class="n">double</span><span class="p">()</span> <span class="k">for</span> <span class="n">stack</span> <span class="ow">in</span> <span class="n">input_tensors</span><span class="p">]</span>
+        <span class="n">output_tensors</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">output_tensors</span><span class="p">)</span><span class="o">.</span><span class="n">double</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TensorDataset</span><span class="p">(</span><span class="o">*</span><span class="n">input_tensors</span><span class="p">,</span> <span class="n">output_tensors</span><span class="p">)</span>
+        <span class="n">loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span>
+                                             <span class="n">pin_memory</span><span class="o">=</span><span class="n">pin_memory</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loader</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">input_tensors</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">input_tensors</span><span class="p">)</span><span class="o">.</span><span class="n">double</span><span class="p">()</span>
+        <span class="n">output_tensors</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">output_tensors</span><span class="p">)</span><span class="o">.</span><span class="n">double</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TensorDataset</span><span class="p">(</span><span class="n">input_tensors</span><span class="p">,</span> <span class="n">output_tensors</span><span class="p">)</span>
+        <span class="n">loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span>
+                                             <span class="n">pin_memory</span><span class="o">=</span><span class="n">pin_memory</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loader</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

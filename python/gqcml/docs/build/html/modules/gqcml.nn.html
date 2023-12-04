@@ -1,0 +1,689 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.nn package &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="gqcml.torchgeom_interface package" href="gqcml.torchgeom_interface.html" />
+    <link rel="prev" title="gqcml.datasets package" href="gqcml.datasets.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">gqcml.nn package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.nn.blocks">gqcml.nn.blocks module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.nn.layers">gqcml.nn.layers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.nn.models">gqcml.nn.models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.nn.models_test">gqcml.nn.models_test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.nn">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>gqcml.nn package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/gqcml.nn.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gqcml-nn-package">
+<h1>gqcml.nn package<a class="headerlink" href="#gqcml-nn-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-gqcml.nn.blocks">
+<span id="gqcml-nn-blocks-module"></span><h2>gqcml.nn.blocks module<a class="headerlink" href="#module-gqcml.nn.blocks" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="gqcml.nn.blocks.GraphConv_Block">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.nn.blocks.</span></code><code class="sig-name descname"><span class="pre">GraphConv_Block</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmb_GC_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmb_filter_dlayers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation_function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/blocks.html#GraphConv_Block"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.blocks.GraphConv_Block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>A sequential block of GraphConv operators that can be used a building module of a graph convolutional model.</p>
+<dl class="simple">
+<dt>Attributes</dt><dd><dl class="field-list simple">
+<dt class="field-odd">node_input_dim (int)</dt>
+<dd class="field-odd"><p>The number of features that are associated with each node in the graph G</p>
+</dd>
+<dt class="field-even">nmb_GraphConv_layers (int)</dt>
+<dd class="field-even"><p>The number of GraphConv layers that need to be present in the block</p>
+</dd>
+<dt class="field-odd">nmb_filter_dlayers (int)</dt>
+<dd class="field-odd"><p>The number of non-linear transformations that are performed in each graph convolution
+after aggregation of the neighbourhood features. The dense layers standardly are constructed
+to output as many amount of features that go into them</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="gqcml.nn.blocks.GraphConv_Block.forward">
+<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_feat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adj_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/blocks.html#GraphConv_Block.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.blocks.GraphConv_Block.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forward propagation function that produces an output</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">node_feat (torch.Tensor)</dt>
+<dd class="field-odd"><p>The initial node feature tensors that are associated with a batch of graphs. This
+tensor should have the dimensions (B x N x F) where B is the batch size, N the
+number of nodes present in the graphs and F the number of features associated
+with each node present in the graph</p>
+</dd>
+<dt class="field-even">adj_matrix (torch.Tensor)</dt>
+<dd class="field-even"><p>The weighted adjacency tensors that are associated with a batch of graphs. This
+tensor should have the dimensions (B x N x N) where B is the batch size and N
+the number of nodes present in the graph</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">transf_node_feat (torch.Tensor)</dt>
+<dd class="field-odd"><p>The transformed node features that are obtained by consecutively performing
+the graph convolutional operator. This tensor has the dimensions (B x N x F)
+where B is the batch size, N the number of nodes present in the graph and
+F is the number of features associated with each node</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.nn.layers">
+<span id="gqcml-nn-layers-module"></span><h2>gqcml.nn.layers module<a class="headerlink" href="#module-gqcml.nn.layers" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="gqcml.nn.layers.GaussianEmbedding">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.nn.layers.</span></code><code class="sig-name descname"><span class="pre">GaussianEmbedding</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lower</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_gaussians</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emb_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emb_bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/layers.html#GaussianEmbedding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.layers.GaussianEmbedding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>A function that combines the GaussianExpansion layer with the concept of embedding.
+Should the initial features be described by a single continuous variable the problem
+becomes that learning an embedding for this becomes difficult due to the mathematical
+construct of embedding where</p>
+<div class="math notranslate nohighlight">
+\[E(\nu_i) = Z\phi(\nu_i)\]</div>
+<p>Where Z is a learnable set of weights. In the case of a single node feature v_i
+the dimension of this Z becomes a vector and thus does not contain many learnable parameters.
+When we use the Gaussian expansion layer we convert this continuous variable to “quasi” binned variable
+where our bins consist of the different gaussians within the layer and the layer measures “overlap” with the gaussians.
+Using this expanded representation we provide more freedom to the Z matrix in our embedding due to the increased dimensionality.</p>
+<dl class="simple">
+<dt>Attributes</dt><dd><dl class="field-list simple">
+<dt class="field-odd">lower (float)</dt>
+<dd class="field-odd"><p>A float that bounds the linear space from which the means are generated.
+The space spans the interval [lower, upper]</p>
+</dd>
+<dt class="field-even">upper (float)</dt>
+<dd class="field-even"><p>A float that bounds the linear space from which the means are generated.
+The space spans the interval [lower, upper]</p>
+</dd>
+<dt class="field-odd">variance (float)</dt>
+<dd class="field-odd"><p>A float that controls the width of gaussians that we construct.</p>
+</dd>
+<dt class="field-even">num_gaussians (int)</dt>
+<dd class="field-even"><p>The number of gaussian functions that we place within the linear space.</p>
+</dd>
+<dt class="field-odd">emb_dim (int)</dt>
+<dd class="field-odd"><p>The dimension of the embedded node feature.</p>
+</dd>
+<dt class="field-even">emb_bias (opt,bool)</dt>
+<dd class="field-even"><p>A boolean that controls the addition of a learnable bias for the embedding</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="gqcml.nn.layers.GaussianEmbedding.forward">
+<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/layers.html#GaussianEmbedding.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.layers.GaussianEmbedding.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that calls the forward propagation</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">inp (torch.Tensor</dt>
+<dd class="field-odd"><p>A (B x N x 1) tensor, where B is the batch size and N is the number of nodes,
+that should be expaned in a Gaussian basis</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">embedded tensor (torch.Tensor)</dt>
+<dd class="field-odd"><p>A (B x N x E) tensor where E is the embedding dimension</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="gqcml.nn.layers.GaussianExpansion">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.nn.layers.</span></code><code class="sig-name descname"><span class="pre">GaussianExpansion</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lower</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_gaussians</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/layers.html#GaussianExpansion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.layers.GaussianExpansion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>A layer that takes an input tensor and expands it into a gaussian basis.
+The layer takes a tensor consisting of single descriptors and bins this descriptor.
+The descriptor is fed to a function that computes the output value of a series of gaussians
+that are equidistantly spaced using a linear space of means and a single variance parameter.
+The output of this function thus maps a scalar value to a vector with the dimension equal to the
+number of gaussians that we have chosen to span the linear space of means.</p>
+<div class="math notranslate nohighlight">
+\[\phi(\nu_i)=\nu_i \rightarrow \vec{\nu_i}: \mathbb{R} \mapsto \mathbb{R}^N\]</div>
+<div class="math notranslate nohighlight">
+\[\phi(\nu_i)=\begin{bmatrix} e^{\frac{\nu_i-\mu_1}{2\sigma^2}} &amp; e^{\frac{\nu_i-\mu_2}{2\sigma^2}} &amp; \dots &amp; e^{\frac{\nu_i-\mu_N}{2\sigma^2}} \end{bmatrix}\]</div>
+<dl class="simple">
+<dt>Attributes</dt><dd><dl class="field-list simple">
+<dt class="field-odd">lower (float)</dt>
+<dd class="field-odd"><p>A float that bounds the linear space from which the means are generated.
+The space spans the interval [lower, upper]</p>
+</dd>
+<dt class="field-even">upper (float)</dt>
+<dd class="field-even"><p>A float that bounds the linear space from which the means are generated.
+The space spans the interval [lower, upper]</p>
+</dd>
+<dt class="field-odd">num_gaussians (int)</dt>
+<dd class="field-odd"><p>The number of gaussian functions that we place within the linear space.</p>
+</dd>
+<dt class="field-even">variance (opt, float)</dt>
+<dd class="field-even"><p>Standardly this is not defined. When this optional parameter is not
+defined we compute the variance so that the FWHM of neighbouring
+overlaps. If a float is given the variance as defined will be used.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="gqcml.nn.layers.GaussianExpansion.forward">
+<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/layers.html#GaussianExpansion.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.layers.GaussianExpansion.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forward phase of the layer</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">inp (torch.Tensor</dt>
+<dd class="field-odd"><p>A (B x N x 1) tensor, where B is the batch size and N is the number of nodes,
+that should be expaned in a Gaussian basis</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">expanded tensor (torch.Tensor)</dt>
+<dd class="field-odd"><p>A (B x N x M) tensor where M is the number of Gaussians</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.nn.layers.GaussianExpansion.meta">
+<code class="sig-name descname"><span class="pre">meta</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/layers.html#GaussianExpansion.meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.layers.GaussianExpansion.meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that extracts the meta data from the layer</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="gqcml.nn.layers.GraphConv">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.nn.layers.</span></code><code class="sig-name descname"><span class="pre">GraphConv</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_output_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation_function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/layers.html#GraphConv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.layers.GraphConv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>The standard graph convolution operator defined in the paper [Semi-Supervised Classification with Graph Convolutional
+Networks](<a class="reference external" href="https://arxiv.org/abs/1609.02907">https://arxiv.org/abs/1609.02907</a>).</p>
+<div class="math notranslate nohighlight">
+\[n_{i+1} = h\left(An_{i}.W_{i+1}\right)\]</div>
+<p>Where the current node features are aggregated according to the adjacency matrix A and subsequently weighted by a (set of)
+weight matrix/matrices. We include the option for a  residual connection by adding the transformed node features to the current
+state</p>
+<dl class="simple">
+<dt>Attributes</dt><dd><dl class="field-list simple">
+<dt class="field-odd">node_input_dim (int)</dt>
+<dd class="field-odd"><p>The number of features present on the nodes of the graph G when entering the layer</p>
+</dd>
+<dt class="field-even">node_output_dim (int)</dt>
+<dd class="field-even"><p>The number of features present in the layer output</p>
+</dd>
+<dt class="field-odd">activation_function (torch.nn)</dt>
+<dd class="field-odd"><p>The activation function to be used for the filter layer(s) after message construction</p>
+</dd>
+<dt class="field-even">bias (opt, bool)</dt>
+<dd class="field-even"><p>A boolean that enables or disables the bias term in the filter application. In the standard settings
+this value is True</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="gqcml.nn.layers.GraphConv.forward">
+<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_feat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adj_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/layers.html#GraphConv.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.layers.GraphConv.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that calls the forward pass of the layer</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">node_feat (torch.Tensor)</dt>
+<dd class="field-odd"><p>The current node features, this tensor should have the dimensions (B x N x F) where
+B is the batch size, N is the number of nodes and F is the number of features</p>
+</dd>
+<dt class="field-even">adj_matrix (torch.Tensor)</dt>
+<dd class="field-even"><p>The adjacency matrices by which the node features need to be aggregated, this tensor
+should have the dimensions (B x N x N) where B is the batch size and N the number of nodes</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">transf_node_emb (torch.Tensor)</dt>
+<dd class="field-odd"><p>The updated node features with the aggregated features according to the adjacency
+matrix. This tensor has the same dimensions as</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.nn.layers.GraphConv.reset_parameters">
+<code class="sig-name descname"><span class="pre">reset_parameters</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/layers.html#GraphConv.reset_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.layers.GraphConv.reset_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that initializes the weights and biases of the learnable layer</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="gqcml.nn.layers.ShiftedSoftplus">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.nn.layers.</span></code><code class="sig-name descname"><span class="pre">ShiftedSoftplus</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/layers.html#ShiftedSoftplus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.layers.ShiftedSoftplus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>The shifted softplus activation function</p>
+<div class="math notranslate nohighlight">
+\[ln\left(\beta+\beta e^{x}\right)\]</div>
+<dl class="simple">
+<dt>Attributes</dt><dd><dl class="field-list simple">
+<dt class="field-odd">beta (opt,float)</dt>
+<dd class="field-odd"><p>A shifting factor with standard setting 2</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="gqcml.nn.layers.ShiftedSoftplus.forward">
+<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/layers.html#ShiftedSoftplus.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.layers.ShiftedSoftplus.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.nn.models">
+<span id="gqcml-nn-models-module"></span><h2>gqcml.nn.models module<a class="headerlink" href="#module-gqcml.nn.models" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="gqcml.nn.models.DNN">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.nn.models.</span></code><code class="sig-name descname"><span class="pre">DNN</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_configs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation_function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/models.html#DNN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.models.DNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>A standard dense network consisting of multiple hidden layers</p>
+<dl class="simple">
+<dt>Attributes</dt><dd><dl class="field-list simple">
+<dt class="field-odd">layer_dims (list)</dt>
+<dd class="field-odd"><p>A list containing the number of nodes in each layer for the network.
+The first entry in the list corresponds to the number of features in the input tensor
+and the last entry in the list corresponds to the number of features in the output tensor</p>
+</dd>
+<dt class="field-even">activation_function (torch.nn)</dt>
+<dd class="field-even"><p>The activation used in the network after each hidden layer</p>
+</dd>
+<dt class="field-odd">bias (opt, bool)</dt>
+<dd class="field-odd"><p>A boolean indication the option to include a bias term in the dense layers</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="gqcml.nn.models.DNN.forward">
+<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_tensor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/models.html#DNN.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.models.DNN.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.nn.models.DNN.meta">
+<code class="sig-name descname"><span class="pre">meta</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/models.html#DNN.meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.models.DNN.meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the input arguments of the class and formats them in a dictionary format which can be used in
+creating an overarching meta file</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="gqcml.nn.models.GraphConv_model">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.nn.models.</span></code><code class="sig-name descname"><span class="pre">GraphConv_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_embedding_nn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GC_dimensions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation_function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_prop_nn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/models.html#GraphConv_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.models.GraphConv_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>A standard graph convolution model constructor</p>
+<dl class="simple">
+<dt>Attributes</dt><dd><dl class="field-list simple">
+<dt class="field-odd">node_embedding_nn (torch.nn.Module)</dt>
+<dd class="field-odd"><p>A torch.nn.Module that processes the initial node features. This torch module
+takes a tensor with dimensions (B x N x f)  and should return a tensor with
+dimensions (B x N x F) where B is the batch size, N is the number of nodes in
+the graphs, f is the initial number of node features and F is the number of node features
+associated with each node in the graph. F should be equal to the node_input_dim
+parameter of the GraphConv layers.</p>
+</dd>
+<dt class="field-even">GC_dimensions (list)</dt>
+<dd class="field-even"><p>A list of integers describing the consecutive node embedding dimensions that go into the graph
+convolution layers and are subsequently returned.</p>
+</dd>
+<dt class="field-odd">activation_function (torch.nn)</dt>
+<dd class="field-odd"><p>The activation function used non-linear transformation of the aggregated neighbourhood
+information.</p>
+</dd>
+<dt class="field-even">node_prop_nn (torch.nn.Module)</dt>
+<dd class="field-even"><p>A torch.nn.Module that processes the transformed node features after the application
+of the graph convolution operators. The network takes the node features with dimension
+(B x N x F) where B is the batch size, N is the number of nodes in the graph and F
+the number of features associated with each node in the graphs. The output of the network
+is a tensor that has the dimensions (B x N x 1) where the resulting features are
+mapped to a single node property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="gqcml.nn.models.GraphConv_model.forward">
+<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_feat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adj_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/models.html#GraphConv_model.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.models.GraphConv_model.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forward propagation phase of the graph conv model</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">node_feat (torch.Tensor)</dt>
+<dd class="field-odd"><p>The initial node feature tensor with the dimensions (B x N x f) where B is the batch
+size, N is the number of nodes in each graph and f is the number of node features
+associated with each node in the graphs.</p>
+</dd>
+<dt class="field-even">adj_matrix (torch.Tensor)</dt>
+<dd class="field-even"><p>The weighted adjacency tensor with the dimensions (B x N x N) where B is the batch
+size and N is the number of nodes in each graph.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>Returns
+:output (torch.Tensor): The graph property tensor with dimensions (B x 1) where B is the batch</p>
+<blockquote>
+<div><p>size. The graph property is computed as the sum of the node properties obtained through the
+site_prop_nn</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.nn.models.GraphConv_model.meta">
+<code class="sig-name descname"><span class="pre">meta</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/models.html#GraphConv_model.meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.models.GraphConv_model.meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.nn.models.GraphConv_model.site_properties">
+<code class="sig-name descname"><span class="pre">site_properties</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_feat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adj_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/models.html#GraphConv_model.site_properties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.models.GraphConv_model.site_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Site property function utilized to return the site properties, i.e. the output of the layer before the final pooling step</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">node_feat (torch.Tensor)</dt>
+<dd class="field-odd"><p>The initial node feature tensor with the dimensions (B x N x f) where B is the batch
+size, N is the number of nodes in each graph and f is the number of node features
+associated with each node in the graphs.</p>
+</dd>
+<dt class="field-even">adj_matrix (torch.Tensor)</dt>
+<dd class="field-even"><p>The weighted adjacency tensor with the dimensions (B x N x N) where B is the batch
+size and N is the number of nodes in each graph.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>Returns
+:node properties(torch.Tensor): The site properties tensor with dimensions (B x N x1) where B is the batch</p>
+<blockquote>
+<div><p>size and N is the number of nodes in each graph.</p>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.nn.models_test">
+<span id="gqcml-nn-models-test-module"></span><h2>gqcml.nn.models_test module<a class="headerlink" href="#module-gqcml.nn.models_test" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="gqcml.nn.models_test.GCNConv_gqcml">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.nn.models_test.</span></code><code class="sig-name descname"><span class="pre">GCNConv_gqcml</span></code><a class="reference internal" href="../_modules/gqcml/nn/models_test.html#GCNConv_gqcml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.models_test.GCNConv_gqcml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt id="gqcml.nn.models_test.GCNConv_gqcml.forward">
+<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adj_matrices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/models_test.html#GCNConv_gqcml.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.models_test.GCNConv_gqcml.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="gqcml.nn.models_test.GCNConv_tg">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.nn.models_test.</span></code><code class="sig-name descname"><span class="pre">GCNConv_tg</span></code><a class="reference internal" href="../_modules/gqcml/nn/models_test.html#GCNConv_tg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.models_test.GCNConv_tg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="py method">
+<dt id="gqcml.nn.models_test.GCNConv_tg.forward">
+<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/nn/models_test.html#GCNConv_tg.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.nn.models_test.GCNConv_tg.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.nn">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-gqcml.nn" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gqcml.torchgeom_interface.html" class="btn btn-neutral float-right" title="gqcml.torchgeom_interface package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gqcml.datasets.html" class="btn btn-neutral float-left" title="gqcml.datasets package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

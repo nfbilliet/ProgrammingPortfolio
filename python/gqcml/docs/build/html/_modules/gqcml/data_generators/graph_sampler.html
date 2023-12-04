@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.data_generators.graph_sampler &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../../../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gqcml.data_generators.graph_sampler</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gqcml.data_generators.graph_sampler</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">permutations</span><span class="p">,</span> <span class="n">combinations</span>
+
+<div class="viewcode-block" id="graph_sampler"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.graph_sampler.graph_sampler">[docs]</a><span class="k">class</span> <span class="nc">graph_sampler</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An object used in the generation of randomly sampled chemical structures</span>
+<span class="sd">    using the adjacency matrix as a representation of the molecular structure</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        :sites (int): An integer denoting the amount of sites present in the system(s) which will sampled  </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sites</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sites</span> <span class="o">=</span> <span class="n">sites</span>
+
+<div class="viewcode-block" id="graph_sampler.generate_diagonal_vector"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.graph_sampler.graph_sampler.generate_diagonal_vector">[docs]</a>    <span class="k">def</span> <span class="nf">generate_diagonal_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nmb_el_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A function that generates a set of vectors that specifies all possible combinations of the diagonal elements of the adjacency matrix. </span>
+<span class="sd">        </span>
+<span class="sd">        Arguments</span>
+<span class="sd">            :nmb_el_type (list): A list that contains the number of occurence of each unique element, </span>
+<span class="sd">                                   e.g. suppose we have a diagonal of length 4 with 2 unique elements in equal occurence then this would </span>
+<span class="sd">                                   correspond with [2,2]</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :List of lists: A set of vectors that contain all possible permutations of a vector that has the </span>
+<span class="sd">                            specified ratios of these elements. E.g. for 2 unique elements in a diagonal of length 4 (equal ratios)</span>
+<span class="sd">                            this would return [[1,1,2,2],[1,2,1,2], [2,1,1,2] </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">diagonals</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">nmb</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nmb_el_type</span><span class="p">):</span>
+            <span class="n">diagonals</span> <span class="o">+=</span> <span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">nmb</span>
+        <span class="c1">#Generate all permutations of the starting diagonal and filter out the redundant set using the set data type</span>
+        <span class="n">diagonals</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">permutations</span><span class="p">(</span><span class="n">diagonals</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">diagonal</span><span class="p">)</span> <span class="k">for</span> <span class="n">diagonal</span> <span class="ow">in</span> <span class="n">diagonals</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="graph_sampler.convert_triu_to_mat"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.graph_sampler.graph_sampler.convert_triu_to_mat">[docs]</a>    <span class="k">def</span> <span class="nf">convert_triu_to_mat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">triu_vector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts the upper triangle representation of a graph to the full matrix form</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :triu_vector (np.array): An upper triangle vector corresponding to the graph of interest</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :adjacency_matrix (np.array): The matrix form of the input triu</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="p">))</span>
+        <span class="n">adjacency_matrix</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">triu_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span><span class="o">=</span><span class="n">triu_vector</span>
+        <span class="n">adjacency_matrix</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">triu_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span><span class="o">=</span><span class="n">triu_vector</span>
+        <span class="k">return</span> <span class="n">adjacency_matrix</span></div>
+
+<div class="viewcode-block" id="graph_sampler.permutate_matrix"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.graph_sampler.graph_sampler.permutate_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">permutate_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="n">permutations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates all possible permutations of a matrix where the permutation changes the order of the rows</span>
+<span class="sd">        and columns in the same way</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :matrix (np.array): The matrix that is to be permutated</span>
+<span class="sd">            :permutations (list): A list of lists where each sublist contains the order of the rows and columns</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :permutated_matrices (list): A list of all the permutated matrices</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">permutated_matrices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">perm</span> <span class="ow">in</span> <span class="n">permutations</span><span class="p">:</span>
+            <span class="n">permutated_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">perm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">permutated_matrices</span></div>
+
+<div class="viewcode-block" id="graph_sampler.sample_homogeneous_matrix"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.graph_sampler.graph_sampler.sample_homogeneous_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">sample_homogeneous_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">triu_vector</span><span class="p">,</span> <span class="n">amount_samples</span><span class="p">,</span>
+                                  <span class="n">diagonal_interval</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mf">0.001</span><span class="p">],</span> <span class="n">off_diagonal_interval</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mf">0.001</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;        </span>
+<span class="sd">        A function that takes a upper triangle of a homogeneous systems, i.e. a graph consisting of a single</span>
+<span class="sd">        vertex type, and generates an amount of samples within the specified sampling ranges</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :triu_vector (np array): A upper triangle np array that describes the structure of the system</span>
+<span class="sd">                                     The array consists of 0&#39;s and 1&#39;s where the 1 signifies a weight.</span>
+<span class="sd">            :amount_samples (int): An integer that determines how many samples need to be generated</span>
+<span class="sd">            :diagonal_interval (opt, list): A list of floats that determines the lower and upper range </span>
+<span class="sd">                                            of the uniform random distribution used in the generation of the samples</span>
+<span class="sd">                                            for the diagonal elements of the adjacency matrix</span>
+<span class="sd">            :off_diagonal_interval (opt, list): A list of floats that determines the lower and upper range</span>
+<span class="sd">                                                of the uniform random distribution used in the generation of the samples</span>
+<span class="sd">                                                for the off-diagonal elements of the adjacency matrix</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :sampled_trius (list): A list of numpy arrays containing the upper triangle vector sampled randomly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">diagonal_distribution</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">diagonal_interval</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">diagonal_interval</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">amount_samples</span><span class="p">)</span>
+        <span class="n">off_diagonal_distribution</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">off_diagonal_interval</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">off_diagonal_interval</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">amount_samples</span><span class="p">)</span>
+        <span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_triu_to_mat</span><span class="p">(</span><span class="n">triu_vector</span><span class="p">)</span>
+        <span class="n">sampled_trius</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">diagonal_el</span><span class="p">,</span> <span class="n">off_diagonal_el</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">diagonal_distribution</span><span class="p">,</span> <span class="n">off_diagonal_distribution</span><span class="p">):</span>
+            <span class="n">sampled_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">adjacency_matrix</span><span class="p">)</span>
+            <span class="n">sampled_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sampled_matrix</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="n">off_diagonal_el</span><span class="p">,</span> <span class="n">sampled_matrix</span><span class="p">)</span>
+            <span class="n">sampled_matrix</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">diag_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="p">)]</span><span class="o">=</span><span class="n">diagonal_el</span>
+            <span class="n">sampled_trius</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sampled_matrix</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">triu_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="p">,</span><span class="mi">0</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">sampled_trius</span></div>
+
+<div class="viewcode-block" id="graph_sampler.sample_inhomogeneous_matrix"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.graph_sampler.graph_sampler.sample_inhomogeneous_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">sample_inhomogeneous_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diagonal_vector</span><span class="p">,</span> <span class="n">triu_vector</span><span class="p">,</span> <span class="n">amount_samples</span><span class="p">,</span>
+                      <span class="n">diagonal_interval</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mf">0.001</span><span class="p">],</span> <span class="n">off_diagonal_interval</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mf">0.001</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs a weighted adjacency matrix sampled uniformly based on the symbolic assignment of the elements</span>
+<span class="sd">            - The diagonal elements are assigned symbolic through integers. These integers will be replaced by random values</span>
+<span class="sd">            - Off diagonal elements are sampled based on the the diagonal indices</span>
+<span class="sd">        </span>
+<span class="sd">        This function will thus generate an adjacency matrix that has unique weights for every type of bond.</span>
+<span class="sd">        A type of bond is considered to be the edge between a pair of diagonal weihgts.</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :diagonal_vector (np array): A np array of integers that symbolic denotes the type of vertex.</span>
+<span class="sd">            :triu_vector (np array): A upper triangle np array that describes the structure of the system</span>
+<span class="sd">                                           The array consists of 0&#39;s and 1&#39;s where the 1 signifies a weight.</span>
+<span class="sd">            :amount_samples (int): An integer that determines how many samples need to be generated</span>
+<span class="sd">            :diagonal_interval (opt, list): A list of floats that determines the lower and upper range</span>
+<span class="sd">                                                  of the uniform random distribution used in the generation of the samples</span>
+<span class="sd">                                                  for the diagonal elements of the adjacency matrix</span>
+<span class="sd">            :off_diagonal_interval (opt, list): A list of floats that determines the lower and upper range</span>
+<span class="sd">                                                      of the uniform random distribution used in the generation of the samples</span>
+<span class="sd">                                                      for the off-diagonal elements of the adjacency matrix</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :sampled_trius (list): A list of numpy arrays containing the upper triangle vector sampled randomly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#We repeat the symbolic diagonal along the row axis</span>
+        <span class="n">row_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">diagonal_vector</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_triu_to_mat</span><span class="p">(</span><span class="n">triu_vector</span><span class="p">)</span>
+        <span class="c1">#Converts the row matrix into a sparse matrix based on the adjacency_matrix</span>
+        <span class="n">row_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">adjacency_matrix</span><span class="p">,</span> <span class="n">row_matrix</span><span class="p">)</span>
+        
+        <span class="n">number_distributions</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">diagonal_vector</span><span class="p">)</span>
+        <span class="n">sampled_adjacency_matrices</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">off_diagonal_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">off_diagonal_interval</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">off_diagonal_interval</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">number_distributions</span><span class="p">,</span> <span class="n">amount_samples</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">rand_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">amount_samples</span><span class="p">):</span>
+            <span class="n">sampled_row_matrix</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">row_matrix</span><span class="p">)</span>
+            <span class="k">for</span>	<span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_distributions</span><span class="p">):</span>
+                <span class="n">sampled_row_matrix</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sampled_row_matrix</span><span class="o">==</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">off_diagonal_samples</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">rand_idx</span><span class="p">],</span><span class="n">sampled_row_matrix</span><span class="p">)</span>
+            <span class="c1">#We average the sampled row matrix with its transposed form. When doing this we ensure that sites that describe the same type</span>
+            <span class="c1">#i.e those that have the same integer in the diagonal have the a different value than the coupling between two vertices with different</span>
+            <span class="c1">#integers.</span>
+            <span class="n">sampled_adjacency_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">sampled_row_matrix</span><span class="o">+</span><span class="n">sampled_row_matrix</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+
+        <span class="n">diagonal_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">diagonal_interval</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">diagonal_interval</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="n">number_distributions</span><span class="p">,</span> <span class="n">amount_samples</span><span class="p">))</span>
+        <span class="n">sampled_diagonals</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">rand_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">amount_samples</span><span class="p">):</span>
+            <span class="n">sampled_diagonal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">diagonal_vector</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_distributions</span><span class="p">):</span>
+                <span class="n">sampled_diagonal</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sampled_diagonal</span><span class="o">==</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">diagonal_samples</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">rand_idx</span><span class="p">],</span><span class="n">sampled_diagonal</span><span class="p">)</span> 
+            <span class="n">sampled_diagonals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sampled_diagonal</span><span class="p">)</span>
+
+        <span class="n">sampled_trius</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">diagonal</span><span class="p">,</span> <span class="n">adjacency</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sampled_diagonals</span><span class="p">,</span> <span class="n">sampled_adjacency_matrices</span><span class="p">):</span>
+            <span class="n">adjacency</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">diag_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="p">)]</span><span class="o">=</span><span class="n">diagonal</span>
+            <span class="n">sampled_trius</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">adjacency</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">triu_indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sites</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">sampled_trius</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

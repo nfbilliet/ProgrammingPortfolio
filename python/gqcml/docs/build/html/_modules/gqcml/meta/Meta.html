@@ -1,0 +1,417 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.meta.Meta &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../../../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gqcml.meta.Meta</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gqcml.meta.Meta</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">getpass</span>
+<span class="kn">import</span> <span class="nn">git</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">psutil</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch_geometric</span>
+<span class="kn">import</span> <span class="nn">torch_scatter</span>
+<span class="kn">import</span> <span class="nn">sklearn</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<div class="viewcode-block" id="get_script_information"><a class="viewcode-back" href="../../../modules/gqcml.meta.html#gqcml.meta.Meta.get_script_information">[docs]</a><span class="k">def</span> <span class="nf">get_script_information</span><span class="p">(</span><span class="n">submission_script</span><span class="p">,</span>
+                           <span class="n">meta_dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function used in the extraction of meta data from a submission script. This function</span>
+<span class="sd">    is built on the assumption that the SLURM job manager is being used to submit tasks on a</span>
+<span class="sd">    high performance computing infrastructure.</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">        :submission_script (str): The filepath to the submission script being used </span>
+<span class="sd">        :meta_dict (dictionary): The dictionary in which the meta data needs to be stored.</span>
+<span class="sd">    Returns</span>
+<span class="sd">        :None: The information is extracted from the script and appended to the meta dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">script_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">script_dict</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">getpass</span><span class="o">.</span><span class="n">getuser</span><span class="p">()</span>
+    <span class="n">script_dict</span><span class="p">[</span><span class="s2">&quot;Script name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">submission_script</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">submission_script</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">script</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">script</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;gpu&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">num_gpus</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">script_dict</span><span class="p">[</span><span class="s2">&quot;Number of GPUs&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">num_gpus</span>
+            <span class="k">elif</span> <span class="s2">&quot;cpus&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">num_cpus</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">script_dict</span><span class="p">[</span><span class="s2">&quot;Number of processors&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">num_cpus</span>
+            <span class="k">elif</span> <span class="s2">&quot;mem&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">mem</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">script_dict</span><span class="p">[</span><span class="s2">&quot;Memory&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">mem</span>
+            <span class="k">elif</span> <span class="s2">&quot;time&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">time</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">script_dict</span><span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">time</span>
+            <span class="k">elif</span> <span class="s2">&quot;.py&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">python_script</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">script_dict</span><span class="p">[</span><span class="s2">&quot;Python script&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">python_script</span>
+    <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Submission script&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">script_dict</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="get_git_information"><a class="viewcode-back" href="../../../modules/gqcml.meta.html#gqcml.meta.Meta.get_git_information">[docs]</a><span class="k">def</span> <span class="nf">get_git_information</span><span class="p">(</span><span class="n">library_directory</span><span class="p">,</span>
+                        <span class="n">meta_dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lookup the repository metadata and returns the current active branch and the git commit sha/hash. </span>
+<span class="sd">    The information is store</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">        :library_directory (str): The path to the parent directory of the library from which the </span>
+<span class="sd">                                    data needs to be extracted. The directory should end in the parent</span>
+<span class="sd">                                    directory name (no / at the end).</span>
+<span class="sd">        :meta_dict (dict): The dictionary in which the meta data needs to be stored. </span>
+<span class="sd">    Returns</span>
+<span class="sd">        :None: The information is extracted and appended to the meta dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">repo</span> <span class="o">=</span> <span class="n">git</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">library_directory</span><span class="p">)</span>
+    <span class="n">repo_name</span> <span class="o">=</span> <span class="n">library_directory</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">branch_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">active_branch</span><span class="p">)</span>
+    <span class="n">sha</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">hexsha</span><span class="p">)</span>
+    <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Git&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Repository name&#39;</span><span class="p">:</span><span class="n">repo_name</span><span class="p">,</span>
+                      <span class="s1">&#39;Branch name&#39;</span><span class="p">:</span><span class="n">branch_name</span><span class="p">,</span>
+                      <span class="s1">&#39;Git sha/hash&#39;</span><span class="p">:</span><span class="n">sha</span><span class="p">}</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+    
+<div class="viewcode-block" id="get_system_information"><a class="viewcode-back" href="../../../modules/gqcml.meta.html#gqcml.meta.Meta.get_system_information">[docs]</a><span class="k">def</span> <span class="nf">get_system_information</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function designed to look up system information and store it in a dictionary format</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">        :meta_dict (dict): The dictionary in which the meta data needs to be stored.</span>
+<span class="sd">    Returns</span>
+<span class="sd">        :None: The information about the system is extracted and appended to the meta dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;System&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Architecture&quot;</span><span class="p">:</span><span class="n">platform</span><span class="o">.</span><span class="n">architecture</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span>
+                         <span class="s2">&quot;Machine&quot;</span><span class="p">:</span><span class="n">platform</span><span class="o">.</span><span class="n">machine</span><span class="p">(),</span>
+                         <span class="s2">&quot;Node&quot;</span><span class="p">:</span><span class="n">platform</span><span class="o">.</span><span class="n">node</span><span class="p">(),</span>
+                         <span class="s2">&quot;Platform&quot;</span><span class="p">:</span><span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">(),</span>
+                         <span class="s2">&quot;Python compiler&quot;</span><span class="p">:</span><span class="n">platform</span><span class="o">.</span><span class="n">python_compiler</span><span class="p">()}</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="get_hardware_information"><a class="viewcode-back" href="../../../modules/gqcml.meta.html#gqcml.meta.Meta.get_hardware_information">[docs]</a><span class="k">def</span> <span class="nf">get_hardware_information</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function designed to look up hardware information and store it in a dictionary format</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">        :meta_dict (dict): The dictionary in which the meta data needs to be stored</span>
+<span class="sd">    Returns</span>
+<span class="sd">        :None: The information about the Hardware is extracted and appended to the meta dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processor_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="s2">&quot;lscpu&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">out</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Model name&quot;</span><span class="p">):</span>
+            <span class="n">processor_name</span><span class="o">=</span><span class="n">line</span>
+    <span class="c1">#Substitute multiple white spaces with a single with space</span>
+    <span class="n">processor_name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">processor_name</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+        <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Hardware&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;CPU&quot;</span><span class="p">:</span> <span class="n">processor_name</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:],</span>
+                               <span class="s2">&quot;GPU&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_name</span><span class="p">())}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Hardware&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;CPU&quot;</span><span class="p">:</span> <span class="n">processor_name</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:],</span>
+                               <span class="s2">&quot;GPU&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="get_software_information"><a class="viewcode-back" href="../../../modules/gqcml.meta.html#gqcml.meta.Meta.get_software_information">[docs]</a><span class="k">def</span> <span class="nf">get_software_information</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function designed to look up software information and store it in a dictionary format</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">        :param meta_dict (dict): The dictionary in which the meta data needs to be stored</span>
+<span class="sd">    Returns</span>
+<span class="sd">        :None: The information about the software is extracted and appended to the meta dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Software&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Python&quot;</span><span class="p">:</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">(),</span>
+                           <span class="s2">&quot;Sci-kit learn&quot;</span><span class="p">:</span><span class="n">sklearn</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
+                           <span class="s2">&quot;Numpy&quot;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+                           <span class="s2">&quot;Torch&quot;</span><span class="p">:</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
+                           <span class="s2">&quot;Torch Geometric&quot;</span><span class="p">:</span><span class="n">torch_geometric</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
+                           <span class="s2">&quot;Torch Scatter&quot;</span><span class="p">:</span><span class="n">torch_scatter</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
+                           <span class="s2">&quot;Torch Sparse&quot;</span><span class="p">:</span> <span class="n">torch_sparse</span><span class="o">.</span><span class="n">__version__</span><span class="p">}</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="get_timestamp"><a class="viewcode-back" href="../../../modules/gqcml.meta.html#gqcml.meta.Meta.get_timestamp">[docs]</a><span class="k">def</span> <span class="nf">get_timestamp</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function to retrieve the time stamp of the calculation</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">        :meta_dict (dict): The dictionary in which the meta data needs to be stored</span>
+<span class="sd">    Returns</span>
+<span class="sd">        :None: The information about the time of execution is extracted and appended to the meta dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Timestamp&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;year&quot;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span><span class="p">),</span>
+                            <span class="s2">&quot;month&quot;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">month</span><span class="p">),</span>
+                            <span class="s2">&quot;day&quot;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">day</span><span class="p">),</span>
+                            <span class="s2">&quot;time&quot;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">time</span><span class="p">())}</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="get_optimizer_information"><a class="viewcode-back" href="../../../modules/gqcml.meta.html#gqcml.meta.Meta.get_optimizer_information">[docs]</a><span class="k">def</span> <span class="nf">get_optimizer_information</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function to extract all the hyper parameters from the optimizer used during the training</span>
+<span class="sd">    </span>
+<span class="sd">    Arguments</span>
+<span class="sd">        :meta_dict (dict): The dictionary in which the meta data needs to be stored</span>
+<span class="sd">        :optizimer (torch.optim): Optimizer object from pytorch</span>
+<span class="sd">    Returns</span>
+<span class="sd">        :None: The information about the optimizer is extracted and appended to the meta dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">optim_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">optim_parameters_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">param_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()][</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">optim_parameters_values</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">optim_parameters_keys</span><span class="p">:</span>
+        <span class="n">optim_parameters_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">optimizer</span><span class="o">.</span><span class="n">param_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+    <span class="n">optim_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Optimizer name&quot;</span><span class="p">]</span><span class="o">+</span><span class="n">optim_parameters_keys</span>
+    <span class="n">optim_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">optim_name</span><span class="p">]</span><span class="o">+</span><span class="n">optim_parameters_values</span>
+    <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Optimizer&quot;</span><span class="p">]</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">optim_keys</span><span class="p">,</span><span class="n">optim_vals</span><span class="p">))</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="make_meta"><a class="viewcode-back" href="../../../modules/gqcml.meta.html#gqcml.meta.Meta.make_meta">[docs]</a><span class="k">def</span> <span class="nf">make_meta</span><span class="p">(</span><span class="n">meta_dir</span><span class="p">,</span>
+              <span class="n">modelname</span><span class="p">,</span>
+              <span class="n">model</span><span class="p">,</span>
+              <span class="n">optimizer</span><span class="p">,</span>
+              <span class="n">submission_script</span><span class="p">,</span>
+              <span class="n">library_directory</span><span class="p">,</span>
+              <span class="n">dataset</span><span class="p">,</span>
+              <span class="n">random_seed</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function that generates a JSON file that contains all the necessary meta data of the calculation that is</span>
+<span class="sd">    being performed. The JSON file stores</span>
+<span class="sd">    </span>
+<span class="sd">        - Script information</span>
+<span class="sd">        - Git information</span>
+<span class="sd">        - Model information</span>
+<span class="sd">        - System information</span>
+<span class="sd">        - Hardware information</span>
+<span class="sd">        - Software information</span>
+<span class="sd">        - Optimizer data</span>
+<span class="sd">        - Dataset</span>
+<span class="sd">        - Timestamp</span>
+<span class="sd">        - Random seed</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">        :meta_dir (str): A filepath to the target directory where the meta data should be stored.</span>
+<span class="sd">        :modelname (str):</span>
+<span class="sd">        :model (gqcml.nn.models/gqcml.torchgeom_interface.models): A torch object that represents the model.</span>
+<span class="sd">                                                                         This model is required to have the meta function</span>
+<span class="sd">        :optimizer (torch.optim): The optimizer that is used in the training of the model</span>
+<span class="sd">        :submission_script (str): The filepath to the submission script being used</span>
+<span class="sd">        :library_directory (str): The path to the parent directory of the library from which the</span>
+<span class="sd">                                        data needs to be extracted. The directory should end in the parent</span>
+<span class="sd">                                        directory name (no / at the end).</span>
+<span class="sd">        :dataset (str/list): A string containing the filepath to the dataset is being in the model. If multiple </span>
+<span class="sd">                                   datasets are used then a filepath to each of these need to be provided in a list</span>
+<span class="sd">    Returns</span>
+<span class="sd">        :None: The meta dict is stored in a json file and stored in the meta target dir</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">meta_dict</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">get_script_information</span><span class="p">(</span><span class="n">submission_script</span><span class="p">,</span> <span class="n">meta_dict</span><span class="p">)</span>
+    <span class="n">get_system_information</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">)</span>
+    <span class="n">get_hardware_information</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">)</span>
+    <span class="n">get_software_information</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">)</span>
+    <span class="n">get_git_information</span><span class="p">(</span><span class="n">library_directory</span><span class="p">,</span> <span class="n">meta_dict</span><span class="p">)</span>
+    <span class="n">get_timestamp</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">)</span>
+    <span class="n">get_optimizer_information</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">)</span>
+    <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">meta</span><span class="p">()</span>
+    <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Dataset&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">dataset</span>
+    <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Random seed&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">random_seed</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">)</span>
+    <span class="n">metafile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">meta_dir</span><span class="p">,</span> <span class="n">modelname</span><span class="o">+</span><span class="s2">&quot;_meta.json&quot;</span><span class="p">)</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">meta_dict</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">metafile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">))</span></div>
+    
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

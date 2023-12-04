@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.datasets package &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="gqcml.nn package" href="gqcml.nn.html" />
+    <link rel="prev" title="gqcml.data package" href="gqcml.data.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">gqcml.datasets package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.datasets.Datasets">gqcml.datasets.Datasets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.datasets">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>gqcml.datasets package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/gqcml.datasets.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gqcml-datasets-package">
+<h1>gqcml.datasets package<a class="headerlink" href="#gqcml-datasets-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-gqcml.datasets.Datasets">
+<span id="gqcml-datasets-datasets-module"></span><h2>gqcml.datasets.Datasets module<a class="headerlink" href="#module-gqcml.datasets.Datasets" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="gqcml.datasets.Datasets.DataLoader_constructor">
+<code class="sig-prename descclassname"><span class="pre">gqcml.datasets.Datasets.</span></code><code class="sig-name descname"><span class="pre">DataLoader_constructor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_tensors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_tensors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pin_memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/datasets/Datasets.html#DataLoader_constructor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.datasets.Datasets.DataLoader_constructor" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that takes in a set of input tensors and a set of output tensor and
+constructs a data loader that can be used in the optimization of network.</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">input_tensors (list of torch.Tensor)</dt>
+<dd class="field-odd"><p>A list of input tensors</p>
+</dd>
+<dt class="field-even">output_tensors (torch.Tensor)</dt>
+<dd class="field-even"><p>A tensor that contains the corresponding output tensors</p>
+</dd>
+<dt class="field-odd">batch_size (int)</dt>
+<dd class="field-odd"><p>An integer that determines the number of tensors in each batch</p>
+</dd>
+<dt class="field-even">shuffle (opt, bool)</dt>
+<dd class="field-even"><p>A boolean that enables the option to shuffle the data during batch iteration</p>
+</dd>
+<dt class="field-odd">pin_memory (opt, bool)</dt>
+<dd class="field-odd"><p>A boolean that enables the option to pin memory in the GPUs utilized during training.
+This allows for faster data transfer</p>
+</dd>
+<dt class="field-even">num_workers (opt, int)</dt>
+<dd class="field-even"><p>An integer that controls how many subprocesses to use for data loading.
+0 means that the data will be loaded in the main process</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">loader (torch.data.DataLoader)</dt>
+<dd class="field-odd"><p>A DataLoader object that returns batch objects</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.datasets.Datasets.bin_values">
+<code class="sig-prename descclassname"><span class="pre">gqcml.datasets.Datasets.</span></code><code class="sig-name descname"><span class="pre">bin_values</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_bins</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/datasets/Datasets.html#bin_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.datasets.Datasets.bin_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function to partition a continuous target variable into discrete bins. This function is intended
+to work together with the train_test_split functionality from sklearn.model_selection to partition the
+dataset into representative training, validation and test data by ensuring that target values are equally
+represented</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">target_values (np.array)</dt>
+<dd class="field-odd"><p>A 2D numpy array containing the continuous target values of the dataset.
+Each row represents the target value of a datapoint</p>
+</dd>
+<dt class="field-even">num_bins (int)</dt>
+<dd class="field-even"><p>An integer that determines the number of output classes that the function returns</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">binned_values (np.array)</dt>
+<dd class="field-odd"><p>A 2D array where the values of the input array have been classified into
+discrete bins determined by the minimum and maximum of the input array.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.datasets.Datasets.split_dataset">
+<code class="sig-prename descclassname"><span class="pre">gqcml.datasets.Datasets.</span></code><code class="sig-name descname"><span class="pre">split_dataset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_frac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stratify</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/datasets/Datasets.html#split_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.datasets.Datasets.split_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that splits a dataset into a training, validation and test set.</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">input_values (np.array)</dt>
+<dd class="field-odd"><p>A 2D numpy array containing the input values of the dataset. Each row represents an input vector of the dataset.</p>
+</dd>
+<dt class="field-even">output_values (np.array)</dt>
+<dd class="field-even"><p>A 2D numpy array containing the continuous target values of the dataset.
+Each row represents the target value of a datapoint.</p>
+</dd>
+<dt class="field-odd">data_frac (float)</dt>
+<dd class="field-odd"><p>The fraction of the dataset that should be reserved for the validation and test set.
+This fraction will be split in half for both these sets.</p>
+</dd>
+<dt class="field-even">seed (int)</dt>
+<dd class="field-even"><p>The random seed used to determine the split of the dataset.</p>
+</dd>
+<dt class="field-odd">stratify (opt,bool)</dt>
+<dd class="field-odd"><p>Option to partition the dataset according to the distribution of the target values. This option
+ensures that all the sets follow the same distribution in their target.</p>
+</dd>
+<dt class="field-even">num_bins (opt,int)</dt>
+<dd class="field-even"><p>An integer that determines the number of output classes</p>
+</dd>
+<dt class="field-odd">shuffle (opt,bool)</dt>
+<dd class="field-odd"><p>Option to shuffle the dataset before partitioning it into a training, validation and test set.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">inputs, outputs (tuple)</dt>
+<dd class="field-odd"><p>The function returns a tuple of the split dataset in the order of input data followed by output data.
+The order in which this happens is training, validation and test set</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.datasets.Datasets.trius_to_inputs">
+<code class="sig-prename descclassname"><span class="pre">gqcml.datasets.Datasets.</span></code><code class="sig-name descname"><span class="pre">trius_to_inputs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">am_args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessor_nf_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nf_args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/datasets/Datasets.html#trius_to_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.datasets.Datasets.trius_to_inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that interacts with the preprocessor class defined in the Data section of gqcml.
+The function takes as stack of upper triangle values and converts them to their matrix representation.
+Following the conversion to matrices we utilize methods defined in the preprocessor class to
+convert the matrices to a suitable input for graph neural networks. The different methods that are
+defined are</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>(categorical) degree node feature</p></li>
+<li><p>weight node feature</p></li>
+<li><p>weighted categorical degree</p></li>
+<li><p>weighted categorical pair degree</p></li>
+</ol>
+</div></blockquote>
+<dl class="simple">
+<dt>Arguments</dt><dd><dl class="field-list simple">
+<dt class="field-odd">trius (np.array)</dt>
+<dd class="field-odd"><p>A numpy array containing the trius of the graphs that are to be processed. This
+array has the dimension (K x M) where K is the number of graphs contained in the
+dataset and M=N(N-1)/2 with N the number of vertices in the graph</p>
+</dd>
+<dt class="field-even">preprocessor_am_method (gqcml.data.Data)</dt>
+<dd class="field-even"><p>A function from the Preprocessor class that processes
+the matrices to the adjacency matrices</p>
+</dd>
+<dt class="field-odd">am_args (list)</dt>
+<dd class="field-odd"><p>The list of function arguments (excluding the input matrix) for the am_method.
+When no arguments need to specified the input should be an empty list</p>
+</dd>
+<dt class="field-even">preprocessor_nf_method (gqcml.data.Data.Preprocessor)</dt>
+<dd class="field-even"><p>A function from the Preprocessor class that
+processes the matrices into the desired node
+feature class</p>
+</dd>
+<dt class="field-odd">nf_args (list)</dt>
+<dd class="field-odd"><p>The list of function arguments (excluding the input matrix) for the nf_method.
+When no arguments need to specified the input should be an empty list</p>
+</dd>
+<dt class="field-even">args (list)</dt>
+<dd class="field-even"><p>The arguments for the preprocessor_method excluding the matrix to be processed.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns</dt><dd><dl class="field-list simple">
+<dt class="field-odd">node_features, adjacency_matrices</dt>
+<dd class="field-odd"><p>Returns the processed node features and the adjacency matrices</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.datasets">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-gqcml.datasets" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gqcml.nn.html" class="btn btn-neutral float-right" title="gqcml.nn package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gqcml.data.html" class="btn btn-neutral float-left" title="gqcml.data package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

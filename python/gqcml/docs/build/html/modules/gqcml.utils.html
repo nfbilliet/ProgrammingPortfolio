@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.utils package &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="gqcml.meta package" href="gqcml.meta.html" />
+    <link rel="prev" title="gqcml.torchgeom_interface package" href="gqcml.torchgeom_interface.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">gqcml.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.utils.test">gqcml.utils.test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.utils.train">gqcml.utils.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gqcml.utils">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>gqcml.utils package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/gqcml.utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gqcml-utils-package">
+<h1>gqcml.utils package<a class="headerlink" href="#gqcml-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-gqcml.utils.test">
+<span id="gqcml-utils-test-module"></span><h2>gqcml.utils.test module<a class="headerlink" href="#module-gqcml.utils.test" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="gqcml.utils.test.evaluate_model">
+<code class="sig-prename descclassname"><span class="pre">gqcml.utils.test.</span></code><code class="sig-name descname"><span class="pre">evaluate_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_descr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_descr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_val.pth'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/utils/test.html#evaluate_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.utils.test.evaluate_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.utils.train">
+<span id="gqcml-utils-train-module"></span><h2>gqcml.utils.train module<a class="headerlink" href="#module-gqcml.utils.train" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="gqcml.utils.train.model_logger">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">gqcml.utils.train.</span></code><code class="sig-name descname"><span class="pre">model_logger</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">history_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_fn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/utils/train.html#model_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.utils.train.model_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="gqcml.utils.train.model_logger.add_epoch_metrics">
+<code class="sig-name descname"><span class="pre">add_epoch_metrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_losses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmb_train_datapoints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_losses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmb_val_datapoints</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/utils/train.html#model_logger.add_epoch_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.utils.train.model_logger.add_epoch_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add epoch metrics</p>
+<p>A function used to write the loss metrics of an epoch to the history file.</p>
+<p>Parameters</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param epoch (int)</dt>
+<dd class="field-odd"><p>The number of the epoch the model is currently on</p>
+</dd>
+<dt class="field-even">param training_losses (list)</dt>
+<dd class="field-even"><p>A list containing all the batch training losses during the current epoch</p>
+</dd>
+<dt class="field-odd">param nmb_train_datapoints (int)</dt>
+<dd class="field-odd"><p>The total number of datapoints in the training dataset</p>
+</dd>
+<dt class="field-even">param validation_losses (list)</dt>
+<dd class="field-even"><p>A list containing all the batch validation losses during the current epoch</p>
+</dd>
+<dt class="field-odd">param nmb_val_datapoints (int)</dt>
+<dd class="field-odd"><p>The total number of datapoints in the validation dataset</p>
+</dd>
+<dt class="field-even">return</dt>
+<dd class="field-even"><p>Nothing is returned, the average loss for the training and validation set is computed together with
+the variances of the batch losses and written to the metrics file</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.utils.train.model_logger.check_improvement">
+<code class="sig-name descname"><span class="pre">check_improvement</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/utils/train.html#model_logger.check_improvement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.utils.train.model_logger.check_improvement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check improvement</p>
+<p>A function to checkpoint the model during optimization based on the evolution of the validation loss.</p>
+<p>Parameters</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param model (torch.Module)</dt>
+<dd class="field-odd"><p>The model object that is currently being optimized. This object needs to have
+the state_dict() function in order to retrieve the parameters.</p>
+</dd>
+<dt class="field-even">param epoch (int)</dt>
+<dd class="field-even"><p>The current epoch of the model optimization.</p>
+</dd>
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><p>Nothing is returned, the function checks whether the validation loss has decreased and saved the model</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gqcml.utils.train.model_logger.summary">
+<code class="sig-name descname"><span class="pre">summary</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/utils/train.html#model_logger.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.utils.train.model_logger.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function that returns the optimal state of the model during optimization as a dictionary object</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.utils.train.random_seed">
+<code class="sig-prename descclassname"><span class="pre">gqcml.utils.train.</span></code><code class="sig-name descname"><span class="pre">random_seed</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cuda</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/utils/train.html#random_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.utils.train.random_seed" title="Permalink to this definition">¶</a></dt>
+<dd><p>random seed</p>
+<p>Sets the random seed for all the different packages to the same value</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gqcml.utils.train.train_model">
+<code class="sig-prename descclassname"><span class="pre">gqcml.utils.train.</span></code><code class="sig-name descname"><span class="pre">train_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nmb_epochs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gqcml/utils/train.html#train_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gqcml.utils.train.train_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>train model</p>
+<p>A function that trains a given neural network</p>
+<p>Parameters</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param device (str)</dt>
+<dd class="field-odd"><p>The device to which the model and tensors are moved during training.</p>
+</dd>
+<dt class="field-even">param model (torch.Module)</dt>
+<dd class="field-even"><p>The neural network that needs to be trained. This is aa torch.nn.Module class that
+has a forward function</p>
+</dd>
+<dt class="field-odd">param nmb_epochs (int)</dt>
+<dd class="field-odd"><p>The number of epochs that the model needs to be trained</p>
+</dd>
+<dt class="field-even">param train_loader (torch.DataLoader)</dt>
+<dd class="field-even"><p>The dataloader that contains the training dataset and generates batches</p>
+</dd>
+<dt class="field-odd">param val_loader (torch.DataLoader)</dt>
+<dd class="field-odd"><p>The dataloader that contains the validation dataset and generates batches</p>
+</dd>
+<dt class="field-even">param loss_fn (torch.nn)</dt>
+<dd class="field-even"><p>The loss function that is used during the optimization of the neural network</p>
+</dd>
+<dt class="field-odd">param optimizer (torch.optim)</dt>
+<dd class="field-odd"><p>The optimizer that is used during the training of the model</p>
+</dd>
+<dt class="field-even">param model_logger (gqcml.utils.train)</dt>
+<dd class="field-even"><p>The model logger class that registers the training progress and saves the best model</p>
+</dd>
+<dt class="field-odd">param (optional) scheduler (torch.optim.lr_scheduler)</dt>
+<dd class="field-odd"><p>A scheduler for decreasing the learning rate</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="module-gqcml.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-gqcml.utils" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gqcml.meta.html" class="btn btn-neutral float-right" title="gqcml.meta package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gqcml.torchgeom_interface.html" class="btn btn-neutral float-left" title="gqcml.torchgeom_interface package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

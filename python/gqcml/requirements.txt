@@ -1,0 +1,17 @@
+-f https://download.pytorch.org/whl/torch_stable.html
+-f https://pytorch-geometric.com/whl/torch-1.4.0.html
+h5py
+ipython
+keras
+numpy
+pytest
+scikit-learn
+Sphinx
+torch==1.4.0+cpu
+torch-scatter==latest+cpu
+torch-sparse==latest+cpu
+torch-cluster==latest+cpu
+torch-spline-conv==latest+cpu
+torch_geometric
+gitpython
+psutil

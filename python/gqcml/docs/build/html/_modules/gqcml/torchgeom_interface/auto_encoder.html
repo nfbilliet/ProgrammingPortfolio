@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.torchgeom_interface.auto_encoder &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../../../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gqcml.torchgeom_interface.auto_encoder</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gqcml.torchgeom_interface.auto_encoder</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">torch_geometric.typing</span> <span class="kn">import</span> <span class="n">Adj</span><span class="p">,</span> <span class="n">OptTensor</span><span class="p">,</span> <span class="n">PairTensor</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">h5py</span> <span class="kn">import</span> <span class="n">File</span> <span class="k">as</span> <span class="n">f</span>
+<span class="kn">import</span> <span class="nn">torch_geometric</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">Parameter</span>
+<span class="kn">from</span> <span class="nn">torch_scatter</span> <span class="kn">import</span> <span class="n">scatter_add</span>
+<span class="kn">from</span> <span class="nn">torch_sparse</span> <span class="kn">import</span> <span class="n">SparseTensor</span><span class="p">,</span> <span class="n">matmul</span><span class="p">,</span> <span class="n">fill_diag</span><span class="p">,</span> <span class="nb">sum</span><span class="p">,</span> <span class="n">mul</span>
+<span class="kn">from</span> <span class="nn">torch_geometric.nn.conv</span> <span class="kn">import</span> <span class="n">MessagePassing</span>
+<span class="kn">from</span> <span class="nn">torch_geometric.utils</span> <span class="kn">import</span> <span class="n">add_remaining_self_loops</span>
+<span class="kn">from</span> <span class="nn">torch_geometric.utils.num_nodes</span> <span class="kn">import</span> <span class="n">maybe_num_nodes</span>
+
+
+<div class="viewcode-block" id="sum_similarity_loss"><a class="viewcode-back" href="../../../modules/gqcml.torchgeom_interface.html#gqcml.torchgeom_interface.auto_encoder.sum_similarity_loss">[docs]</a><span class="k">def</span> <span class="nf">sum_similarity_loss</span><span class="p">(</span><span class="n">inp_tensor</span><span class="p">,</span> <span class="n">decoded_tensor</span><span class="p">):</span>
+    <span class="n">inp_tensor_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">inp_tensor</span><span class="p">)</span>
+    <span class="n">decoded_tensor_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">decoded_tensor</span><span class="p">)</span>
+    <span class="n">dot_product</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">inp_tensor</span><span class="p">,</span> <span class="n">decoded_tensor</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">inp_tensor_norm</span><span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dot_product</span><span class="p">)</span><span class="o">-</span><span class="n">decoded_tensor_norm</span></div>
+
+<div class="viewcode-block" id="Neighbourhood_Aggregator"><a class="viewcode-back" href="../../../modules/gqcml.torchgeom_interface.html#gqcml.torchgeom_interface.auto_encoder.Neighbourhood_Aggregator">[docs]</a><span class="k">class</span> <span class="nc">Neighbourhood_Aggregator</span><span class="p">(</span><span class="n">MessagePassing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class that is used in the generation of a feature vector containing</span>
+<span class="sd">    raw node features that are aggregated. This function works in a similar</span>
+<span class="sd">    fashion to GCNConv but removes the use of any bias and weights.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Neighbourhood_Aggregator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Neighbourhood_Aggregator.forward"><a class="viewcode-back" href="../../../modules/gqcml.torchgeom_interface.html#gqcml.torchgeom_interface.auto_encoder.Neighbourhood_Aggregator.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">:</span> <span class="n">Adj</span><span class="p">,</span>
+                <span class="n">edge_weight</span><span class="p">:</span> <span class="n">OptTensor</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">propagate</span><span class="p">(</span><span class="n">edge_index</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">edge_weight</span><span class="o">=</span><span class="n">edge_weight</span><span class="p">,</span>
+                             <span class="n">size</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="Neighbourhood_Aggregator.message"><a class="viewcode-back" href="../../../modules/gqcml.torchgeom_interface.html#gqcml.torchgeom_interface.auto_encoder.Neighbourhood_Aggregator.message">[docs]</a>    <span class="k">def</span> <span class="nf">message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_j</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">edge_weight</span><span class="p">:</span> <span class="n">OptTensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x_j</span> <span class="k">if</span> <span class="n">edge_weight</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">edge_weight</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">x_j</span></div>
+
+<div class="viewcode-block" id="Neighbourhood_Aggregator.message_and_aggregate"><a class="viewcode-back" href="../../../modules/gqcml.torchgeom_interface.html#gqcml.torchgeom_interface.auto_encoder.Neighbourhood_Aggregator.message_and_aggregate">[docs]</a>    <span class="k">def</span> <span class="nf">message_and_aggregate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adj_t</span><span class="p">:</span> <span class="n">SparseTensor</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">matmul</span><span class="p">(</span><span class="n">adj_t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">reduce</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">aggr</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">(</span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_channels</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">out_channels</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraphAutoEncoder"><a class="viewcode-back" href="../../../modules/gqcml.torchgeom_interface.html#gqcml.torchgeom_interface.auto_encoder.GraphAutoEncoder">[docs]</a><span class="k">class</span> <span class="nc">GraphAutoEncoder</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Graph auto-encoder that utilizes the neighbourhood aggregation class.</span>
+<span class="sd">    The encoder applies a series of unweighted graph convolutions  that construct</span>
+<span class="sd">    aggregated representation, residually added to the original or not.</span>
+<span class="sd">    In addition to this we als provide the option to store each aggregation step seperately and concatenate them at the end.</span>
+
+<span class="sd">    After aggregation the original feature vector is passed through an encoder dense network which contracts it to a specific dimension.</span>
+<span class="sd">    Following this contraction the encoded form is fed to the decoder dense network which will map it again to the original feature vector.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        :num_aggr (int): Number of neighbourhood aggregation that needs to be performed</span>
+<span class="sd">        :layer_config (list): layer configuration for the encoder network. This configuration is reversed for the decoder dense network</span>
+<span class="sd">        :act_fn (torch.nn): A torch module that serves as an activation for the encoder and decoder layers</span>
+<span class="sd">        :dropout (opt, bool): A boolean that controls the employment of dropout between the layers</span>
+<span class="sd">        :dropout_rate (opt, float): The dropout rate at which nodes are disable</span>
+<span class="sd">        :feature_transformation (opt, torch.nn.Module): soon to be deprecated</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_aggr</span><span class="p">,</span> <span class="n">layer_config</span><span class="p">,</span> <span class="n">act_fn</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">feature_transformation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GraphAutoEncoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aggr</span> <span class="o">=</span> <span class="n">Neighbourhood_Aggregator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_aggr</span><span class="o">=</span><span class="n">num_aggr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder_layers</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">layer_config</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">layer_config</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+                                                             <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_config</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decoder_layers</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">layer_config</span><span class="p">[</span><span class="o">-</span><span class="n">idx</span><span class="p">],</span> <span class="n">layer_config</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+                                                             <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_config</span><span class="p">))])</span>
+        <span class="k">if</span> <span class="n">dropout</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">dropout_rate</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">feature_transformation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformation</span> <span class="o">=</span> <span class="n">feature_transformation</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformation</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">act_fn</span> <span class="o">=</span> <span class="n">act_fn</span>
+
+<div class="viewcode-block" id="GraphAutoEncoder.forward"><a class="viewcode-back" href="../../../modules/gqcml.torchgeom_interface.html#gqcml.torchgeom_interface.auto_encoder.GraphAutoEncoder.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Forward phase of the encoder</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :data (torch_geometric.data.Data): A data object that contains the node features, edge indices and edge weights</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :initial features, decoded_features (torch.Tensor): The initial tensor obtained after aggregation of the neighbourhood information and the decoded form of this tensor </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformation</span><span class="p">:</span>
+            <span class="n">aggregated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformation</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">aggregated</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_aggr</span><span class="p">):</span>
+            <span class="n">aggregated</span> <span class="o">=</span> <span class="n">aggregated</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggr</span><span class="p">(</span><span class="n">aggregated</span><span class="p">,</span>
+                                                <span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="p">,</span>
+                                                <span class="n">edge_weight</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">edge_attr</span><span class="p">)</span>
+        <span class="n">embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoder_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">aggregated</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">:</span>
+            <span class="n">embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">embedded</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">encoder_layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder_layers</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">:</span>
+                <span class="n">embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">act_fn</span><span class="p">(</span><span class="n">encoder_layer</span><span class="p">(</span><span class="n">embedded</span><span class="p">)))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fn</span><span class="p">(</span><span class="n">encoder_layer</span><span class="p">(</span><span class="n">embedded</span><span class="p">))</span>
+        <span class="n">encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder_layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">](</span><span class="n">embedded</span><span class="p">)</span>
+        <span class="n">decoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decoder_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">encoded</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">:</span>
+            <span class="n">decoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">decoded</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">decoder_layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder_layers</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">:</span>
+                <span class="n">decoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">act_fn</span><span class="p">(</span><span class="n">decoder_layer</span><span class="p">(</span><span class="n">decoded</span><span class="p">)))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">decoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fn</span><span class="p">(</span><span class="n">decoder_layer</span><span class="p">(</span><span class="n">decoded</span><span class="p">))</span>
+        <span class="n">decoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder_layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">](</span><span class="n">decoded</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">aggregated</span><span class="p">,</span> <span class="n">decoded</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraphAutoEncoder.encode"><a class="viewcode-back" href="../../../modules/gqcml.torchgeom_interface.html#gqcml.torchgeom_interface.auto_encoder.GraphAutoEncoder.encode">[docs]</a>    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Encoding of the initial feature vector</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :data (torch_geometric.data.Data): A data object that contains the node features, edge indices and edge weights</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :encoded_features (torch.Tensor): The encoded representation of the initial feature vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformation</span><span class="p">:</span>
+            <span class="n">aggregated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformation</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">aggregated</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_aggr</span><span class="p">):</span>
+            <span class="n">aggregated</span> <span class="o">=</span> <span class="n">aggregated</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggr</span><span class="p">(</span><span class="n">aggregated</span><span class="p">,</span>
+                                                <span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="p">,</span>
+                                                <span class="n">edge_weight</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">edge_attr</span><span class="p">)</span>
+        <span class="n">embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoder_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">aggregated</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">encoder_layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder_layers</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">embedded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fn</span><span class="p">(</span><span class="n">encoder_layer</span><span class="p">(</span><span class="n">embedded</span><span class="p">))</span>
+        <span class="n">encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder_layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">](</span><span class="n">embedded</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">encoded</span></div>
+
+<div class="viewcode-block" id="GraphAutoEncoder.decode"><a class="viewcode-back" href="../../../modules/gqcml.torchgeom_interface.html#gqcml.torchgeom_interface.auto_encoder.GraphAutoEncoder.decode">[docs]</a>    <span class="k">def</span> <span class="nf">decode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoded_node_features</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Decoding of an encoded tensor</span>
+<span class="sd">        Forward phase of the encoder</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :encoded_node_features (torch.Tensor): A torch Tensor that represent the encoded feature vector which requires decoding</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :decoded_features (torch.Tensor): The decoded form of the encoded features</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">decoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decoder_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">encoded_node_features</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">decoder_layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder_layers</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">decoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fn</span><span class="p">(</span><span class="n">decoder_layer</span><span class="p">(</span><span class="n">decoded</span><span class="p">))</span>
+        <span class="n">decoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder_layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">](</span><span class="n">decoded</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">decoded</span></div></div>
+
+<div class="viewcode-block" id="train_model"><a class="viewcode-back" href="../../../modules/gqcml.torchgeom_interface.html#gqcml.torchgeom_interface.auto_encoder.train_model">[docs]</a><span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">nmb_epochs</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span>
+                <span class="n">loss_fn</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">model_logger</span><span class="p">,</span> <span class="n">scheduler</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;train model</span>
+
+<span class="sd">  A function that trains a given neural network</span>
+
+<span class="sd">  Arguments</span>
+<span class="sd">    :device (str): The device to which the model and tensors are moved during training.</span>
+<span class="sd">    :model (torch.Module): The neural network that needs to be trained. This is aa torch.nn.Module class that</span>
+<span class="sd">                                   has a forward function</span>
+<span class="sd">    :nmb_epochs (int): The number of epochs that the model needs to be trained</span>
+<span class="sd">    :train_loader (torch.DataLoader): The dataloader that contains the training dataset and generates batches</span>
+<span class="sd">    :val_loader (torch.DataLoader): The dataloader that contains the validation dataset and generates batches</span>
+<span class="sd">    :loss_fn (torch.nn): The loss function that is used during the optimization of the neural network</span>
+<span class="sd">    :optimizer (torch.optim): The optimizer that is used during the training of the model</span>
+<span class="sd">    :model_logger (gqcml.utils.train): The model logger class that registers the training progress and saves the best model</span>
+<span class="sd">    :(optional) scheduler (torch.optim.lr_scheduler): A scheduler for decreasing the learning rate</span>
+<span class="sd">  Returns</span>
+<span class="sd">    :optimized_model (torch.nn.Module): The optimized model after the specified options</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">nmb_train_dp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+  <span class="n">nmb_val_dp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_loader</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nmb_epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">training_loss</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+      <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+      <span class="n">initial</span><span class="p">,</span> <span class="n">decoded</span> <span class="o">=</span><span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+      <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">initial</span><span class="p">,</span> <span class="n">decoded</span><span class="p">)</span>
+      <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+      <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+      <span class="n">training_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">num_graphs</span><span class="p">)</span>
+    <span class="n">validation_loss</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">val_loader</span><span class="p">):</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+      <span class="n">initial</span><span class="p">,</span> <span class="n">decoded</span><span class="o">=</span><span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+      <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">initial</span><span class="p">,</span> <span class="n">decoded</span><span class="p">)</span>
+      <span class="n">validation_loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">num_graphs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">scheduler</span><span class="p">:</span>
+        <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">validation_loss</span><span class="p">)</span><span class="o">/</span><span class="n">nmb_val_dp</span><span class="p">)</span>
+    <span class="n">model_logger</span><span class="o">.</span><span class="n">add_epoch_metrics</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">training_loss</span><span class="p">,</span> <span class="n">nmb_train_dp</span><span class="p">,</span> <span class="n">validation_loss</span><span class="p">,</span> <span class="n">nmb_val_dp</span><span class="p">)</span>
+    <span class="n">model_logger</span><span class="o">.</span><span class="n">check_improvement</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---Epoch &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Train loss: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">training_loss</span><span class="p">)</span><span class="o">/</span><span class="n">nmb_train_dp</span><span class="p">))</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Val loss: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">validation_loss</span><span class="p">)</span><span class="o">/</span><span class="n">nmb_val_dp</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">model</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

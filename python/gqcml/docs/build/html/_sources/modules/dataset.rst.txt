@@ -1,0 +1,3 @@
+.. automodule:: gqcml.datasets
+    :members:
+    :special-members:

@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.nn.layers &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../../../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gqcml.nn.layers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gqcml.nn.layers</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="GraphConv"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.layers.GraphConv">[docs]</a><span class="k">class</span> <span class="nc">GraphConv</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;GraphConv</span>
+
+<span class="sd">    The standard graph convolution operator defined in the paper [Semi-Supervised Classification with Graph Convolutional</span>
+<span class="sd">    Networks](https://arxiv.org/abs/1609.02907).</span>
+<span class="sd">    </span>
+<span class="sd">    .. math::</span>
+<span class="sd">        n_{i+1} = h\\left(An_{i}.W_{i+1}\\right)</span>
+
+<span class="sd">    Where the current node features are aggregated according to the adjacency matrix A and subsequently weighted by a (set of)</span>
+<span class="sd">    weight matrix/matrices. We include the option for a  residual connection by adding the transformed node features to the current</span>
+<span class="sd">    state</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        :node_input_dim (int): The number of features present on the nodes of the graph G when entering the layer </span>
+<span class="sd">        :node_output_dim (int): The number of features present in the layer output</span>
+<span class="sd">        :activation_function (torch.nn): The activation function to be used for the filter layer(s) after message construction</span>
+<span class="sd">        :bias (opt, bool): A boolean that enables or disables the bias term in the filter application. In the standard settings</span>
+<span class="sd">                           this value is True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">node_input_dim</span><span class="p">,</span>
+                 <span class="n">node_output_dim</span><span class="p">,</span>
+                 <span class="n">activation_function</span><span class="p">,</span>
+                 <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GraphConv</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span> <span class="o">=</span> <span class="n">activation_function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">node_input_dim</span><span class="p">,</span>
+                                                       <span class="n">node_output_dim</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">bias</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">node_output_dim</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register_parameter</span><span class="p">(</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_parameters</span><span class="p">()</span>
+
+<div class="viewcode-block" id="GraphConv.reset_parameters"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.layers.GraphConv.reset_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">reset_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A function that initializes the weights and biases of the learnable layer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">xavier_uniform_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">zeros_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="GraphConv.forward"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.layers.GraphConv.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_feat</span><span class="p">,</span> <span class="n">adj_matrix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function that calls the forward pass of the layer</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments</span>
+<span class="sd">            :node_feat (torch.Tensor): The current node features, this tensor should have the dimensions (B x N x F) where</span>
+<span class="sd">                                          B is the batch size, N is the number of nodes and F is the number of features</span>
+<span class="sd">            :adj_matrix (torch.Tensor): The adjacency matrices by which the node features need to be aggregated, this tensor</span>
+<span class="sd">                                           should have the dimensions (B x N x N) where B is the batch size and N the number of nodes</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :transf_node_emb (torch.Tensor): The updated node features with the aggregated features according to the adjacency</span>
+<span class="sd">                                                 matrix. This tensor has the same dimensions as</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">node_message</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">node_feat</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">adj_matrix</span><span class="p">,</span> <span class="n">node_message</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_function</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div></div>
+    
+<div class="viewcode-block" id="GaussianExpansion"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.layers.GaussianExpansion">[docs]</a><span class="k">class</span> <span class="nc">GaussianExpansion</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A layer that takes an input tensor and expands it into a gaussian basis.</span>
+<span class="sd">    The layer takes a tensor consisting of single descriptors and bins this descriptor.</span>
+<span class="sd">    The descriptor is fed to a function that computes the output value of a series of gaussians</span>
+<span class="sd">    that are equidistantly spaced using a linear space of means and a single variance parameter.</span>
+<span class="sd">    The output of this function thus maps a scalar value to a vector with the dimension equal to the</span>
+<span class="sd">    number of gaussians that we have chosen to span the linear space of means.</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        \\phi(\\nu_i)=\\nu_i \\rightarrow \\vec{\\nu_i}: \\mathbb{R} \\mapsto \\mathbb{R}^N</span>
+<span class="sd">        </span>
+<span class="sd">    .. math::</span>
+<span class="sd">        \\phi(\\nu_i)=\\begin{bmatrix} e^{\\frac{\\nu_i-\\mu_1}{2\\sigma^2}} &amp; e^{\\frac{\\nu_i-\\mu_2}{2\\sigma^2}} &amp; \dots &amp; e^{\\frac{\\nu_i-\\mu_N}{2\\sigma^2}} \\end{bmatrix}</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        :lower (float): A float that bounds the linear space from which the means are generated.</span>
+<span class="sd">                             The space spans the interval [lower, upper]</span>
+<span class="sd">        :upper (float): A float that bounds the linear space from which the means are generated.</span>
+<span class="sd">                             The space spans the interval [lower, upper]</span>
+<span class="sd">        :num_gaussians (int): The number of gaussian functions that we place within the linear space.</span>
+<span class="sd">        :variance (opt, float): Standardly this is not defined. When this optional parameter is not</span>
+<span class="sd">                                      defined we compute the variance so that the FWHM of neighbouring</span>
+<span class="sd">                                      overlaps. If a float is given the variance as defined will be used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">num_gaussians</span><span class="p">,</span> <span class="n">variance</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GaussianExpansion</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">means</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">num_gaussians</span><span class="p">)),</span>
+                                                  <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">variance</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">variance</span><span class="p">)),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">num_gaussians</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">num_gaussians</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">variance</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">variance</span><span class="p">)),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_gaussians</span> <span class="o">=</span> <span class="n">num_gaussians</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lower</span> <span class="o">=</span> <span class="n">lower</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upper</span> <span class="o">=</span> <span class="n">upper</span>
+        
+<div class="viewcode-block" id="GaussianExpansion.forward"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.layers.GaussianExpansion.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Forward phase of the layer</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :inp (torch.Tensor: A (B x N x 1) tensor, where B is the batch size and N is the number of nodes,</span>
+<span class="sd">                                  that should be expaned in a Gaussian basis </span>
+<span class="sd">        Returns</span>
+<span class="sd">            :expanded tensor (torch.Tensor): A (B x N x M) tensor where M is the number of Gaussians</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">zeros</span><span class="p">:</span>
+            <span class="n">binary_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">inp</span><span class="o">!=</span><span class="mi">0</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">inp</span><span class="p">),</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">inp</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">binary_tensor</span><span class="p">,</span>
+                             <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">inp</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">means</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span><span class="o">.</span><span class="n">double</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">inp</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">means</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">double</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GaussianExpansion.meta"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.layers.GaussianExpansion.meta">[docs]</a>    <span class="k">def</span> <span class="nf">meta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A function that extracts the meta data from the layer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">meta_dict</span><span class="o">=</span><span class="p">{}</span>
+        <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Layer&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;Gaussian Expansion&quot;</span>
+        <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Number of Gaussians&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_gaussians</span>
+        <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Lower bound&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lower</span>
+        <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Upper bound&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">upper</span>
+        <span class="n">meta_dict</span><span class="p">[</span><span class="s2">&quot;Precision&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">meta_dict</span></div></div>
+    
+<div class="viewcode-block" id="GaussianEmbedding"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.layers.GaussianEmbedding">[docs]</a><span class="k">class</span> <span class="nc">GaussianEmbedding</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function that combines the GaussianExpansion layer with the concept of embedding.</span>
+<span class="sd">    Should the initial features be described by a single continuous variable the problem</span>
+<span class="sd">    becomes that learning an embedding for this becomes difficult due to the mathematical </span>
+<span class="sd">    construct of embedding where</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        E(\\nu_i) = Z\\phi(\\nu_i)</span>
+
+<span class="sd">    Where Z is a learnable set of weights. In the case of a single node feature v_i</span>
+<span class="sd">    the dimension of this Z becomes a vector and thus does not contain many learnable parameters.</span>
+<span class="sd">    When we use the Gaussian expansion layer we convert this continuous variable to &quot;quasi&quot; binned variable</span>
+<span class="sd">    where our bins consist of the different gaussians within the layer and the layer measures &quot;overlap&quot; with the gaussians.</span>
+<span class="sd">    Using this expanded representation we provide more freedom to the Z matrix in our embedding due to the increased dimensionality.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        :lower (float): A float that bounds the linear space from which the means are generated.</span>
+<span class="sd">                             The space spans the interval [lower, upper]</span>
+<span class="sd">        :upper (float): A float that bounds the linear space from which the means are generated.</span>
+<span class="sd">                             The space spans the interval [lower, upper]</span>
+<span class="sd">        :variance (float): A float that controls the width of gaussians that we construct.</span>
+<span class="sd">        :num_gaussians (int): The number of gaussian functions that we place within the linear space.</span>
+<span class="sd">        :emb_dim (int): The dimension of the embedded node feature. </span>
+<span class="sd">        :emb_bias (opt,bool): A boolean that controls the addition of a learnable bias for the embedding</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">num_gaussians</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">,</span> <span class="n">variance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">emb_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GaussianEmbedding</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GaussExp</span> <span class="o">=</span> <span class="n">GaussianExpansion</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">num_gaussians</span><span class="p">,</span> <span class="n">variance</span><span class="o">=</span><span class="n">variance</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_gaussians</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">emb_bias</span><span class="p">)</span><span class="o">.</span><span class="n">double</span><span class="p">()</span>
+
+<div class="viewcode-block" id="GaussianEmbedding.forward"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.layers.GaussianEmbedding.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A function that calls the forward propagation</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments</span>
+<span class="sd">            :inp (torch.Tensor: A (B x N x 1) tensor, where B is the batch size and N is the number of nodes,</span>
+<span class="sd">                                  that should be expaned in a Gaussian basis</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :embedded tensor (torch.Tensor): A (B x N x E) tensor where E is the embedding dimension</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">expanded_inp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GaussExp</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">expanded_inp</span><span class="p">)</span></div></div>
+    
+
+<div class="viewcode-block" id="ShiftedSoftplus"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.layers.ShiftedSoftplus">[docs]</a><span class="k">class</span> <span class="nc">ShiftedSoftplus</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The shifted softplus activation function</span>
+<span class="sd">    </span>
+<span class="sd">    .. math::</span>
+<span class="sd">        ln\\left(\\beta+\\beta e^{x}\\right)</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        :beta (opt,float): A shifting factor with standard setting 2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ShiftedSoftplus</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shift</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ShiftedSoftplus.forward"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.layers.ShiftedSoftplus.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Softplus</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">shift</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

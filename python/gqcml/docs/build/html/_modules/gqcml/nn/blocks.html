@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.nn.blocks &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../../../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gqcml.nn.blocks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gqcml.nn.blocks</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">gqcml.nn.layers</span> <span class="kn">import</span> <span class="n">GraphConv</span>
+
+<div class="viewcode-block" id="GraphConv_Block"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.blocks.GraphConv_Block">[docs]</a><span class="k">class</span> <span class="nc">GraphConv_Block</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A sequential block of GraphConv operators that can be used a building module of a graph convolutional model.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        :node_input_dim (int): The number of features that are associated with each node in the graph G</span>
+<span class="sd">        :nmb_GraphConv_layers (int): The number of GraphConv layers that need to be present in the block</span>
+<span class="sd">        :nmb_filter_dlayers (int): The number of non-linear transformations that are performed in each graph convolution</span>
+<span class="sd">                                   after aggregation of the neighbourhood features. The dense layers standardly are constructed</span>
+<span class="sd">                                   to output as many amount of features that go into them</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">node_input_dim</span><span class="p">,</span>
+                 <span class="n">nmb_GC_layers</span><span class="p">,</span>
+                 <span class="n">nmb_filter_dlayers</span><span class="p">,</span>
+                 <span class="n">activation_function</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GraphConv_Block</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GC_layers</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">GraphConv</span><span class="p">(</span><span class="n">node_input_dim</span><span class="p">,</span> <span class="n">nmb_filter_dlayers</span><span class="p">,</span> <span class="n">activation_function</span><span class="p">)]</span><span class="o">*</span><span class="n">nmb_GC_layers</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GraphConv_Block.forward"><a class="viewcode-back" href="../../../modules/gqcml.nn.html#gqcml.nn.blocks.GraphConv_Block.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_feat</span><span class="p">,</span> <span class="n">adj_matrix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;forward</span>
+<span class="sd">        Forward propagation function that produces an output</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :node_feat (torch.Tensor): The initial node feature tensors that are associated with a batch of graphs. This</span>
+<span class="sd">                                         tensor should have the dimensions (B x N x F) where B is the batch size, N the</span>
+<span class="sd">                                         number of nodes present in the graphs and F the number of features associated</span>
+<span class="sd">                                         with each node present in the graph</span>
+<span class="sd">            :adj_matrix (torch.Tensor): The weighted adjacency tensors that are associated with a batch of graphs. This</span>
+<span class="sd">                                          tensor should have the dimensions (B x N x N) where B is the batch size and N</span>
+<span class="sd">                                          the number of nodes present in the graph</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :transf_node_feat (torch.Tensor): The transformed node features that are obtained by consecutively performing</span>
+<span class="sd">                                              the graph convolutional operator. This tensor has the dimensions (B x N x F)</span>
+<span class="sd">                                              where B is the batch size, N the number of nodes present in the graph and</span>
+<span class="sd">                                              F is the number of features associated with each node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">transf_node_feat</span> <span class="o">=</span> <span class="n">node_feat</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">GC_layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">GC_layers</span><span class="p">:</span>
+            <span class="n">transf_node_feat</span> <span class="o">=</span> <span class="n">GC_layer</span><span class="p">(</span><span class="n">transf_node_feat</span><span class="p">,</span> <span class="n">adj_matrix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">transf_node_feat</span></div></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

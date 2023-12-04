@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gqcml.data_generators.Huckel &mdash; GQCML 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> GQCML
+          
+
+          
+            
+            <img src="../../../_static/gqcg_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data_generators.html">gqcml.data_generators package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.data.html">gqcml.data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.datasets.html">gqcml.datasets package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.nn.html">gqcml.nn package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.torchgeom_interface.html">gqcml.torchgeom_interface package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.utils.html">gqcml.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.meta.html">gqcml.meta package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/gqcml.analysis.html">gqcml.analysis package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">GQCML</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gqcml.data_generators.Huckel</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gqcml.data_generators.Huckel</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<div class="viewcode-block" id="HuckelSolver"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.Huckel.HuckelSolver">[docs]</a><span class="k">class</span> <span class="nc">HuckelSolver</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class that provides the utilities to solve the Schrödinger equation</span>
+<span class="sd">    for the Hückel model. This class contains the following objects</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">        :eigenvals (np.array): An attribute that stores the eigenvalues of the last computed system.</span>
+<span class="sd">                                     The standard value for this attribute is 0</span>
+<span class="sd">        :eigenvecs (np.array): An attribute that stores the eigenvectors of the last computed system.</span>
+<span class="sd">                                     The standard value for this attribute is 0</span>
+<span class="sd">        :ONV_a (np.array): An attribute that stores the alpha occupation number vector of the last computed system.</span>
+<span class="sd">                                 The standard value for this attribute is 0</span>
+<span class="sd">        :ONV_b (np.array): An attribute that stores the beta occuptation number vector of the last computed system.</span>
+<span class="sd">                                 The standard value for this attribute is 0</span>
+<span class="sd">        :P_a (np.array): An attribute that stores the alpha density matrix of the last computed system.</span>
+<span class="sd">                               The standard value for this attribute is 0</span>
+<span class="sd">        :P_b (np.array): An attribute that stores the beta density matrix of the last computed system.</span>
+<span class="sd">                               The standard value for this attribute is 0</span>
+<span class="sd">        :P (np.array): An attribute that stores the total density matrix of the last computed system.</span>
+<span class="sd">                             The standard value for this attribute is 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eigenvals</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eigenvecs</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ONV_a</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ONV_b</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">P_a</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">P_b</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">P</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="HuckelSolver.ONV"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.Huckel.HuckelSolver.ONV">[docs]</a>    <span class="k">def</span> <span class="nf">ONV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eigenvals</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">N_a</span><span class="p">,</span> <span class="n">N_b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the occupation number vectors that determines the filling of the electrons in the</span>
+<span class="sd">        spin orbitals. This functions takes degenerate states into account as well</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :eigenvals (np.array): A 1D array containing the eigenvalues of the system</span>
+<span class="sd">            :N (int): The amount of spin orbitals in the system, i.e. the maximum number</span>
+<span class="sd">                            of electrons in the ONV</span>
+<span class="sd">            :N_a (int): The amount of alpha electrons in the system</span>
+<span class="sd">            :N_b (int): The amount of beta electrons in the system</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :ONV (np.array): The occupation number vector for both alpha and beta are updated</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#Search for the degenerate eigenvalues. This results in blocks in the occuptation matrix</span>
+        <span class="n">weight_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">eigenvals</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">N</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                                   <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">eigenvals</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">N</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="c1">#Determine the degeneracy of the eigenvalues</span>
+        <span class="n">degeneracy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weight_matrix</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="c1">#Weigh the elements of the occupation matrix with the degeneracy factor</span>
+        <span class="n">weight_matrix</span> <span class="o">=</span> <span class="n">degeneracy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">weight_matrix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ONV_a</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">N_a</span><span class="o">+</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">N_a</span><span class="p">))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">weight_matrix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ONV_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">N_b</span><span class="o">+</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">N_b</span><span class="p">))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">weight_matrix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="HuckelSolver.solve_ndo"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.Huckel.HuckelSolver.solve_ndo">[docs]</a>    <span class="k">def</span> <span class="nf">solve_ndo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">H</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A function that solves the Schrodinger equation working under the assumption of non-differential overlap</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments</span>
+<span class="sd">            :H (np.array): A (N x N) numpy array that represents the system that needs to be computed</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :None: The function does computes the eigenvalues and eigenvectors of the given matrix H</span>
+<span class="sd">                      using the eigh function from numpy. These solutions are stored in the corresponding attributes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eigenvals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eigenvecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="HuckelSolver.solve_general"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.Huckel.HuckelSolver.solve_general">[docs]</a>    <span class="k">def</span> <span class="nf">solve_general</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A function that solves the Schrodinger equation working when including a general overlap</span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :H (np.array): A (N x N) numpy array that represents the system that needs to be computed</span>
+<span class="sd">            :S (np.array): A (N x N) numpy array that contains the overlap values associated with the </span>
+<span class="sd">                           given H</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :None: The function does computes the eigenvalues and eigenvectors of the given matrix H</span>
+<span class="sd">                    using the eigh function from scipy. These solutions are stored in the corresponding attributes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eigenvals</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eigenvecs</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">eigvals_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="HuckelSolver.compute_energy"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.Huckel.HuckelSolver.compute_energy">[docs]</a>    <span class="k">def</span> <span class="nf">compute_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N_a</span><span class="p">,</span> <span class="n">N_b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the molecular energy in the Huckel model based on the occupation of </span>
+<span class="sd">        alpha and beta electrons of the molecular orbitals. This functions assumes that</span>
+<span class="sd">        the lowest eigenvalues are the first elements </span>
+
+<span class="sd">        Arguments</span>
+<span class="sd">            :N_a (int): The number of alpha electrons</span>
+<span class="sd">            :N_b (int): The number of beta electrons</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :E (float): A floating point value that corresponds to the total energy of the system</span>
+<span class="sd">                               when contain N_a and N_b electrons</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eigenvals</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ONV</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eigenvals</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">N_a</span><span class="p">,</span> <span class="n">N_b</span><span class="p">)</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eigenvals</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ONV_a</span><span class="p">)</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">eigenvals</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ONV_b</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">E</span>                </div>
+
+<div class="viewcode-block" id="HuckelSolver.compute_density_matrix"><a class="viewcode-back" href="../../../modules/gqcml.data_generators.html#gqcml.data_generators.Huckel.HuckelSolver.compute_density_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">compute_density_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N_a</span><span class="p">,</span> <span class="n">N_b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the groundstate density of based on the ONV</span>
+<span class="sd">        </span>
+<span class="sd">        Arguments</span>
+<span class="sd">            :N_a (int): The number of alpha electrons.</span>
+<span class="sd">            :N_b (int): The number of beta electrons.</span>
+<span class="sd">        Returns</span>
+<span class="sd">            :P (np.array): A (N x N) numpy array that represents the total electron density matrix from the system</span>
+<span class="sd">                                  when it contains N_a and  N_b electrons</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eigenvals</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ONV</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eigenvals</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">N_a</span><span class="p">,</span> <span class="n">N_b</span><span class="p">)</span>
+        <span class="n">P_a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+        <span class="n">P_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">eigenvec_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eigenvals</span><span class="p">)):</span>
+            <span class="c1">#Columns of the eigenvector matrix represent the eigenvectors</span>
+            <span class="n">MO</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eigenvecs</span><span class="p">[:,</span><span class="n">eigenvec_idx</span><span class="p">]</span>
+            <span class="c1">#Construct the density of the MO</span>
+            <span class="n">P_MO</span> <span class="o">=</span> <span class="n">MO</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">MO</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#Compute the spin components of the density</span>
+            <span class="n">P_a</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ONV_a</span><span class="p">[</span><span class="n">eigenvec_idx</span><span class="p">]</span><span class="o">*</span><span class="n">P_MO</span>
+            <span class="n">P_b</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ONV_b</span><span class="p">[</span><span class="n">eigenvec_idx</span><span class="p">]</span><span class="o">*</span><span class="n">P_MO</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">P_a</span> <span class="o">=</span> <span class="n">P_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">P_b</span> <span class="o">=</span> <span class="n">P_b</span>
+        <span class="c1">#The total density is the sum of the spin component densities</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">P</span> <span class="o">=</span> <span class="n">P_a</span><span class="o">+</span><span class="n">P_b</span>
+        <span class="k">return</span> <span class="n">P_a</span><span class="o">+</span><span class="n">P_b</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Niels Billiet
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

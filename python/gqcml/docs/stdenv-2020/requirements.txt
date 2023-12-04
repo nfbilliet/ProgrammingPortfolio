@@ -1,0 +1,19 @@
+-f /cvmfs/soft.computecanada.ca/custom/python/wheelhouse/gentoo/avx2
+-f /cvmfs/soft.computecanada.ca/custom/python/wheelhouse/gentoo/generic
+-f /cvmfs/soft.computecanada.ca/custom/python/wheelhouse/generic
+h5py==3.1.0
+Keras==2.3.1
+numpy==1.20.2
+pandas==1.2.3
+pytest==6.2.2
+scikit-learn==0.24.1
+Sphinx==3.3.0
+GitPython==3.1.12
+psutil==5.8.0
+py-cpuinfo==4.0.0
+torch==1.7.1
+torch-geometric==1.6.3
+torch-scatter==2.0.5
+torch-sparse==0.6.8
+torch-cluster==1.5.8
+torch-spline-conv==1.2.0
