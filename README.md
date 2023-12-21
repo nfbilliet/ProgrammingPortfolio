@@ -3,8 +3,10 @@
 ## Introduction
 
 Hi, my name is Niels Billiet and welcome to my personal github page. This programming portfolio is intended for two purposes 
+
 1. Storing the code I have written for personal projects that I work on in my spare time
 2. Displaying my coding skills to potential employers who are interested in my abilities and/or previous work
+
 I started programming during my first year of university and immediately fell in love with the field. During and after my education I continued coding for research purposes and in my spare time. The languages that I am familiar with are 
 
 - Python
