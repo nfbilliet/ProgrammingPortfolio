@@ -16,13 +16,13 @@ which are also the ones being displayed in this portfolio. The code in both thes
 
 ## Python
 
+### Quantum mechanics research
+
 Python is my main coding language and the one that I have the most experience working in. I have 3+ years of experience working in this language during my years as a researcher at the university of Ghent and for both my bachelor and master thesis during my studies. I have used this language to implement *quantum mechanical models*, which required me to focus on 
 
 1. Matrix construction constrained by specific operator symmetries (e.g. commutational relations)
 2. Construction of complete bitvector sets that fulfill specific conditions
 3. Eigenspectrum calculation and visualtion 
-
-### Quantum mechanical data
 
 In addition to this I also applied machine learning models to quantum mechanical data with the goal to analyse the learned patterns that were obtained during model optimization.
 
@@ -36,9 +36,11 @@ In addition to this I also applied machine learning models to quantum mechanical
 As such I have experience with the following python libraries
 
 1. [NumPy](https://numpy.org/)
-2. [Scikit learn]()
-3. [Keras]()
-4. [Pytorch]()
+2. [Scikit learn](https://scikit-learn.org/stable/)
+3. [Keras](https://keras.io/)
+4. [Pytorch](https://pytorch.org/)
+
+### Personal Library
 
 My personal code from my time as a reasearcher can be found in the [gqcml](https://github.com/nfbilliet/ProgrammingPortfolio/tree/main/python/gqcml) subdirectory in the python directory. 
 
