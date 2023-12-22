@@ -46,4 +46,4 @@ My personal code from my time as a reasearcher can be found in the [gqcml](https
 
 ## C++
 
-Currently I am in the process of learning C++ in my own private time. I already completed the C++ course on [codecademy](https://www.codecademy.com/learn/learn-c-plus-plus). In addition to this I am going through [The Modern C++ 20 Masterclass](https://www.udemy.com/course/the-modern-cpp-20-masterclass/) 
+Currently I am in the process of learning C++ in my own private time. I already completed the C++ course on [codecademy](https://www.codecademy.com/learn/learn-c-plus-plus). In addition to this I am currently following [The Modern C++ 20 Masterclass](https://www.udemy.com/course/the-modern-cpp-20-masterclass/) and going through Bjarne Stroustrup's *The C++ programming language* to further expand my knowledge of the language. 
