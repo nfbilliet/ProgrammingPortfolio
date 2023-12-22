@@ -22,7 +22,7 @@ Python is my main coding language and the one that I have the most experience wo
 2. Construction of complete bitvector sets that fulfill specific conditions
 3. Eigenspectrum calculation and visualtion 
 
-###Quantum mechanical data###
+### Quantum mechanical data
 
 In addition to this I also applied machine learning models to quantum mechanical data with the goal to analyse the learned patterns that were obtained during model optimization.
 
@@ -31,7 +31,7 @@ In addition to this I also applied machine learning models to quantum mechanical
 3. Analysis of model optimization and model performance
 4. Interpretability of learned features
 
-###Libraries###
+### Libraries
 
 As such I have experience with the following python libraries
 
