@@ -19,41 +19,42 @@ import time
 import collections
 import random
 
+DNAstr = open("rosalind_dna.txt", 'r').readline()[:-1]
+
+print([DNAstr.count("A"), DNAstr.count("C"), DNAstr.count("G"), DNAstr.count("T")])
+
 #Make a large test string to be more representative of an actual genome sequence
 # Chromosomal DNA ranges from 50.10^6 to 250.10^6 bp
-nmb_BP = 1000000
+"""
+nmb_BP = 1
 testNucleotideStr = ["A"]*nmb_BP+["C"]*nmb_BP+["G"]*nmb_BP+["T"]*nmb_BP
 random.shuffle(testNucleotideStr)
 testNucleotideStr = "".join(testNucleotideStr)
-
+"""
 #Method 1: Built in count functionality
 
-method1_beginTime = time.time()
-nucleotideCount = [testNucleotideStr.count("A"), 
-                   testNucleotideStr.count("C"),
-                   testNucleotideStr.count("G"),
-                   testNucleotideStr.count("T")]
-method1_endTime = time.time()
-
-print(nucleotideCount)
-print("Time of execution of method 1: %s sec" % (method1_endTime-method1_beginTime))
+def nucleotideCount(inpStr):
+    nucleotideCount = [inpStr.count("A"), 
+                       inpStr.count("C"),
+                       inpStr.count("G"),
+                       inpStr.count("T")]
+    
+    return(" ".join([str(el) for el in nucleotideCount]))
 
 #Method 2: Dictionary method
 
-nucleotideDict = dict(zip(["A", "C", "G", "T"], [0]*4))
-
-method2_beginTime = time.time()
-for nucleotide in testNucleotideStr:
-    nucleotideDict[nucleotide] += 1
-method2_endTime = time.time()
-
-print(nucleotideDict)
-print("Time of execution of method 2: %s sec" % (method2_endTime-method2_beginTime))
+def nucleotideDictCount(inpStr):
+    nucleotideDict = dict(zip(["A", "C", "G", "T"], [0]*4))
+    for nucleotide in inpStr:
+        nucleotideDict[nucleotide] += 1
+    return(" ".join([str(el) for el in nucleotideDict.values()]))
 
 #Method 3: collections.Counter
 
-method3_beginTime = time.time()
-nucleotideCounter = collections.Counter(testNucleotideStr)
-method3_endTime = time.time()
-print(nucleotideCounter)
-print("Time of execution of method 3: %s sec" % (method3_endTime - method3_beginTime))
+def nucleotideCollections(inpStr):
+    nucleotideCounter = collections.Counter(DNAstr)
+    return(" ".join([str(nucleotideCounter["A"]), str(nucleotideCounter["C"]), str(nucleotideCounter["G"]), str(nucleotideCounter["T"])]))
+
+print(nucleotideCount(DNAstr))
+print(nucleotideDictCount(DNAstr))
+print(nucleotideCollections(DNAstr))
