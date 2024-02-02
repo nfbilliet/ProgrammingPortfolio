@@ -46,14 +46,7 @@ The mathematical field of numerical analysis is devoted to rigorously studying t
 #fastaFile = open("rosalind_gc.txt", "r")
 #print([line.split("\n")[:-1] for line in fastaFile.read().split(">")[1:]])
 
-"""
-fastFile=open("rosalind_test.txt", "r")
-lines = fastFile.read()
-print(lines)
-print(lines.split(">"))
-lines = lines.split(">")[1:]
-print([line.split("\n") for line in lines])
-"""
+
 def formatFastaFile(fname):
     with open(fname, "r") as fastaFile:
         #The first element in the list after the initial split is an empty char after using the split function
@@ -65,7 +58,6 @@ def formatFastaFile(fname):
 
 def calculateGCcontent(DNAstr, decimal=6):
     GCcounter = 0
-    strLength = 0
     for nucleotide in DNAstr:
         if nucleotide=="C" or nucleotide=="G":
             GCcounter+=1
