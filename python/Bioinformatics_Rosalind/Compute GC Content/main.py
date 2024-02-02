@@ -43,10 +43,6 @@ Error bounding is a vital practical tool because of the inherent round-off error
 The mathematical field of numerical analysis is devoted to rigorously studying the nature of computational approximation.
 """
 
-#fastaFile = open("rosalind_gc.txt", "r")
-#print([line.split("\n")[:-1] for line in fastaFile.read().split(">")[1:]])
-
-
 def formatFastaFile(fname):
     with open(fname, "r") as fastaFile:
         #The first element in the list after the initial split is an empty char after using the split function
@@ -71,4 +67,3 @@ def selectHighGC(fname):
     print(fastaLines[GCcontent.index(max(GCcontent))][0]+"\n"+"%.6f" % max(GCcontent))
 
 selectHighGC("rosalind_gc.txt")
-#"""
