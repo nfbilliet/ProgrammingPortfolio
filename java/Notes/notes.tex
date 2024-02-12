@@ -1,0 +1,142 @@
+\documentclass{article}
+
+\begin{document}
+
+\section{Overview of the Java programming language}
+
+Java is characterized by its features which are given as
+\begin{enumerate}
+    \item Simple
+    \begin{itemize}
+        \item Based on the C++ syntax
+        \item Removes certain features present in C++ such as pointers and operator overloading
+        \begin{itemize}
+            \item Pointers Store the memory adres of a specific variable
+            \item Operator overloading is a form of polymorhpism that allows us to redefine specific operators in class usage
+        \end{itemize}
+        \item Garbage collection occurs automatically in Java
+    \end{itemize}
+    \item Object oriented
+    \item Portable
+    \item Platform independent
+    \begin{itemize}
+        \item Unlinke C and C++ which requires to be compiled for specific platforms, java can be compiled on any platforms
+        \item Java code is compiled by the compiler and converted into bytecode. This bytecode is a platform-independent code because it can be run on multiple platforms, i.e., Write Once and Run Anywhere (WORA).
+    \end{itemize}
+    \item Secured
+    \begin{itemize}
+        \item Virus free programming due to 
+        \begin{itemize}
+            \item No usage of explicit pointers
+            \item Java programs are run inside a virtual machine 
+            \item Classloader,a part of the Java Runtime Environment (JRE) which is used to load Java classes into the Java Virtual Machine dynamically. It adds security by separating the package for the classes of the local file system from those that are imported from network sources.
+            \item Bytecode Verifier: It checks the code fragments for illegal code that can violate access rights to objects.
+            \item Security Manager: It determines what resources a class can access such as reading and writing to the local disk. 
+        \end{itemize}
+    \end{itemize}
+    \item Robust
+    \begin{itemize}
+        \item Strong memory management
+        \item Lack pointer usage which minimizes security risks
+        \item Automatic garbage collection
+        \item Exception handling and type checking
+    \end{itemize}
+    \item  Architecture Neutral
+\end{enumerate}
+
+\section{Program execution}
+
+\subsection{Compilation}
+
+The '.java' file is first compiled  so that the source code is encoded to a machine independent coding known as Bytecode.
+All classes that are defined in the java file are stored into seperate '.class' files. When compiling a '.java' file the compiler takes the following steps
+\begin{enumerate}
+    \item Parse: Reads a set of *.java source files and maps the resulting token sequence into AST (Abstract Syntax Tree)-Nodes.
+    \begin{itemize}
+        \item An abstract syntax tree (AST) is a data structure used in computer science to represent the structure of a program or code snippet. It is a tree representation of the abstract syntactic structure of text (often source code) written in a formal language. Each node of the tree denotes a construct occurring in the text. It is sometimes called just a syntax tree.
+        \item Abstract syntax trees are data structures widely used in compilers to represent the structure of program code. An AST is usually the result of the syntax analysis phase of a compiler.
+    \end{itemize}
+    \item Enter: Enters symbols for the definitions into the symbol table.
+    \begin{itemize}
+        \item Symbol table is used to store the information about the occurrence of various entities such as objects, classes, variable name, interface, function name etc. it is used by both the analysis and synthesis phases.
+        \item store the names of all entities in a structured way, verify variable declaration, determine scope of a name, mplement type checking by verifying assignments and expressions in the source code are semantically correct. 
+    \end{itemize}
+    \item Process annotations: If Requested, processes annotations found in the specified compilation units.
+    \begin{itemize}
+        \item Annotations in Java provide additional information to the compiler and JVM. An annotation is a tag representing metadata about classes, interfaces, variables, methods, or fields. Annotations do not impact the execution of the code that they annotate.
+    \end{itemize}
+    \item Attribute: Attributes the Syntax trees. This step includes name resolution, type checking and constant folding.
+    \begin{itemize}
+        \item Name resolution, in the context of programming, is the linking of identifiers within the programming environment to the actual program components that they represent. These names may be stored in lookup tables or as part of a namespace hierarchy.
+        \item Type checking in compiler design is an essential aspect of compiler design that involves verifying the types of expressions used in a program or source code. It is the process of ensuring that the type of a variable or expression is compatible with its context of use
+        \item Constant folding is the process of recognizing and evaluating constant expressions at compile time rather than computing them at runtime. Terms in constant expressions are typically simple literals, such as the integer literal 2 , but they may also be variables whose values are known at compile time.
+    \end{itemize}
+    \item Flow: Performs dataflow analysis on the trees from the previous step. This includes checks for assignments and reachability.
+    \item Desugar: Rewrites the AST and translates away some syntactic sugar.
+    \item Generate: Generates ‘.Class’ files.
+\end{enumerate}
+
+\subsection{JVM}
+
+The JVM or Java Virtual Machine is an abstract environment where a runtime environment for the Java Bytecode exists.
+It is not platform dependent and thus it can be run in on any machine. The JVM performs the following operations
+\begin{enumerate}
+    \item Loads code 
+    \item Verifies the code
+    \item Executes the code
+    \item Provide the runtime environment
+\end{enumerate}
+And provides defintions for
+\begin{enumerate}
+    \item Memory area
+    \item class file format
+    \item register set
+    \item garbage collected heap
+    \item fatal error reporting 
+\end{enumerate}
+
+\includeonly{'JVM-Architecture-diagram.jpg'}
+
+\subsubsection{Class loader}
+
+A subsystem of the JVM that is responsible for loading in the compiled classes. When running a java file we pass the compiled class files to the loader which sets it up for execution.
+There are three builtin class loaders in the JVM
+\begin{enumerate}
+    \item Bootstrap Classloader: Super class of the Extension Classloader and loads the rt.jar file that contain all the standard java class files 
+    \item Extension Classloader: Child of the Bootstrap Classloader and parent to the System Classloader. It loades the jar files located inside JAVA_HOME/jre/lib/ext directory.
+    \item System/Application Classloader: Loads the class files from the classpath (by default the current directory)
+\end{enumerate}
+
+\subsubsection{Class method area}
+
+The class method area is the memory block that stores the class code, variable code(static variable, runtime constant), method code, and the constructor of a Java program. (Here method means the function which is written inside the class).
+It stores class-level data of every class such as the runtime constant pool, field and method data, the code for methods.
+
+\subsubsection{Heap}
+
+The Heap area is the memory block where objects are created or objects are stored. Heap memory allocates memory for class interfaces and arrays (an array is an object). It is used to allocate memory to objects at run time
+
+\subsubsection{Stack}
+
+Each thread has a private JVM stack, created at the same time as the thread. It is used to store data and partial results which will be needed while returning value for method and performing dynamic linking.
+
+Java Stack stores frames and a new frame is created each time at every invocation of the method. A frame is destroyed when its method invocation completes
+
+\subsubsection{Program Counter Register}
+
+Each JVM thread that carries out the task of a specific method has a program counter register associated with it. The non-native method has a PC that stores the address of the available JVM instruction whereas, in a native method, the value of the program counter is undefined. PC register is capable of storing the return address or a native pointer on some specific platform.
+
+\subsubsection{Native Method Stacks}
+
+Also called C stacks, native method stacks are not written in Java language. This memory is allocated for each thread when it’s created And it can be of a fixed or dynamic nature.
+
+\subsubsection{Execution Engine}
+
+The execution engine is responsible for executing the bytecode (compiled Java code) that is loaded into the JVM. The execution engine reads the bytecode and performs the necessary operations to carry out the program’s instructions.
+
+\subsubsection{Native Method Interface}
+
+Java Native Interface (JNI) is a framework which provides an interface to communicate with another application written in another language like C, C++, Assembly etc. Java uses JNI framework to send output to the Console or interact with OS libraries.
+
+
+\end{document}
