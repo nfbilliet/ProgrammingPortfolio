@@ -1,0 +1,64 @@
+===Oefening 1.1===
+
+-Opgave-
+
+We willen een lijst van alle bieren met daarbij de naam van de brouwerij.
+We moeten de tables 'bieren' en 'brouwers' koppelen via het veld 'brouwernr'. 
+Hierdoor kunnen we de naam van het bier en de naam van de bijhorende brouwer tonen.
+
+-Oplossing-
+
+select bieren.Naam, brouwers.BrNaam from bieren.bieren inner join bieren.brouwers 
+on bieren.BrouwerNr = brouwers.BrouwerNr
+
+===Oefening 1.2===
+
+-Opgave-
+
+Geef een lijst van alle bieren met de velden 'naam', 'brouwerij' en 'soort'. 
+
+-Oplossing-
+
+select bieren.Naam, brouwers.BrNaam, soorten.Soort from
+bieren.bieren inner join bieren.brouwers on bieren.BrouwerNr=brouwers.BrouwerNr
+inner join bieren.soorten on bieren.SoortNr=soorten.SoortNr
+
+===Oefening 2.1===
+
+-Opgave-
+
+In dit voorbeeld koppelen we de tables 'soorten' en 'bieren' op het veld 'soortnr'.
+Deze instructie genereert een lijst van alle soorten, inclusief de soorten waarvan er geen bieren aanwezig 
+zijn in de table 'bieren'. 
+
+-Oplossing-
+
+select soorten.Soort, bieren.Naam from bieren.soorten left outer join bieren.bieren
+on soorten.SoortNr = bieren.SoortNr
+
+===Oefening 2.2===
+
+-Opgave-
+
+In dit voorbeeld koppelen we de tables 'brouwers' en 'bieren'.
+De SELECT-instructie genereert een lijst van alle brouwers, inclusief de brouwerijen waarvan er geen bieren 
+aanwezig zijn in de table 'bieren'. 
+
+-Oplossing-
+
+select brouwers.BrNaam, bieren.Naam from bieren.brouwers left join bieren.bieren
+on brouwers.BrouwerNr = bieren.BrouwerNr
+
+===Oefening 3.1===
+
+-Opgave-
+
+Maak een lijst van brouwers die in dezelfde gemeente wonen.
+Aan de table 'brouwers' wordt telkens een aliasnaam gegeven.
+Als je een kolomnaam gebruikt, ben je verplicht om die aliasnaam te gebruiken.
+
+-Oplossing-
+
+select b1.BrNaam, b2.BrNaam from brouwers as b1 join brouwers as b2
+on b1.Gemeente = b2.Gemeente and b1.BrouwerNr < b2.BrouwerNr
+

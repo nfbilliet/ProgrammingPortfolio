@@ -1,0 +1,101 @@
+---OEFENING 1---
+
+-Opgave-
+
+Hoeveel leveranciers telt ons tuincentrum? 
+
+-Oplossing-
+
+select count(distinct leverancierNaam) from planten.leveranciers
+
+-------------------------------------------------------------------------
+---OEFENING 2---
+
+-Opgave-
+
+Geef de gemiddelde prijs van alle waterplanten. 
+
+-Oplossing-
+
+select avg(prijs) from planten.planten where soort='WATER'
+
+-------------------------------------------------------------------------
+---OEFENING 3---
+
+-Opgave-
+
+Geef de gemiddelde, de laagste en de hoogste offerteprijs van leverancier 4.  
+
+-Oplossing-
+
+select avg(offertePrijs), min(offertePrijs), max(offertePrijs) from planten.artikelsleveranciers 
+where leverancierId=4
+
+-------------------------------------------------------------------------
+---OEFENING 4---
+
+-Opgave-
+
+Wat is de maximale hoogte van de bomen in de table 'planten'?
+
+-Oplossing-
+
+select max(hoogte) from planten.planten where soort='BOOM'
+
+-------------------------------------------------------------------------
+---OEFENING 5---
+
+-Opgave-
+
+Wat is de laagste offerteprijs voor artikel 1?
+
+-Oplossing-
+
+select min(offertePrijs) from planten.artikelsleveranciers where plantId=1
+
+-------------------------------------------------------------------------
+---OEFENING 6---
+
+-Opgave-
+
+Geef bestelnummer, artikelLeverancierId en het totale bestelbedrag per bestelrij uit de table 'bestellijnen'.
+
+-Oplossing-
+
+select bestelId, artikelLeverancierId, aantal*bestelPrijs as 'totale bestelprijs' from planten.bestellijnen
+
+-------------------------------------------------------------------------
+---OEFENING 7---
+
+-Opgave-
+
+Maak een overzicht van de heesters uit de table 'planten', waarbij je de prijzen met 5% verhoogt.
+
+-Oplossing-
+
+select plantNaam, prijs*1.05 from planten.planten where soort='heester'
+
+-------------------------------------------------------------------------
+---OEFENING 8---
+
+-Opgave-
+
+Hoeveel stuks van leveranciersartikelnummer 59 zijn er besteld?
+
+-Oplossing-
+
+select sum(aantal) from planten.bestellijnen where artikelLeverancierId=59
+
+-------------------------------------------------------------------------
+---OEFENING 9---
+
+-Opgave-
+
+Wat is het totale bestelbedrag (exclusief korting) voor leveranciersartikelnummer 8?
+
+
+-Oplossing-
+
+select sum(aantal*bestelPrijs) from planten.bestellijnen where artikelLeverancierId=8
+
+-------------------------------------------------------------------------

@@ -1,0 +1,158 @@
+---OEFENING 1---
+
+-Opgave-
+
+Tel het aantal planten per plantensoort uit de table 'planten'. 
+
+-oplossing-
+
+select soort, count(*) from planten.planten group by soort order by soort asc
+
+-------------------------------------------------------------------------
+---OEFENING 2---
+
+-Opgave-
+
+Tel het aantal bestelregels per bestelling.
+
+-oplossing-
+
+select bestelId, count(bestelLijnId) as 'aantal bestelregels' from planten.bestellijnen group by bestelId 
+
+-------------------------------------------------------------------------
+---OEFENING 3---
+
+-Opgave-
+
+Wat is de gemiddelde prijs per plantensoort?
+
+
+-oplossing-
+
+select soort, avg(prijs) from planten.planten group by soort order by soort asc
+
+-------------------------------------------------------------------------
+---OEFENING 4---
+
+-Opgave-
+
+Hoeveel planten zijn er per plantensoort-kleurgroep?
+
+
+-oplossing-
+
+select soort, kleur, count(*) from planten.planten group by soort, kleur order by soort asc, kleur asc
+
+-------------------------------------------------------------------------
+---OEFENING 5---
+
+-Opgave-
+
+Maak een overzicht zodat duidelijk is welke kleur van de vaste planten de hoogste gemiddelde prijs heeft. 
+
+-oplossing-
+
+select kleur, avg(prijs) from planten.planten where soort='vast' group by kleur order by avg(prijs) desc
+
+-------------------------------------------------------------------------
+---OEFENING 6---
+
+-Opgave-
+
+Laat per leveranciersId het aantal artikelen zien dat de leverancier aanbiedt onder voorwaarde dat 
+de levertijd van het artikel minder dan 18 dagen is.
+
+-Oplossing-
+
+select leverancierId, count(*) from planten.artikelsleveranciers where levertijd <18
+group by leverancierId 
+
+-------------------------------------------------------------------------
+---OEFENING 7---
+
+-Opgave-
+
+Wat is de gemiddelde prijs per plantensoort, exclusief de geelbloemige planten?
+
+-Oplossing-
+
+select soort, avg(prijs) from planten.planten where kleur != 'geel' group by soort order by soort asc
+
+-------------------------------------------------------------------------
+---OEFENING 8---
+
+-Opgave-
+
+Maak een overzicht met de laagste en de hoogste offerteprijs per plant.
+
+-Oplossing-
+
+select plantId, min(offertePrijs), max(offertePrijs) from planten.artikelsleveranciers group by plantId order by plantId asc
+
+-------------------------------------------------------------------------
+---OEFENING 9---
+
+-Opgave-
+
+Wat is de gemiddelde prijs per plantensoort voor soorten met minstens 10 exemplaren in de table 'planten'?
+
+-Oplossing-
+
+select soort, avg(prijs) as 'Gemiddelde prijs' from planten.planten group by soort having count(*) >= 10 order by  soort asc
+
+-------------------------------------------------------------------------
+---OEFENING 10---
+
+-Opgave-
+
+Hebben de planten met korte levertijden in het algemeen een hogere gemiddelde offerteprijs?
+
+-Oplossing-
+
+
+
+-------------------------------------------------------------------------
+---OEFENING 11---
+
+-Opgave-
+
+Maak een overzicht met de laagste en de hoogste bestelprijs per artikelLeverancierId.
+
+-Oplossing-
+
+select artikelLeverancierId, min(bestelPrijs), max(bestelPrijs) from planten.bestellijnen group by artikelLeverancierId order by artikelLeverancierId
+
+-------------------------------------------------------------------------
+---OEFENING 12---
+
+-Opgave-
+
+Geef een overzicht van het aantal beschikbare planten per beginBloeiMaand/hoogte/kleur groep.
+
+-Oplossing-
+
+select beginBloeiMaand, hoogte, kleur, count(*) as aantal from planten.planten where kleurgroup by beginBloeiMaand, hoogte, kleur order by beginBloeiMaand, hoogte, kleur
+
+-------------------------------------------------------------------------
+---OEFENING 13---
+
+-Opgave-
+
+Wat is de laagste prijs per plantensoort van de planten die in ieder geval bloeien in de ganse periode mei tot en met juni?
+
+-Oplossing-
+
+select soort, min(prijs) from planten.planten where beginBloeiMaand<5 and eindBloeiMaand > 6 group by soort order by soort asc 
+
+-------------------------------------------------------------------------
+---OEFENING 14---
+
+-Opgave-
+
+Tel het aantal planten per prijs. De prijs moet je afronden op een geheel getal. 
+
+-Oplossing-
+
+select round(prijs) as 'afgeronde prijs', count(*) as aantal from planten.planten group by round(prijs) order by round(prijs) asc
+
+-------------------------------------------------------------------------

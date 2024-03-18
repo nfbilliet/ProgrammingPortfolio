@@ -1,0 +1,223 @@
+===Oefening 1===
+
+-Opgave-
+
+Het tuincentrum wil graag een lijst waarop is aangegeven welke bomen in Aalsmeer 
+en welke buiten Aalsmeer verkrijgbaar zijn. Op het overzicht moeten de volgende 
+gegevens verschijnen: plantId, plantennaam, artikelcode van de leverancier, alsmede 
+een aanduiding 'AALSMEER' of 'BUITEN AALSMEER'. Sorteer de lijst op plantId.
+
+-Oplossing-
+
+select 
+	planten.plantId,
+    planten.plantNaam,
+    artikelsleveranciers.artikelLeverancierCode,
+    'AALSMEER' as Gebied
+from 
+	planten.planten inner join planten.artikelsleveranciers
+    on planten.plantId = artikelsleveranciers.plantId
+    inner join planten.leveranciers
+    on artikelsleveranciers.leverancierId = leveranciers.leverancierId and leveranciers.woonplaats='aalsmeer'
+    where soort='boom'
+union
+select 
+	planten.plantId,
+    planten.plantNaam,
+    artikelsleveranciers.artikelLeverancierCode,
+    'BUITEN AALSMEER' as Gebied
+from 
+	planten.planten inner join planten.artikelsleveranciers
+    on planten.plantId = artikelsleveranciers.plantId
+    inner join planten.leveranciers
+    on artikelsleveranciers.leverancierId = leveranciers.leverancierId and leveranciers.woonplaats!='aalsmeer'
+	where soort='boom'
+order by plantId
+
+===Oefening 2===
+
+-Opgave-
+
+Je wil een overzicht waarop is aangegeven welke bestellijnen te laat zijn. 
+Voor de bestellijnen die te laat zijn moet in een extra kolom de opmerking 'TE LAAT'
+ worden geplaatst; voor de andere bestellijnen wordt in die kolom een aantal streepjes geplaatst.
+
+Sorteer het overzicht op 'bestelId'.
+
+Geef bestelId, artikelLeverancierId, besteldatum, leveringsdatum, levertijd, bericht 'TE LAAT' of '-------'.
+
+-Oplossing-
+
+select 
+	bestellijnen.bestelId,
+    bestellijnen.artikelLeverancierId,
+    bestellingen.bestelDatum,
+    bestellingen.leveringsDatum,
+    datediff(bestellingen.leveringsDatum, bestellingen.bestelDatum) as leveringstijd,
+    'TE LAAT' as status
+from 
+	planten.bestellijnen inner join planten.bestellingen 
+    on bestellijnen.bestelId = bestellingen.bestelId
+	inner join planten.artikelsleveranciers
+	on artikelsleveranciers.artikelLeverancierId = bestellijnen.bestelId
+    where artikelsleveranciers.levertijd < datediff(bestellingen.leveringsDatum, bestellingen.bestelDatum)
+union
+select 
+	bestellijnen.bestelId,
+    bestellijnen.artikelLeverancierId,
+    bestellingen.bestelDatum,
+    bestellingen.leveringsDatum,
+    datediff(bestellingen.leveringsDatum, bestellingen.bestelDatum) as leveringstijd,
+    '-----' as status
+from 
+	planten.bestellijnen inner join planten.bestellingen 
+    on bestellijnen.bestelId = bestellingen.bestelId
+	inner join planten.artikelsleveranciers
+	on artikelsleveranciers.artikelLeverancierId = bestellijnen.bestelId
+    where artikelsleveranciers.levertijd >= datediff(bestellingen.leveringsDatum, bestellingen.bestelDatum)
+order by bestelId
+
+===Oefening 3===
+
+-Opgave-
+
+Welke planten zijn hoger dan de gemiddelde hoogte van alle planten samen? Toon alle gegevens. 
+
+-Oplossing-
+
+select * from planten.planten where hoogte > (select avg(hoogte) from planten.planten)
+
+===Oefening 4===
+
+-Opgave-
+
+Welke planten zijn duurder dan de gemiddelde prijs van de bomen? Toon alle gegevens.
+
+-Oplossing-
+
+select * from planten.planten where prijs > (select avg(prijs) from planten.planten where soort='boom')
+
+===Oefening 5===
+
+-Opgave-
+
+Maak een overzicht van de leveranciers (alle gegevens)
+waar nog bestellingen uitstaan met een leverdatum die vóór 1 april 2016 ligt.
+
+ -Oplossing-
+
+select * from planten.leveranciers
+where leverancierId in
+(select leverancierId from planten.bestellingen where leveringsDatum < '2016-04-01')
+
+===Oefening 6===
+
+-Opgave-
+
+Welke rijen hebben de laagste offerteprijs van alle offertes
+in de table artikelsleveranciers? Geef alle gegevens.
+
+-Oplossing-
+
+select * from planten.artikelsleveranciers where offertePrijs = (select min(offertePrijs) from planten.artikelsleveranciers)
+
+===Oefening 7===
+
+-Opgave-
+
+Welke planten zijn lager dan de laagste vaste plant?
+Toon alle gegevens.
+Planten waar de hoogte 0 is, worden niet meegerekend.
+
+-Oplossing-
+
+select * from planten.planten where hoogte < (select min(hoogte) from planten.planten where soort='vast' and hoogte != 0) and hoogte !=0
+
+===Oefening 8===
+
+-Opgave-
+
+Welke planten zijn hoger dan de gemiddelde hoogte van vaste planten en tevens 
+goedkoper dan de gemiddelde prijs van vaste planten? Geef alle gegevens.
+
+-Oplossing-
+
+select * from planten.planten where plantId in 
+(
+    select plantId from planten.planten 
+        where 
+            hoogte > (select avg(hoogte) from planten.planten where soort='vast')
+            and
+            prijs < (select avg(prijs) from planten.planten where soort='vast')
+)
+
+===Oefening 9===
+
+-Opgave-
+
+Welke planten hebben een prijs die tussen de laagste en hoogste prijs
+van de klimplanten ligt? Geef alle gegevens.
+
+-Oplossing-
+
+select * from planten.planten
+where 
+    prijs > (select min(prijs) from planten.planten where soort = 'klim') 
+    and 
+    prijs < (select max(prijs) from planten.planten where soort = 'klim')
+
+===Oefening 10===
+
+-Opgave-
+
+Maak een overzicht van de plantIds die een lagere offerteprijs hebben dan 
+de gemiddelde offerteprijs voor de betreffende plantId.
+Plaats de gegevens plantId, leveranciersnaam en offerteprijs op het overzicht.
+Sorteer op 'plantId'.
+
+-Oplossing-
+
+select 
+	artikelsleveranciers.plantId,
+    leveranciers.leverancierNaam,
+    artikelsleveranciers.offertePrijs
+from 
+    planten.artikelsleveranciers
+    inner join
+    (select 
+	    artikelsleveranciers.plantId,
+        avg(artikelsleveranciers.offertePrijs) as gemiddeldePrijs
+     from planten.artikelsleveranciers
+     where offertePrijs is not null
+     group by plantId
+     order by plantId) as gemiddeldes
+    on offertePrijs < gemiddeldes.gemiddeldePrijs and artikelsleveranciers.plantId = gemiddeldes.plantId
+    inner join
+    planten.leveranciers 
+    on artikelsleveranciers.leverancierId = leveranciers.leverancierId 
+order by plantId
+
+===Oefening 11===
+
+-Opgave-
+
+Maak een overzicht van bestelde planten die een bestelprijs hebben 
+welke hoger is dan de maximum offerteprijs voor zo’n plant.
+Plaats de volgende gegevens op het overzicht :
+bestelnummer, artikelcode van de leverancier, plantennaam en bestelprijs.
+
+-Oplossing-
+
+select 
+	a1.bestelId as bestelnummer,
+    a1.artikelLeverancierId as artikelcode,
+    a3.plantNaam as plantennaam,
+    a1.bestelPrijs as bestelprijs
+from 
+	planten.bestellijnen as a1 inner join planten.artikelsleveranciers as a2
+    on a1.artikelLeverancierId = a2.artikelLeverancierId
+    inner join planten.planten as a3
+    on a2.plantId = a3.plantId
+where 
+	a1.bestelprijs > (select max(a4.offertePrijs) from planten.artikelsleveranciers as a4 where a2.plantId = a4.plantId) 
+    

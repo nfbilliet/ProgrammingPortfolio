@@ -1,0 +1,308 @@
+---OEFENING 1---
+
+-Opgave-
+
+Geef een overzicht, met alle gegevens, van de leveranciers uit Aalsmeer.
+
+-oplossing-
+
+select * from planten.leveranciers where woonplaats = 'AALSMEER
+
+-------------------------------------------------------------------------
+---OEFENING 2---
+
+-Opgave-
+
+Geef een alfabetisch overzicht op plantennaam, met plantId, plantennaam en prijs, van alle planten.
+
+-oplossing-
+
+select plantId, plantNaam, prijs from planten.planten order by plantNaam asc
+
+-------------------------------------------------------------------------
+---OEFENING 3---
+
+-Opgave-
+
+Welke planten beginnen in de maand maart te bloeien?
+
+Toon plantId, plantennaam, en de beginmaand van de bloeiperiode.
+
+-oplossing-
+
+select plantId, plantNaam, beginBloeiMaand from planten.planten where beginBloeiMaand=3
+
+-------------------------------------------------------------------------
+---OEFENING 4---
+
+-Opgave-
+
+Maak een overzicht uit de table 'artikelsleveranciers', gesorteerd op plantId en binnen plantId een sortering op artikelcode van de leverancier.
+Toon alleen de gegevens plantId, artikelcode van de leverancier en leverancierId
+
+-oplossing-
+
+select plantId, artikelLeverancierCode, leverancierId from planten.artikelsleveranciers 
+order by plantId asc, artikelLeverancierCode asc
+-------------------------------------------------------------------------
+---OEFENING 5---
+
+-Opgave-
+
+Maak een gesorteerd overzicht van alle waterplanten. Sorteer op hoogte, grootste voorop.
+
+-oplossing-
+
+select * from planten.planten where soort='WATER' order by hoogte desc
+-------------------------------------------------------------------------
+---OEFENING 6---
+
+-Opgave-
+
+Maak een lijst van de verschillende kleuren die bij de planten uit de table planten horen.
+
+-Oplossing-
+
+select distinct kleur from planten.planten where kleur is not null order by kleur asc
+
+-------------------------------------------------------------------------
+---OEFENING 7---
+
+-Opgave-
+
+Maak een lijst van alle planten waarvan de kolom kleur niet ingevuld is.
+
+-Oplossing-
+
+select * from planten.planten where kleur is null
+
+-------------------------------------------------------------------------
+---OEFENING 8---
+
+-Opgave-
+
+Toon de verschillende soorten planten in de table 'planten'.
+
+-Oplossing-
+
+select distinct soort from planten.planten
+
+-------------------------------------------------------------------------
+---OEFENING 9---
+
+-Opgave-
+
+Geef een overzicht van alle vaste planten met gele bloemen.
+Van iedere plant toon je de volgende gegevens: plantId, plantennaam, hoogte en de beginmaand van de bloeiperiode.
+
+-Oplossing-
+
+select plantId, plantNaam, hoogte, beginBloeiMaand from planten.planten where soort='VAST' and kleur='GEEL'
+
+-------------------------------------------------------------------------
+---OEFENING 10---
+
+-Opgave-
+
+Geef een overzicht van alle planten met een prijs boven de 10 € die niet tot de soort bomen behoren.
+
+-Oplossing-
+
+select * from planten.planten where prijs > 10 and soort != 'BOOM'
+
+-------------------------------------------------------------------------
+---OEFENING 11---
+
+-Opgave-
+
+Maak een lijst van alle planten die in juni beginnen te bloeien en witte bloemen geven en tevens van alle planten 
+die in augustus voor het eerst bloeien en gele bloemen hebben. Plaats alle beschikbare gegevens in het overzicht.
+
+-Oplossing-
+
+select * from planten.planten where (beginBloeiMaand=6 and kleur='WIT') or (beginBloeiMaand=8 and kleur='GEEL')  
+-------------------------------------------------------------------------
+---OEFENING 12---
+
+-Opgave-
+
+Welke planten met gemengde bloeikleuren worden maximum 60 cm hoog?
+Toon plantId, plantennaam en hoogte.
+
+-Oplossing-
+
+select plantId, plantNaam, hoogte from planten.planten where hoogte <= 60 and kleur='GEMENGD'
+
+-------------------------------------------------------------------------
+---OEFENING 13---
+
+-Opgave-
+
+Geef een overzicht van alle leveranciers die niet in Hillegom wonen.
+
+-Oplossing-
+
+select * from planten.leveranciers where woonplaats != 'HILLEGOM'
+
+-------------------------------------------------------------------------
+---OEFENING 14---
+
+-Opgave-
+
+Van welke planten is de kleur onbekend? Geef plantId en plantennaam.
+
+-Oplossing-
+
+select plantId, plantNaam from planten.planten where kleur is null 
+-------------------------------------------------------------------------
+---OEFENING 15---
+
+-Opgave-
+
+Welke planten bloeien in ieder geval in de ganse periode augustus tot en met oktober? 
+Geef plantId en plantennaam.
+
+-Oplossing-
+
+select plantId, plantNaam from planten.planten where beginBloeiMaand <=8 and eindBloeiMaand=10
+
+-------------------------------------------------------------------------
+---OEFENING 16---
+
+-Opgave-
+
+Welke planten bloeien in ieder geval in de maand september? Geef plantId en plantennaam.
+
+
+-Oplossing-
+
+select plantId, plantNaam from planten.planten where beginBloeiMaand <=9 and eindBloeiMaand >= 9
+-------------------------------------------------------------------------
+---OEFENING 17---
+
+-Opgave-
+
+Geef een overzicht van alle vaste planten met een prijs tussen €3 en €5.
+
+-Oplossing-
+
+select * from planten.planten where soort='VAST' and  prijs between 3 and 5
+
+-------------------------------------------------------------------------
+---OEFENING 18---
+
+-Opgave-
+
+Geef een overzicht van alle planten die in maart, april, september of oktober beginnen te bloeien.
+
+-Oplossing-
+
+select * from planten.planten where beginBloeiMaand in (3,4,9,10)
+
+-------------------------------------------------------------------------
+---OEFENING 19---
+
+-Opgave-
+
+Van welke planten is zowel de kleur als de hoogte onbekend? Geef plantId, plantennaam, kleur en hoogte.
+
+-Oplossing-
+
+select plantId, plantNaam, kleur, hoogte from planten.planten where kleur is null and hoogte is null
+
+-------------------------------------------------------------------------
+---OEFENING 20---
+
+-Opgave-
+
+Bij welke planten komt het woord BOOM voor? Geef plantId en plantennaam.
+
+-Oplossing-
+
+select plantId, plantNaam from planten.planten where plantNaam like '%BOOM%'
+
+-------------------------------------------------------------------------
+---OEFENING 21---
+
+-Opgave-
+
+Geef plantId en plantennaam van alle planten die als derde letter een 'N' hebben.
+
+-Oplossing-
+
+select plantId, plantNaam from planten.planten where plantNaam like '__N%'
+
+-------------------------------------------------------------------------
+---OEFENING 22---
+
+-Opgave-
+
+Welke 1- en 2-jarige planten staan er in de table 'planten'?
+Probeer deze vraag met en zonder de operator like op te lossen.
+
+-Oplossing-
+
+select * from planten.planten where soort in ('1-JARIG', '2-JARIG')
+select * from planten.planten where soort like '_-JARIG'
+
+-------------------------------------------------------------------------
+---OEFENING 23---
+
+-Opgave-
+
+Geef een overzicht van alle planten, behalve de bomen en de heesters, die tussen de 100 en 200 cm hoog zijn, 
+rode of blauwe bloemen geven, en vóór augustus beginnen te bloeien. Alle gegevens behalve de prijs zijn belangrijk.
+Sorteer de lijst op 'soort' en binnen soort op 'plantennaam'.
+
+-Oplossing-
+
+select plantId, plantNaam, soort, kleur, beginBloeiMaand, eindBloeiMaand, categorieId from planten.planten
+where hoogte between 100 and 200 and kleur in ('ROOD', 'BLAUW') and beginBloeiMaand < 8 and soort not in ('BOOM', 'HEESTER')
+order by soort asc, plantNaam asc
+
+-------------------------------------------------------------------------
+---OEFENING 24---
+
+-Opgave-
+
+Bij welke planten, die niet behoren tot de soort kruid, komt het woord KRUID voor in hun plantennaam?
+Geef plantId en plantennaam.
+
+-Oplossing-
+
+select plantId, plantNaam from planten.planten where soort != 'KRUID' and plantNaam like '%kruid%'
+-------------------------------------------------------------------------
+---OEFENING 25---
+
+-Opgave-
+
+Geef plantId en plantennaam van alle planten die beginnen met de letter 'L' en eindigen met 
+de letter 'E'.
+
+-Oplossing-
+
+select plantId, plantNaam from planten.planten where plantNaam like 'L%E'
+
+-------------------------------------------------------------------------
+---OEFENING 26---
+
+-Opgave-
+
+Welke planten hebben een plantennaam van precies 5 letters lang? Geef plantId en plantennaam.
+
+-Oplossing-
+
+select plantId, plantNaam from planten.planten where plantNaam like '_____'
+
+-------------------------------------------------------------------------
+---OEFENING 27---
+
+-Opgave-
+
+Welke planten hebben een plantennaam van minimum 5 letters lang? Geef plantId en plantennaam.
+
+-Oplossing-
+
+select plantId, plantNaam from planten.planten where plantNaam like '_____%'
+
+-------------------------------------------------------------------------

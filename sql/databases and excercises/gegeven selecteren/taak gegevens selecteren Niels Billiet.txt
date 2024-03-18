@@ -1,0 +1,88 @@
+====Taak 1 : Module Gegevens selecteren====
+
+---Vraag 1---
+
+*Opgave*
+
+Geef een lijst van de klanten uit Gent of Wetteren met de velden naam, voornaam, postcode, woonplaats 
+en klantstatus. Sorteer op klantstatus en naam.
+
+*Antwoord*
+
+select naam, voornaam, postcode, woonplaats, klantStatus from video.klanten 
+where woonplaats in ('gent', 'wetteren') order by klantStatus, naam
+
+---Vraag 2---
+
+*Opgave*
+
+Maak een lijst van de klanten waarvan de postcode groter of gelijk is aan 9000 en de klanten waarvan 
+het huuraantal groter is dan 200.  Deze lijst moet gesorteerd worden op postcode
+
+*Antwoord*
+
+select * from video.klanten where postcode >= 9000 or totaalGehuurd > 200 
+order by postcode, naam
+
+---Vraag 3---
+
+*Opgave*
+
+Geef een lijst van de klanten wiens naam niet begint met een 'd'.
+
+*Antwoord*
+
+select * from video.klanten where naam not like 'd%' order by naam
+
+---Vraag 4---
+
+*Opgave*
+
+Geef een lijst van klanten waar in de naam van de gemeente op de derde plaats een 'n' staat.
+
+*Antwoord*
+
+select * from video.klanten where woonplaats like '__n%'
+
+---Vraag 5---
+
+*Opgave*
+
+Bereken voor alle films de prijs incl BTW (21%).
+
+*Antwoord*
+
+select titel, prijs*1.21 as 'prijs incl. BTW' from video.films
+
+---Vraag 6---
+
+*Opgave*
+
+Uit welke woonplaatsen komen onze klanten?
+
+*Antwoord*
+
+select distinct woonplaats from video.klanten
+
+---Vraag 7---
+
+*Opgave*
+
+Maak een lijst van het aantal klanten per gemeente.
+
+*Antwoord*
+
+select woonplaats, count(*) as 'Aantal klanten' from video.klanten group by woonplaats order by woonplaats
+
+---Vraag 8---
+
+*Opgave*
+
+Maak een lijst die het mogelijk maakt een inzicht te krijgen in de verhuringen per gemeente.
+Op deze lijst moet de gemeente/stad met de meeste verhuringen bovenaan staan.
+Indien in een bepaalde gemeente geen 200 verhuringen gebeurd zijn, mag deze gemeente niet op de lijst staan.
+
+*Antwoord*
+
+select woonplaats, sum(totaalGehuurd) as 'Aantal verhuringen' from video.klanten 
+group by woonplaats having sum(totaalGehuurd) > 200 order by sum(totaalGehuurd) desc

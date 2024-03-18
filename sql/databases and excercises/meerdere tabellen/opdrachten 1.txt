@@ -1,0 +1,198 @@
+===Oefening 1===
+
+-Opgave-
+
+Maak een overzicht van de bestellingen met het bestelnummer, de naam van de leverancier en de leverdatum.
+
+-Oplossing-
+
+select planten.bestellingen.bestelId, planten.leveranciers.leverancierNaam, planten.bestellingen.leveringsDatum
+from planten.bestellingen inner join planten.leveranciers
+on planten.bestellingen.leverancierId = planten.leveranciers.leverancierId
+
+===Oefening 2===
+
+-Opgave-
+
+Welke planten hebben een levertijd van maximum 10 dagen?
+Plaats in het overzicht de gegevens artikelcode, leveranciers-artikelcode, plantennaam en levertijd.
+
+-Oplossing-
+
+select 
+	planten.plantId, 
+    artikelsleveranciers.artikelLeverancierCode, 
+    planten.plantNaam, 
+    artikelsleveranciers.levertijd 
+from planten.planten inner join planten.artikelsleveranciers
+on planten.plantId = artikelsleveranciers.plantId
+where levertijd<=10
+
+===Oefening 3===
+
+-Opgave-
+
+Geef een overzicht waaruit blijkt bij welke leverancier(s) de planten besteld kunnen worden.
+In het overzicht moeten de volgende gegevens staan: plantid, plantennaam, leverancierscode,
+naam van de leverancier, levertijd en offerteprijs.
+
+Sorteer het overzicht op plantennaam. 
+
+-Oplossing-
+
+select
+	planten.plantId,
+    planten.plantNaam,
+    artikelsleveranciers.artikelLeverancierCode,
+    leveranciers.leverancierNaam,
+    artikelsleveranciers.levertijd,
+    artikelsleveranciers.offertePrijs
+from 
+	planten.planten inner join planten.artikelsleveranciers 
+	on planten.plantId=artikelsleveranciers.plantId
+	inner join planten.leveranciers
+    on artikelsleveranciers.leverancierId = leveranciers.leverancierId
+order by plantNaam asc
+
+===Oefening 4===
+
+-Opgave-
+
+Maak een overzicht van die planten die een prijs hebben die minstens 50% boven de offerteprijs ligt.
+Geef plantId, plantennaam, prijs van de plant, leveranciersId en offerteprijs.
+Sorteer je lijst op plantennaam.
+
+-Oplossing-
+
+select
+	planten.plantId,
+    planten.plantNaam,
+    planten.prijs,
+    artikelsleveranciers.leverancierId,
+    artikelsleveranciers.offertePrijs
+from 
+	planten.planten inner join planten.artikelsleveranciers
+    on planten.plantId=artikelsleveranciers.plantId
+    where prijs >= offertePrijs*1.5
+order by
+	plantNaam asc
+
+===Oefening 5===
+
+-Opgave-
+
+Hoeveel verschillen de gehanteerde bestelprijzen met de huidige offerteprijzen?
+Presenteer in de lijst de gegevens bestelnummer, 
+artikelcode van de leverancier en het positieve of negatieve verschil.
+
+-Oplossing-
+
+select 
+	bestellijnen.bestelId,
+    artikelsleveranciers.artikelLeverancierCode,
+    bestellijnen.bestelPrijs-artikelsleveranciers.offertePrijs as 'Verschil bestel- en offerteprijs'
+from
+	planten.bestellijnen inner join planten.artikelsleveranciers
+    on bestellijnen.artikelLeverancierId = artikelsleveranciers.artikelLeverancierId
+
+===Oefening 6===
+
+-Opgave-
+
+In welke plaatsen kan het tuincentrum vaste planten bestellen?
+
+-Oplossing-
+
+select distinct
+	leveranciers.woonplaats
+from
+	planten.planten inner join planten.artikelsleveranciers
+    on planten.plantId=artikelsleveranciers.plantId
+    inner join planten.leveranciers
+    on artikelsleveranciers.leverancierId=leveranciers.leverancierId
+    where planten.soort='vast'
+
+===Oefening 7===
+
+-Opgave-
+
+Maak een overzicht van alle rode planten geleverd door leveranciers die niet in Aalsmeer wonen.
+Vermeld de gegevens plantId, plantennaam, soort, naam van de leverancier, woonplaats.
+Sorteer op soort en plantennaam.
+
+-Oplossing-
+
+select 
+	planten.plantId,
+    planten.plantNaam,
+    planten.soort,
+    leveranciers.leverancierNaam,
+    leveranciers.woonplaats
+from
+	planten.planten inner join planten.artikelsleveranciers
+    on planten.plantId = artikelsleveranciers.plantId
+    inner join planten.leveranciers
+    on artikelsleveranciers.leverancierId = leveranciers.leverancierId
+    where planten.kleur = 'rood' and leveranciers.woonplaats != 'Aalsmeer'
+order by
+	soort, planten.plantNaam asc
+
+===Oefening 8===
+
+-Opgave-
+
+Bepaal voor iedere artikelcode de laagste offerteprijs.
+Vermeld in het overzicht plantId, plantennaam en de bijbehorende offerteprijs.
+Sorteer het overzicht op plantennaam.
+
+-Oplossing-
+
+select
+	artikelsleveranciers.plantId,
+    planten.plantNaam,
+    min(artikelsleveranciers.offertePrijs)
+from 
+	planten.artikelsleveranciers inner join planten.planten
+    on artikelsleveranciers.plantId = planten.plantId
+group by
+	artikelsleveranciers.plantId, planten.plantNaam
+order by
+	plantNaam
+
+===Oefening 9===
+
+-Opgave-
+
+Zoek de bestellingen welke een besteldatum hebben die gelijk is aan de leverdatum
+van één of meer andere bestellingen. Geef bestelnummer 1e bestelling, besteldatum 1e bestelling, 
+bestelnummer 2e bestelling, leveringsdatum 2e bestelling.
+
+-Oplossing-
+
+select 
+	t1.bestelId as "Bestelnummer 1e bestelling",
+    t1.bestelDatum as "Besteldatum 1e bestelling",
+    t2.bestelId as "Bestelnummer 2e bestelling",
+    t2.leveringsDatum as "Leverdatum 2e bestelling"
+from 
+	planten.bestellingen as t1 join planten.bestellingen as t2
+    on t1.bestelDatum = t2.leveringsDatum
+
+===Oefening 10===
+
+-Opgave-
+
+Geef een overzicht van alle leveranciers en de bijbehorende bestellingen. 
+Toon ook de leveranciers bij wie we nog niets besteld hebben.
+We zijn enkel geïnteresseerd in de velden bestelId en leverancierNaam
+
+-Oplossing-
+
+select 
+    leveranciers.leverancierNaam,
+    bestellingen.bestelId
+from 
+	planten.leveranciers left join planten.bestellingen
+    on leveranciers.leverancierId = bestellingen.leverancierId
+order by
+	leverancierNaam
